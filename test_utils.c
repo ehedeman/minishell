@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 12:00:23 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/04/09 14:14:52 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:35:16 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,3 +54,28 @@ void    ft_cd(char *new_path)
     if (chdir(new_path) == -1)
         printf("%s\n", strerror(errno));
 }
+
+void    ft_print_history(void)
+{
+    // int fd;
+    // char    *str;
+
+    //fd = open("~/.history", O_RDONLY);
+    // fd = open("testfile.txt", O_RDONLY);
+    // if (fd < 0)
+    //     return ;
+    // str = get_next_line(fd);
+    // if (!str)
+    //     return ;
+    // printf("%s\n", str);
+    // free(str);
+    // close(fd);
+}
+
+// void    ft_execute(char *str)
+// {
+//     if (str[0] == '.' && str[1] == '/')
+//     {
+
+//     }
+// }
