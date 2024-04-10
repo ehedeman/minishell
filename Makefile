@@ -6,14 +6,17 @@
 #    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/04/09 13:09:13 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/04/10 12:27:19 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-NAME = test
-SRC = 	test.c			\
-		test_utils.c
+NAME = minishell
+SRC = 	minishell.c			\
+		cd.c				\
+		redirect.c			\
+		pwd.c				\
+		ls.c
 
 OBJS = $(SRC:.c=.o)
 OBJS_DIR = objs/
@@ -34,7 +37,7 @@ all: $(LIBFT) $(CLIENT) $(NAME) #norm
 $(NAME): $(OBJS_PREFIXED)
 	@$(CC) $(CFLAGS) $(OBJS_PREFIXED) -lreadline -Ilibft -L$(LIB_PATH) -lft -o $(NAME)
 
-$(OBJS_DIR)%.o : %.c test.h
+$(OBJS_DIR)%.o : %.c minishell.h
 	@mkdir -p $(OBJS_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
@@ -62,7 +65,7 @@ leaks:
 
 norm:
 	@printf "$(GREEN)"
-	@norminette $(SRC) test.h
+	@norminette $(SRC) minishell.h
 	@printf "$(NC)"
 
 .PHONY: all clean re fclean leaks norm
