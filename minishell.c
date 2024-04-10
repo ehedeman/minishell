@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 12:16:09 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/04/10 13:20:28 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:44:49 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	set_values(t_mini *mini)
 {
-	mini->bool_redirect = 0;
+	mini->redirect = 1;
+	mini->mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 }
 
 int main(void)
@@ -22,6 +23,7 @@ int main(void)
 	t_mini	mini;
 
 	set_values(&mini);
+	//mini.redirect = create_file("testfile.txt", &mini);
 	while (1)
 	{
 		mini.input = readline("Minishell: ");
@@ -36,11 +38,13 @@ int main(void)
 			if (ft_strnstr(mini.input, "ls", ft_strlen(mini.input)))
 				ft_ls();
 			else if (ft_strncmp(mini.input, "pwd", ft_strlen(mini.input)) == 0)
-				ft_pwd();
+				ft_pwd(&mini);
 			else if (ft_strnstr(mini.input, "cd", ft_strlen(mini.input)))
 				ft_cd(mini.input);
 			else if (ft_strncmp(mini.input, "red", ft_strlen(mini.input)) == 0)
-				redirect("testfile.txt", "Hello how ur doin?", 3);
+				file_write("testfile.txt", "Hello how ur doin?", 3, &mini);
+			else if (ft_strncmp(mini.input, "exit", ft_strlen(mini.input)) == 0)
+				ft_exit(&mini);
 		}
 		free(mini.input);
 	}

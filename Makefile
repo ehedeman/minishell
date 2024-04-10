@@ -6,7 +6,7 @@
 #    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/04/10 12:27:19 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/04/10 14:14:49 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,10 @@
 NAME = minishell
 SRC = 	minishell.c			\
 		cd.c				\
-		redirect.c			\
+		file_write.c		\
 		pwd.c				\
-		ls.c
+		ls.c				\
+		exit.c
 
 OBJS = $(SRC:.c=.o)
 OBJS_DIR = objs/
