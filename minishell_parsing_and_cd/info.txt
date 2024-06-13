@@ -1,0 +1,45 @@
+how parsing works step-by-step:
+
+1. pasing() returns a linklist (similar to the one in libft)
+
+it takes the input, cllocates a node (consisting of an argument list argv, the number of arguments argc,
+the operator for those arguments saved and the next node in line)
+
+so a list would perhabs look like this:
+
+Node 1:
+
+argv[0] = pwd
+argc = 1
+operator = PIPE
+next = (pointer to) Node 2
+
+Node 2:
+
+argv[0] = cat
+argv[1] = -e
+argc = 2
+operator = NONE
+next = NULL
+
+there might be errors (lots of them probably) but the basic idea works.
+
+things to know:
+
+-quotation marks will be removed before putting it into the list
+-operator signs (<>|) can be typed both "pwd>out" and "pwd > out".
+-operator signs will not get listed in argv (they get skipped and instead
+the operator value is set)
+
+
+-currently working on checking the input for invalid stuff (such as single quotation marks because the parser 
+cannot and is not supposed to handle that)
+
+-parsing is very much not norminette conforming but i dont think its smart to clean everything up
+before making sure everything works properly.
+
+cd is also working and tailored to the parsing method. if you type cd then it gets you to home/user.
+if you type cd Directory (without the /), then it gets itself the path youre currently on and adds the new
+Directory. Then it heads there (worked when i tried it).
+if you type cd /whatever_path, then it just gets you there. pwd works somewhat but i havent changed it to work with
+redirection and such, since redirections etc arent really implemented yet. (it works to test cd but thats it)
