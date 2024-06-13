@@ -42,4 +42,4 @@ cd is also working and tailored to the parsing method. if you type cd then it ge
 if you type cd Directory (without the /), then it gets itself the path youre currently on and adds the new
 Directory. Then it heads there (worked when i tried it).
 if you type cd /whatever_path, then it just gets you there. pwd works somewhat but i havent changed it to work with
-redirection and such, since redirections etc arent really implemented yet. (it works to test cd but thats it)
+redirection and such, since redirections etc arent really implemented yet. (it works to test cd but thats it.)
