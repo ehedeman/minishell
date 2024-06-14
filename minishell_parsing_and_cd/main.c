@@ -6,27 +6,24 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/06/13 14:21:25 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/06/14 13:53:21 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
- //set everything that needs to be malloced to zero later so there
- //can be one function thats like "is this zero? no? then free it."
-static int	set_values(t_mini *mini)
+int	main_error(int errnum)
 {
-	mini->fd = 1;
-	// mini->mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
-	// mini->builtins_tab = malloc(sizeof(char *) * 7);
-	// if (!mini->builtins_tab)
-	// 	return (1);
-	// mini->builtins_tab[6] = NULL;
-	// fill_builtins_tab(mini->builtins_tab);
-	return (0);
+	if (errnum == MALLOC_ERR)
+		write(2, FAILED_MALLOC, ft_strlen(FAILED_MALLOC));
+	if (errnum == SYNTAX_ERR)
+		write(2, UNEXPECTED_TOKEN, ft_strlen(UNEXPECTED_TOKEN));
+	if (errnum == PATH_ERR)
+		write(2, FAILED_PATH, ft_strlen(FAILED_PATH));
+	return (-1);
 }
 
+//to check the input/if everything was parsed correctly
 void	ft_print(t_mini *mini)
 {
 	int i;
@@ -39,8 +36,8 @@ void	ft_print(t_mini *mini)
 		while (temp->argv[i])
 		{
 			printf("%s\n", temp->argv[i]);
-			printf("%i\n", temp->operator);
-			printf("%i\n", temp->argc);
+			// printf("%i\n", temp->operator);
+			// printf("%i\n", temp->argc);
 			i++;
 		}
 		temp = temp->next;
@@ -58,15 +55,18 @@ void	check_command(t_mini *mini)
 		i = 0;
 		while (temp->argv[i])
 		{
-			printf("%s\n", temp->argv[i]);
 			if (ft_strncmp(temp->argv[i], "cd", 2) == 0)
 				ft_cd(temp, i);
 			else if (ft_strncmp(temp->argv[i], "pwd", 3) == 0)
-				ft_pwd(mini);
+				ft_pwd(check_redirect(temp));
 			else if (ft_strncmp(temp->argv[i], "exit", 5) == 0)
 				ft_exit(mini);
 			else if (ft_strnstr(temp->argv[i], "print", 5))
+			{
 				ft_print(mini);
+				if (temp->operator == NONE)
+					return ;
+			}
 			else 
 			{
 				write(1, "Command not found.\n", 19);
@@ -81,7 +81,6 @@ void	check_command(t_mini *mini)
 int	main(void)
 {
 	t_mini	mini;
-	set_values(&mini);
 	while (1)
 	{
 		mini.input = readline("minishell: ");

@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:12:00 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/06/13 14:21:32 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/06/14 13:21:08 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,39 @@ static int	check_unclosed_quotes(char *input)
 	return (0);
 }
 
+static int	check_missmatched_quotes(char *input)
+{
+	char quote_type;
+	int i;
+	bool quotes;
+
+	i = 0;
+	while (input[i] && !is_onstr(QUOTES, input[i]))
+		i++;
+	if (!input[i])
+		return (0);
+	quote_type = input[i];
+	quotes = true;
+	i++;
+	while (input[i])
+	{
+		if (is_onstr(QUOTES, input[i]) && quotes)
+		{
+			if (quote_type != input[i])
+				return (1);
+			quotes = !quotes;
+			quote_type = 0;
+		}
+		else if (is_onstr(QUOTES, input[i]) && !quotes)
+		{
+			quotes = !quotes;
+			quote_type = input[i];
+		}
+		i++;
+	}
+	return (0);
+}
+
 bool input_check(char *input)
 {
     bool    valid;
@@ -42,9 +75,14 @@ bool input_check(char *input)
     valid = true;
     if (check_unclosed_quotes(input))
     {
-        write(1, UNCLOSED_QUOTES, 28);
+        write(1, UNCLOSED_QUOTES, ft_strlen(UNCLOSED_QUOTES));
         valid = false;
     }
+	else if (check_missmatched_quotes(input))
+	{
+		write(1, MISSMATCHED_QUOTES, ft_strlen(MISSMATCHED_QUOTES));
+		valid = false;
+	}
     if (!valid)
         free(input);
     return (valid);

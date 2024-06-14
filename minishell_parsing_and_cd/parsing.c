@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:19:48 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/06/13 14:13:32 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/06/14 13:24:14 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,19 @@ int	get_nbr_statements(char *input, int i)
 			i++;
 		else if (is_onstr(QUOTES, input[i]))
 			quotes = !quotes;
-		if (input[i] != ' ' && !is_onstr(OPERATORS, input[i]) && !quotes)
+		if (input[i] != ' ' && !is_onstr(OPERATORS, input[i]))
 		{
 			count++;
-			while (input[i + 1] && !is_onstr(OPERATORS, input[i]) && !is_spaces(input[i]))
+			while (input[i + 1] && !is_onstr(OPERATORS, input[i]))
+			{
+				if (is_spaces(input[i]) && !quotes)
+					break ;
 				i++;
+			}
 		}
 		i++;
 	}
+//	printf("%i\n", count);
 	return (count);
 }
 
@@ -53,7 +58,9 @@ int	get_token_len(char *input)
 {
 	int	i;
 	int size;
+	bool quotes;
 
+	quotes = false;
 	i = 0;
 	size = 0;
 	if (is_onstr(OPERATORS, input[i]))
@@ -64,8 +71,12 @@ int	get_token_len(char *input)
 	}
 	while (is_spaces(input[i]))
 		i++;
-	while (input[i] && !is_spaces(input[i]))
+	while (input[i])
 	{
+		if (input[i] == '\'' || input[i] == '\"')
+			quotes = !quotes;
+		if (is_spaces(input[i]) && !quotes)
+			break ;
 		if (is_onstr(OPERATORS, input[i]))
 			return (size);
 		size++;
@@ -74,16 +85,13 @@ int	get_token_len(char *input)
 	return (size);
 }
 //		printf("%c %i\n", input[i], size);
-char **parsing_input(char *input)
+char **parsing_input(char *input, int i, int j, int k)
 {
 	char	**parsed;
-	int		i;
-	int		j;
-	int		k;
 	int		length;
+	bool quotes;
 	
-	i = 0;
-	j = 0;
+	quotes = false;
 	parsed = malloc(sizeof(char *) * (get_nbr_statements(input, 0) + 1));
 	if (!parsed)
 	{
@@ -110,7 +118,9 @@ char **parsing_input(char *input)
 		}
 		while (input[i] && k < length)
 		{
-			if (is_spaces(input[i]))
+			if (input[i] == '\'' || input[i] == '\"')
+				quotes = !quotes;
+			if (is_spaces(input[i]) && !quotes)
 				i++;
 			else
 			{
@@ -122,9 +132,6 @@ char **parsing_input(char *input)
 		parsed[j][k] = '\0';
 		j++;
 	}
-	//printf("%s\n", parsed[0]);
-	// printf("%s\n", parsed[1]);
-	// printf("%s\n", parsed[2]);
 	parsed[j] = NULL;
 	return (parsed);
 }
@@ -135,7 +142,7 @@ t_statement *parsing(char *input, int i, int j)
 	t_statement	*temp;
 	t_statement	*head;
 
-	parsed = parsing_input(input);
+	parsed = parsing_input(input, 0, 0, 0);
 	if (!parsed)
 		return (NULL);
 	free(input);
