@@ -31,7 +31,6 @@ things to know:
 -operator signs will not get listed in argv (they get skipped and instead
 the operator value is set)
 
-
 -currently working on checking the input for invalid stuff (such as single quotation marks because the parser 
 cannot and is not supposed to handle that)
 
@@ -43,3 +42,11 @@ if you type cd Directory (without the /), then it gets itself the path youre cur
 Directory. Then it heads there (worked when i tried it).
 if you type cd /whatever_path, then it just gets you there. pwd works somewhat but i havent changed it to work with
 redirection and such, since redirections etc arent really implemented yet. (it works to test cd but thats it.)
+
+NEW STUFF: (01.06.24)
+
+-inplemented rm -f for fun and cuz its practical
+-fixed some parsing errors (you can now have as many redirections as you want)
+
+working on: getting redirections correct if its multiple after another (e.g "echo hello > out > out_1",
+in example the "hello" would land in the last file listed in the command)

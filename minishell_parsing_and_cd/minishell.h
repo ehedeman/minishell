@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/06/14 13:52:26 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/01 15:48:28 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 #define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token '"
 #define FAILED_MALLOC "minishell: failed to allocate needed memory.\n"
 #define FAILED_PATH "minishell: failed to find path.\n"
+#define FAILED_FORK "minishell: system error regarding forks\n"
+#define FAILED_EXECVE "minishell: system error regarding execve\n"
 
 typedef enum e_operator {
 	NONE = 0,
@@ -41,12 +43,15 @@ typedef enum e_operator {
 	RDR_INPUT = 3,
 	RDR_INPUT_UNTIL = 4,
 	PIPE = 5,
+	SKIP = 6,
 }			t_operator;
 
 typedef enum e_errors {
 	MALLOC_ERR = 0,
 	SYNTAX_ERR = 2,
 	PATH_ERR = 3,
+	FORK_ERR = 4,
+	EXECVE_ERR = 5,
 }			t_errors;
 
 
@@ -78,9 +83,7 @@ int	ft_pwd(int fd);
 void	ft_exit(t_mini *mini);
 void	free_com_tab(t_mini *mini);
 bool input_check(char *input);
-int	set_fd(char *filename, int red_type);
 int	main_error(int errnum);
-int	is_path(char *path);
 
 int	check_redirect(t_statement *temp);
-
+void	ft_echo(t_statement *temp, int i);

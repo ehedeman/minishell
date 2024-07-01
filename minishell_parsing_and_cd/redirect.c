@@ -6,22 +6,15 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:24:36 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/06/14 13:52:03 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/01 13:06:38 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.c"
+#include "minishell.h"
 
 
 static int	is_path(char *path)
 {
-	int	i;
-	bool directory;
-	bool slash;
-
-	i = 0;
-	directory = false;
-	slash = false;
 	if (path[0] == '.' && path[1] == '/' && path[3])
 		return (1);
 	else if (!ft_strncmp("/home", path, 5))

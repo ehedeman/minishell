@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:19:48 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/06/14 13:24:14 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/01 15:13:59 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	get_nbr_statements(char *input, int i)
 		if (input[i] != ' ' && !is_onstr(OPERATORS, input[i]))
 		{
 			count++;
-			while (input[i + 1] && !is_onstr(OPERATORS, input[i]))
+			while (input[i + 1] && !is_onstr(OPERATORS, input[i + 1]))
 			{
 				if (is_spaces(input[i]) && !quotes)
 					break ;
@@ -50,7 +50,6 @@ int	get_nbr_statements(char *input, int i)
 		}
 		i++;
 	}
-//	printf("%i\n", count);
 	return (count);
 }
 
@@ -136,6 +135,18 @@ char **parsing_input(char *input, int i, int j, int k)
 	return (parsed);
 }
 
+void print_p(char **parsed, int j)
+{
+	int i = 0;
+	printf("j: %i\n", j);
+	while (parsed[i])
+	{
+		printf("print_p: %s\n", parsed[i]);
+		i++;
+	}
+	printf("\n");
+}
+
 t_statement *parsing(char *input, int i, int j)
 {
 	char	**parsed;
@@ -170,7 +181,8 @@ t_statement *parsing(char *input, int i, int j)
 		if (!parsed[i])
 			break ;
 		temp->operator = get_operator(parsed[i]);
-		temp->next = p_new_node(get_argc(&parsed[j]));
+		temp->next = p_new_node(get_argc(&parsed[i]));
+		temp->next->operator = SKIP;
 		if (!temp)
 		{
 			free(parsed);
