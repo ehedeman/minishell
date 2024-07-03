@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:15:46 by ehedeman          #+#    #+#             */
-/*   Updated: 2023/11/23 14:28:53 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/03 20:51:43 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ char	**ft_split(char const *s, char c)
 {
 	char	**a;
 	int		n;
-	int		i;
 
 	if (!s)
 		return (0);
@@ -91,7 +90,6 @@ char	**ft_split(char const *s, char c)
 		a[0] = NULL;
 		return (a);
 	}
-	i = 0;
 	n = countc((char *)s, c);
 	a = malloc(sizeof(char *) * (n + 1));
 	if (!a)
