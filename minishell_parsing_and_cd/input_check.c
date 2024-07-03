@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:12:00 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/03 14:35:45 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/03 21:00:41 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static int	check_unclosed_quotes(char *input)
 {
-	int	quotes_i;
+//	int	quotes_i;
 	int	i;
 	bool	quotes;
 
-	quotes_i = -1;
+//	quotes_i = -1;
 	i = 0;
 	quotes = false;
 	while (input[i])
@@ -26,7 +26,7 @@ static int	check_unclosed_quotes(char *input)
 		if (input[i] == '\'' || input[i] == '\"')
 		{
 			quotes = !quotes;
-			quotes_i = i;
+//			quotes_i = i;
 		}
 		i++;
 	}
