@@ -6,96 +6,64 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/01 15:50:56 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:21:09 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main_error(int errnum)
+//if theres multiple output redirections it creates all of the files, then
+//closes them if nessecary.
+//returns only the last fd.
+// (get_fd is for creating the right type of file if nessecary. else it just
+//  opens the right file)
+int	check_redirect_output(t_mini *mini)
 {
-	if (errnum == MALLOC_ERR)
-		write(2, FAILED_MALLOC, ft_strlen(FAILED_MALLOC));
-	if (errnum == SYNTAX_ERR)
-		write(2, UNEXPECTED_TOKEN, ft_strlen(UNEXPECTED_TOKEN));
-	if (errnum == PATH_ERR)
-		write(2, FAILED_PATH, ft_strlen(FAILED_PATH));
-	if (errnum == FORK_ERR)
-		write(2, FAILED_FORK, ft_strlen(FAILED_FORK));
-	if (errnum == EXECVE_ERR)
-		write(2, FAILED_EXECVE, ft_strlen(FAILED_EXECVE));
-	return (-1);
-}
+	int	fd;
 
-//to check the input/if everything was parsed correctly
-void	ft_print(t_mini *mini, t_statement *current)
-{
-	int i;
-	t_statement *temp;
-	int fd;
-	char	*nbr;
-
-	temp = mini->com_tab;
-	fd = check_redirect(current);
-	while (temp)
+	fd = 1;
+	while (1)
 	{
-		i = 0;
-		nbr = ft_itoa(temp->operator);
-		write(fd, nbr, ft_strlen(nbr));
-		write(fd, "\n", 1);
-		while (temp->argv[i])
+		if (mini->temp->operator == RDR_OUT_REPLACE ||
+			mini->temp->operator == RDR_OUT_APPEND)
 		{
-//			printf("%s\n", temp->argv[i]);
-			write(fd, temp->argv[i], ft_strlen(temp->argv[i]));
-			write(fd, "\n", 1);
-			// printf("%i\n", temp->operator);
-			// printf("%i\n", temp->argc);
-			i++;
+			fd = get_fd(mini->temp);
+			if (mini->temp->next->operator == RDR_OUT_REPLACE ||
+				mini->temp->next->operator == RDR_OUT_APPEND)
+				close(fd);
 		}
-		temp = temp->next;
-		free(nbr);
+		else if (mini->temp->operator > RDR_OUT_APPEND || mini->temp->operator == NONE)
+			break ;
+		if (!mini->temp->next)
+			break ;
+		mini->temp = mini->temp->next;
 	}
-}
-
-int	ft_rm(t_statement *temp)
-{
-	char *args[] = {"/bin/rm", temp->argv[1], temp->argv[2], NULL };
-	char *env[] = { NULL };
-	int status;
-
-	pid_t pid = fork();
-		
-	if (pid == -1)
-		return (main_error(FORK_ERR));
-	else if (pid == 0)
-	{
-		if (execve("/bin/rm", args, env) == -1)
-			return (main_error(EXECVE_ERR));
-	}
-	else
-		waitpid(pid, &status, 0);
-	return (0);
+	return (fd);
 }
 
 void	check_command(t_mini *mini)
 {
 	t_statement *temp;
+	int fd;
 	int	i;
 
-	temp = mini->com_tab;
+	mini->temp = mini->com_tab;
+	temp = mini->temp;
 	while (temp)
 	{
 		i = 0;
-		while (temp->argv[i])
+		fd = check_redirect_output(mini); //standart is 1, if its got redirection then its set new
+		while (i < temp->argc)
 		{
 			if (ft_strncmp(temp->argv[i], "cd", 2) == 0)
 			{
-				ft_cd(temp, i);
+				if (ft_cd(temp, i))
+					return ;
 				if (temp->argv[i + 1])
 					i++;
-			}
+			} //skips the path after use
 			else if (ft_strncmp(temp->argv[i], "pwd", 3) == 0)
-				ft_pwd(check_redirect(temp));
+				ft_pwd(fd);
 			else if (ft_strncmp(temp->argv[i], "exit", 5) == 0)
 				ft_exit(mini);
 			else if (ft_strncmp(temp->argv[i], "print", 5) == 0)
@@ -106,7 +74,7 @@ void	check_command(t_mini *mini)
 			}
 			else if (ft_strncmp(temp->argv[i], "echo", 4) == 0)
 			{
-				ft_echo(temp, i);
+				ft_echo(temp, fd, i);
 				break ;
 			}
 			else if (ft_strncmp(temp->argv[i], "rm", 2) == 0)
@@ -121,6 +89,9 @@ void	check_command(t_mini *mini)
 			}
 			i++;
 		}
+		temp = mini->temp;
+		if (fd != 1 && fd != 2)
+			close(fd);
 		temp = temp->next;
 	}
 }

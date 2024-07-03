@@ -6,7 +6,7 @@
 #    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/01 13:33:44 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/07/02 12:52:38 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRC = 	main.c			\
 		pwd.c			\
 		input_check.c	\
 		redirect.c		\
-		echo.c
+		echo.c			\
+		main_utils.c
 OBJS = $(SRC:.c=.o)
 OBJS_DIR = objs/
 OBJS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJS))

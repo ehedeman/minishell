@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:23:16 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/06/13 12:29:45 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/03 15:04:53 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,26 @@ static void	ft_cd_nothing(void)
 		printf("%s\n", strerror(errno));
 }
 
-void	ft_cd(t_statement *temp, int i)
+static int check_args_cd(t_statement *temp)
+{
+	if (temp->argc > 2)
+	{
+		write(2, "minishell: cd: too many arguments.\n", 35);
+		return (1);
+	}
+	return (0);
+}
+
+int	ft_cd(t_statement *temp, int i)
 {
 	char	*current_path;
 	char	*new_path;
 
+	if (check_args_cd(temp))
+		return (1);
 	current_path = malloc(PATH_MAX + 1);
 	if (!getcwd(current_path, PATH_MAX + 1))
-		return ;
+		return (1);
 	if (!temp->argv[i + 1])
 		ft_cd_nothing();
 	else
@@ -42,4 +54,5 @@ void	ft_cd(t_statement *temp, int i)
 				printf("%s\n", strerror(errno));
 	}
 	free(current_path);
+	return (0);
 }

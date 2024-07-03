@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:19:48 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/01 15:13:59 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/03 12:02:11 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ int	get_nbr_statements(char *input, int i)
 			count++;
 			while (input[i + 1] && !is_onstr(OPERATORS, input[i + 1]))
 			{
+				if (is_onstr(QUOTES, input[i]) && quotes)
+				{
+					quotes = !quotes;
+				}
 				if (is_spaces(input[i]) && !quotes)
 					break ;
 				i++;
@@ -83,7 +87,7 @@ int	get_token_len(char *input)
 	}
 	return (size);
 }
-//		printf("%c %i\n", input[i], size);
+
 char **parsing_input(char *input, int i, int j, int k)
 {
 	char	**parsed;
@@ -135,17 +139,18 @@ char **parsing_input(char *input, int i, int j, int k)
 	return (parsed);
 }
 
-void print_p(char **parsed, int j)
-{
-	int i = 0;
-	printf("j: %i\n", j);
-	while (parsed[i])
-	{
-		printf("print_p: %s\n", parsed[i]);
-		i++;
-	}
-	printf("\n");
-}
+// for debugging
+// void print_p(char **parsed, int j)
+// {
+// 	int i = 0;
+// 	printf("j: %i\n", j);
+// 	while (parsed[i])
+// 	{
+// 		printf("print_p: %s\n", parsed[i]);
+// 		i++;
+// 	}
+// 	printf("\n");
+// }
 
 t_statement *parsing(char *input, int i, int j)
 {

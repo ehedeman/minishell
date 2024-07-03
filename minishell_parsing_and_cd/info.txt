@@ -47,6 +47,15 @@ NEW STUFF: (01.06.24)
 
 -inplemented rm -f for fun and cuz its practical
 -fixed some parsing errors (you can now have as many redirections as you want)
+-added echo
 
 working on: getting redirections correct if its multiple after another (e.g "echo hello > out > out_1",
 in example the "hello" would land in the last file listed in the command)
+
+
+For parsing redirect: Operator is always for the next. if theres a redirect the thing on the right has
+to be the place its going to. therefor you can just say if your on argv[argc] and the operator is redirect
+then skip the next node and just create the file with the name of the file (if nessecary, otherwise just open,
+check if its got another redirect and if not write. otherwise close, open next etc.)
+
+->works now

@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/01 15:48:28 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:09:36 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@
 
 #define UNCLOSED_QUOTES "minishell: syntax error unclosed quotes.\n"
 #define MISSMATCHED_QUOTES "minishell: syntax error missmatched quotes.\n"
-#define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token '"
+#define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token '.\n"
+#define UNFINISHED_OUT_RED "minishell: syntax error near unexpected token >.\n"
 #define FAILED_MALLOC "minishell: failed to allocate needed memory.\n"
 #define FAILED_PATH "minishell: failed to find path.\n"
 #define FAILED_FORK "minishell: system error regarding forks\n"
@@ -69,21 +70,26 @@ typedef struct	s_mini
 	int 	operator;
 	char	*pwd_save;
 	t_statement	*com_tab;
+	t_statement *temp;
 }				t_mini;
 
 t_statement *parsing(char *input, int i, int j);
-int	is_onstr(const char *str, int c);
-int	get_argc(char **parsed);
-char *remove_quotes(char	*parsed);
+int			is_onstr(const char *str, int c);
+int			is_spaces(char c);
+int			get_argc(char **parsed);
+char 		*remove_quotes(char	*parsed);
 t_operator	get_operator(char *operator);
 t_statement	*p_new_node(int argc);
-int	parsing_error(int errnum);
-void	ft_cd(t_statement *temp, int i);
-int	ft_pwd(int fd);
-void	ft_exit(t_mini *mini);
-void	free_com_tab(t_mini *mini);
-bool input_check(char *input);
-int	main_error(int errnum);
+int			parsing_error(int errnum);
+int			ft_cd(t_statement *temp, int i);
+int			ft_pwd(int fd);
+void		ft_exit(t_mini *mini);
+void		free_com_tab(t_mini *mini);
+bool 		input_check(char *input);
 
-int	check_redirect(t_statement *temp);
-void	ft_echo(t_statement *temp, int i);
+int			get_fd(t_statement *temp);
+void		ft_echo(t_statement *temp, int fd, int i);
+
+void		ft_print(t_mini *mini, t_statement *current);
+int			main_error(int errnum);
+int			ft_rm(t_statement *temp);

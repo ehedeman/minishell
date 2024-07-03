@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 11:57:45 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/01 14:37:15 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/03 13:55:50 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ int	is_onstr(const char *str, int c)
 	int	i;
 	
 	if (!str)
-		return (0);
+		return (-1);
+	if (!c)
+		return (-1);
 	i = 0;
 	while (str[i])
 	{

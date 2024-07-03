@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:24:36 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/01 13:06:38 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/03 14:42:02 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	set_fd(char *filename, int red_type)
 	return (fd);
 }
 
-int	check_redirect(t_statement *temp)
+int	get_fd(t_statement *temp)
 {
 	char *temp_path;
 	int	need_free;
@@ -63,14 +63,14 @@ int	check_redirect(t_statement *temp)
 		else
 			temp_path = temp->next->argv[0];
 	}
-	if (temp->operator == NONE)
-		fd = 1;
 	if (temp->operator == RDR_OUT_REPLACE)
 		fd = set_fd(temp_path, 3);
-	if (temp->operator == RDR_OUT_APPEND)
+	else if (temp->operator == RDR_OUT_APPEND)
 		fd = set_fd(temp_path, 1);
-	if (temp->operator == RDR_INPUT)
+	else if (temp->operator == RDR_INPUT)
 		fd = set_fd(temp_path, 2);
+	else
+		fd = 1;
 	if (need_free)
 		free(temp_path);
 	return (fd);

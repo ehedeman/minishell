@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 12:18:17 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/06/14 13:53:37 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/03 15:13:16 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ int	ft_pwd(int fd)
 	write(fd, path, ft_strlen(path));
 	if (fd == 1 || fd == 2)
 		write (fd, "\n", 1);
-	if (fd != 1 && fd != 2)
-		close(fd);
 	free(path);
 	return (0);
 }

@@ -6,23 +6,30 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:28:15 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/01 13:42:13 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/03 15:00:48 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_echo(t_statement *temp, int i)
+void	ft_echo(t_statement *temp, int fd, int i)
 {
-	int	fd;
+	bool newline;
 
-	fd = check_redirect(temp);
+	newline = false;
 	i++;
+	if (!ft_strncmp(temp->argv[i], "-n", 2) && !temp->argv[i][2])
+	{
+		newline = true;
+		i++;
+	}
 	while (temp->argv[i])
 	{
 		write(fd, temp->argv[i], ft_strlen(temp->argv[i]));
-		write(fd, " ", 1);
+		if (i < temp->argc -1)
+			write(fd, " ", 1);
 		i++;
 	}
-	write(fd, "\n", 1);
+	if (!newline)
+		write(fd, "\n", 1);
 }
