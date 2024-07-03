@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 11:57:45 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/03 13:55:50 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/03 21:00:06 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	remove_quotes_size(char *parsed)
 {
 	int	i;
 	int	size;
-	char	quotes;
+	//char	quotes;
 
 	i = 0;
 	size = 0;
@@ -67,7 +67,7 @@ static int	remove_quotes_size(char *parsed)
 	{
 		while (parsed[i] && is_onstr(QUOTES, parsed[i]))
 		{
-			quotes = parsed[i];
+			//quotes = parsed[i];
 			i++;
 		}
 		while (parsed[i] && !is_onstr(QUOTES, parsed[i]))
@@ -77,7 +77,7 @@ static int	remove_quotes_size(char *parsed)
 		}
 		if (!parsed[i])
 			break ;
-		quotes = 0;
+		//quotes = 0;
 	}
 	return (size);
 }
