@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/05 13:03:12 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:23:32 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ typedef struct	s_mini
 	char	*input;
 	int 	operator;
 	char	*pwd_save;
-	t_statement	*com_tab;
-	t_statement *temp;
+	t_statement	*com_tab; //dont change (always the orignal)
+	t_statement *temp; //can be changed to whatever
 }				t_mini;
 
 t_statement *parsing(char *input, int i, int j);
