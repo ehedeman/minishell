@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:12:00 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/03 21:00:41 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/05 12:59:34 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,38 @@ static int	check_incomplete_out_red(char *input, int i)
 	}
 	return (0);
 }
+
+static int	check_incomplete_in_red(char *input, int i)
+{
+	int redirect;
+
+	redirect = 0;
+	while (input[i])
+	{
+		while (input[i] != '<' && input[i])
+			i++;
+		while (input[i] == '<' && input[i])
+		{
+			redirect++;
+			i++;
+			if (redirect > 2)
+				return (1);
+		}
+		while (is_spaces(input[i]) && input[i])
+			i++;
+		if (is_onstr(OPERATORS, input[i]) && redirect)
+			return (1);
+		else if (!input[i] && redirect)
+			return (1);
+		else if (!input[i])
+			break ;
+		else if (redirect && !is_onstr(OPERATORS, input[i]))
+			redirect = 0;
+		i++;
+	}
+	return (0);
+}
+
 		// if (!is_onstr(OPERATORS, input[i]) && redirect)
 		// redirect = 0;
 bool input_check(char *input)
@@ -118,6 +150,11 @@ bool input_check(char *input)
 	else if (check_incomplete_out_red(input, 0))
 	{
 		write(1, UNFINISHED_OUT_RED, ft_strlen(UNFINISHED_OUT_RED));
+		valid = false;
+	}
+	else if (check_incomplete_in_red(input, 0))
+	{
+		write(1, UNFINISHED_in_RED, ft_strlen(UNFINISHED_in_RED));
 		valid = false;
 	}
 	if (!valid)
