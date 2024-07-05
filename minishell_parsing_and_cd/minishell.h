@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/03 21:10:48 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:03:12 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@
 #define UNCLOSED_QUOTES "minishell: syntax error unclosed quotes.\n"
 #define MISSMATCHED_QUOTES "minishell: syntax error missmatched quotes.\n"
 #define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token '.\n"
-#define UNFINISHED_OUT_RED "minishell: syntax error near unexpected token >.\n"
+#define UNFINISHED_OUT_RED "minishell: syntax error near unexpected token '>'.\n"
+#define UNFINISHED_in_RED "minishell: syntax error near unexpected token '<'.\n"
 #define FAILED_MALLOC "minishell: failed to allocate needed memory.\n"
 #define FAILED_PATH "minishell: failed to find path.\n"
 #define FAILED_FORK "minishell: system error regarding forks\n"
@@ -94,3 +95,5 @@ void		ft_echo(t_statement *temp, int fd, int i);
 void		ft_print(t_mini *mini, t_statement *current);
 int			main_error(int errnum);
 int			ft_rm(t_statement *temp);
+
+int	exec_file(t_statement *temp);

@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/05 12:54:39 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:01:34 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ void	check_command(t_mini *mini)
 		fd = check_redirect_output(mini); //standart is 1, if its got redirection then its set new
 		while (i < temp->argc)
 		{
+			if (!ft_strncmp(temp->argv[i], "./", 2) || !ft_strncmp(temp->argv[i], "/", 1))
+			{
+				exec_file(temp);
+				break ;
+			}
 			if (ft_strncmp(temp->argv[i], "cd", 2) == 0)
 			{
 				if (ft_cd(temp, i))
