@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/05 13:01:34 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:15:39 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	check_redirect_output(t_mini *mini)
 	return (fd);
 }
 
-void	check_command(t_mini *mini)
+int	check_command(t_mini *mini)
 {
 	t_statement *temp;
 	int fd;
@@ -58,13 +58,14 @@ void	check_command(t_mini *mini)
 		{
 			if (!ft_strncmp(temp->argv[i], "./", 2) || !ft_strncmp(temp->argv[i], "/", 1))
 			{
-				exec_file(temp);
+				if (exec_file(temp) == -1)
+					return (-1);
 				break ;
 			}
 			if (ft_strncmp(temp->argv[i], "cd", 2) == 0)
 			{
 				if (ft_cd(temp, i))
-					return ;
+					return (0);
 				if (temp->argv[i + 1])
 					i++;
 			} //skips the path after use
@@ -76,7 +77,7 @@ void	check_command(t_mini *mini)
 			{
 				ft_print(mini, temp);
 				if (temp->operator == NONE)
-					return ;
+					return (0);
 			}
 			else if (ft_strncmp(temp->argv[i], "echo", 4) == 0)
 			{
@@ -86,12 +87,12 @@ void	check_command(t_mini *mini)
 			else if (ft_strncmp(temp->argv[i], "rm", 2) == 0)
 			{
 				ft_rm(temp);
-				return ;
+				return (0);
 			}
 			else if (temp->operator != SKIP)
 			{
 				write(1, "Command not found.\n", 19);
-				return ;
+				return (0);
 			}
 			i++;
 		}
@@ -100,6 +101,7 @@ void	check_command(t_mini *mini)
 			close(fd);
 		temp = temp->next;
 	}
+	return (0);
 }
 
 int	main(void)
@@ -122,7 +124,11 @@ int	main(void)
 				mini.com_tab = parsing(mini.input, 0 , 0);
 				if (!mini.com_tab)
 					return (0);
-				check_command(&mini);
+				if (check_command(&mini) == -1)
+				{
+					free_com_tab(&mini);
+					return (0);
+				}
 				if (mini.com_tab)
 					free_com_tab(&mini);
 			}
