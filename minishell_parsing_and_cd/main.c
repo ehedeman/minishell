@@ -17,6 +17,7 @@
 //returns only the last fd.
 // (get_fd is for creating the right type of file if nessecary. else it just
 //  opens the right file)
+//test github
 int	check_redirect_output(t_mini *mini)
 {
 	int	fd;
