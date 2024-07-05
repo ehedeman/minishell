@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/03 16:21:09 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/05 12:54:39 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ int	main(void)
 		mini.input = readline("minishell: ");
 		if (!mini.input)
 		{
-			write(2, "Error\n", 6);
-			return (0);
+			mini.com_tab = NULL;
+			ft_exit(&mini);
 		}
 		if (*mini.input)
 		{
