@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/05 13:23:32 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/06 18:11:51 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@
 #define UNCLOSED_QUOTES "minishell: syntax error unclosed quotes.\n"
 #define MISSMATCHED_QUOTES "minishell: syntax error missmatched quotes.\n"
 #define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token '.\n"
-#define UNFINISHED_OUT_RED "minishell: syntax error near unexpected token '>'.\n"
-#define UNFINISHED_in_RED "minishell: syntax error near unexpected token '<'.\n"
+#define UNFINISHED_OUT_RED "minishell: syntax error near unexpected token >.\n"
 #define FAILED_MALLOC "minishell: failed to allocate needed memory.\n"
 #define FAILED_PATH "minishell: failed to find path.\n"
 #define FAILED_FORK "minishell: system error regarding forks\n"
@@ -57,7 +56,6 @@ typedef enum e_errors {
 	EXECVE_ERR = 5,
 }			t_errors;
 
-
 typedef struct	s_statement
 {
 	int		argc;
@@ -66,13 +64,23 @@ typedef struct	s_statement
 	struct s_statement *next;
 }				t_statement;
 
+//linked list for env
+typedef struct s_env_list
+{
+	char				*name;
+	char				*value;
+	struct s_env_list	*next;
+}	t_env_list;
+
 typedef struct	s_mini
 {
 	char	*input;
 	int 	operator;
 	char	*pwd_save;
-	t_statement	*com_tab; //dont change (always the orignal)
-	t_statement *temp; //can be changed to whatever
+	t_statement	*com_tab;
+	t_statement *temp;
+	char		**envp_dup; //dup of envp from main
+	t_env_list	*env; //linked list of env var names and values
 }				t_mini;
 
 t_statement *parsing(char *input, int i, int j);
@@ -96,4 +104,15 @@ void		ft_print(t_mini *mini, t_statement *current);
 int			main_error(int errnum);
 int			ft_rm(t_statement *temp);
 
+
 int	exec_file(t_statement *temp);
+
+//env functions
+void	ft_copy_env2lst(t_mini *mini, char **envp);
+
+//env list functions
+void	ft_env_lst_addback(t_env_list **lst, t_env_list *new);
+t_env_list *ft_env_lst_new(char *key, char *value);
+
+//print env
+int	ft_print_env_lst(t_env_list *env);
