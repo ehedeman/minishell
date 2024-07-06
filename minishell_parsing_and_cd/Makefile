@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
+#    By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/05 13:03:35 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/07/06 16:55:25 by smatschu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRC = 	main.c			\
 		redirect.c		\
 		echo.c			\
 		main_utils.c	\
-		execute_file.c
+		execute_file.c	\
+		env.c
 OBJS = $(SRC:.c=.o)
 OBJS_DIR = objs/
 OBJS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJS))
