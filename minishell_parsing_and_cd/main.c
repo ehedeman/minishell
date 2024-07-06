@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/05 13:15:39 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/06 18:08:56 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	check_command(t_mini *mini)
 				ft_echo(temp, fd, i);
 				break ;
 			}
+			else if (ft_strncmp(temp->argv[i], "env", 3) == 0 && !temp->argv[i + 1])
+				return (ft_print_env_lst(mini->env));
 			else if (ft_strncmp(temp->argv[i], "rm", 2) == 0)
 			{
 				ft_rm(temp);
@@ -104,13 +106,17 @@ int	check_command(t_mini *mini)
 	return (0);
 }
 
-int	main(void)
+int main (int argc, char **argv, char **envp)
 {
 	t_mini	mini;
-
+	(void)argv;
+	(void)argc;
+	
 	while (1)
 	{
 		mini.input = readline("minishell: ");
+
+		ft_copy_env2lst(&mini, envp);
 		if (!mini.input)
 		{
 			mini.com_tab = NULL;
