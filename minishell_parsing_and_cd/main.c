@@ -6,12 +6,13 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/08 11:04:04 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/08 12:11:18 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int g_exec_file;
 //if theres multiple output redirections it creates all of the files, then
 //closes them if nessecary.
 //returns only the last fd.
@@ -93,7 +94,8 @@ int	check_command(t_mini *mini)
 			}
 			else if (temp->operator != SKIP)
 			{
-				write(1, "Command not found.\n", 19);
+				if (exec_command(temp) == -1)
+					return (-1);
 				return (0);
 			}
 			i++;
@@ -108,10 +110,12 @@ int	check_command(t_mini *mini)
 
 void	handler(int sig)
 {
-	if (sig == SIGINT)
+	if (sig == SIGINT && !g_exec_file)
 		printf("\nminishell: ");
-}
-
+	else if (sig == SIGINT && g_exec_file) //had issues with closing endless programs (usually you use ctrl c)
+		printf("\n");					   //without else if the programm displays "minishell: " twice in that case
+}										   //used global var to tell the program "hey theres smth else beign closed with ctrl c right now"
+										   //so theres no need to display the new prompt cuz minishell does that anyways
 int main (int argc, char **argv, char **envp)
 {
 	t_mini	mini;
@@ -120,8 +124,9 @@ int main (int argc, char **argv, char **envp)
 	
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
-	mini.input = NULL;
 	mini.com_tab = NULL;
+	mini.input = NULL;
+	g_exec_file = 0;
 	while (1)
 	{
 		mini.input = readline("minishell: ");
@@ -153,8 +158,7 @@ int main (int argc, char **argv, char **envp)
 					free_com_tab(&mini);
 			}
 		}
-		if (mini.env)
-			free_env(mini.env);
+		free_env(mini.env);
 	}
 	return (0);
 }

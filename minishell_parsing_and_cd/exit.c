@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:12:06 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/08 11:03:46 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/08 11:32:59 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	ft_exit(t_mini *mini)
 {
 	free_com_tab(mini);
 	free_env(mini->env);
+	rl_clear_history();
 	printf("Bye then :)\n");
 	exit(0);
 }

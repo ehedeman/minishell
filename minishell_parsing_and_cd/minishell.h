@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/08 09:53:36 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/08 12:10:38 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 #define FAILED_PATH "minishell: failed to find path.\n"
 #define FAILED_FORK "minishell: system error regarding forks\n"
 #define FAILED_EXECVE "minishell: system error regarding execve\n"
+
+extern int g_exec_file;
 
 typedef enum e_operator {
 	NONE = 0,
@@ -107,6 +109,7 @@ int			ft_rm(t_statement *temp);
 
 
 int	exec_file(t_statement *temp);
+int	exec_command(t_statement *temp);
 
 //env functions
 void	ft_copy_env2lst(t_mini *mini, char **envp);
