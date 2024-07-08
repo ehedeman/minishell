@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:46:10 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/06 18:41:33 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/08 09:56:28 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ t_env_list *ft_env_lst_new(char *key, char *value)
 	node->name = ft_strdup(key);
 	node->value = ft_strdup(value);
 	node->next = NULL;
+	free(key);
+	free(value);
 	return (node);
 }
 

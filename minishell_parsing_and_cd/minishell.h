@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/06 18:11:51 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/08 09:53:36 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 #define MISSMATCHED_QUOTES "minishell: syntax error missmatched quotes.\n"
 #define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token '.\n"
 #define UNFINISHED_OUT_RED "minishell: syntax error near unexpected token >.\n"
+#define UNFINISHED_IN_RED "minishell: syntax error near unexpected token '<'.\n"
 #define FAILED_MALLOC "minishell: failed to allocate needed memory.\n"
 #define FAILED_PATH "minishell: failed to find path.\n"
 #define FAILED_FORK "minishell: system error regarding forks\n"
@@ -116,3 +117,5 @@ t_env_list *ft_env_lst_new(char *key, char *value);
 
 //print env
 int	ft_print_env_lst(t_env_list *env);
+
+void	free_env(t_env_list *env);

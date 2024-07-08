@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:12:06 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/06/12 16:43:45 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/08 09:55:20 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,27 @@ void	free_com_tab(t_mini *mini)
 	}
 }
 
+void	free_env(t_env_list *env)
+{
+	t_env_list	*temp;
+	int			i;
+
+	i = 0;
+	temp = env;
+	while (temp->next)
+	{
+		if (temp->name)
+			free(temp->name);
+		if (temp->value)
+			free(temp->value);
+		temp = temp->next;
+	}
+}
+
 void	ft_exit(t_mini *mini)
 {
 	free_com_tab(mini);
+	free_env(mini->env);
 	printf("Bye then :)\n");
 	exit(0);
 }

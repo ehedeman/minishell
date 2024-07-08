@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:12:00 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/05 12:59:34 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/08 09:42:25 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ bool input_check(char *input)
 	}
 	else if (check_incomplete_in_red(input, 0))
 	{
-		write(1, UNFINISHED_in_RED, ft_strlen(UNFINISHED_in_RED));
+		write(1, UNFINISHED_IN_RED, ft_strlen(UNFINISHED_IN_RED));
 		valid = false;
 	}
 	if (!valid)

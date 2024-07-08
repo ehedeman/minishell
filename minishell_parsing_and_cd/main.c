@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/06 18:08:56 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/08 09:54:39 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_sig;
 
 //if theres multiple output redirections it creates all of the files, then
 //closes them if nessecary.
@@ -106,12 +108,20 @@ int	check_command(t_mini *mini)
 	return (0);
 }
 
+void	handler(int sig)
+{
+	g_sig = sig;
+}
+
 int main (int argc, char **argv, char **envp)
 {
 	t_mini	mini;
 	(void)argv;
 	(void)argc;
 	
+	g_sig = -1;
+	signal(SIGINT, handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		mini.input = readline("minishell: ");
@@ -121,6 +131,13 @@ int main (int argc, char **argv, char **envp)
 		{
 			mini.com_tab = NULL;
 			ft_exit(&mini);
+		}
+		if (g_sig != -1)
+		{
+			if (mini.input)
+				free(mini.input);
+			g_sig = -1;
+			continue ;
 		}
 		if (*mini.input)
 		{
@@ -133,12 +150,16 @@ int main (int argc, char **argv, char **envp)
 				if (check_command(&mini) == -1)
 				{
 					free_com_tab(&mini);
+					free_env(mini.env);
 					return (0);
 				}
 				if (mini.com_tab)
 					free_com_tab(&mini);
+				if (mini.env)
+					free_env(mini.env);
 			}
 		}
+		g_sig = -1;
 	}
 	return (0);
 }
