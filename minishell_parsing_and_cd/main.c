@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/08 09:54:39 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/08 10:09:25 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,6 @@ int main (int argc, char **argv, char **envp)
 	while (1)
 	{
 		mini.input = readline("minishell: ");
-
-		ft_copy_env2lst(&mini, envp);
 		if (!mini.input)
 		{
 			mini.com_tab = NULL;
@@ -139,6 +137,7 @@ int main (int argc, char **argv, char **envp)
 			g_sig = -1;
 			continue ;
 		}
+		ft_copy_env2lst(&mini, envp);
 		if (*mini.input)
 		{
 			if (input_check(mini.input))
@@ -146,7 +145,10 @@ int main (int argc, char **argv, char **envp)
 				add_history(mini.input);
 				mini.com_tab = parsing(mini.input, 0 , 0);
 				if (!mini.com_tab)
+				{
+					free_env(mini.env);
 					return (0);
+				}
 				if (check_command(&mini) == -1)
 				{
 					free_com_tab(&mini);
@@ -159,7 +161,6 @@ int main (int argc, char **argv, char **envp)
 					free_env(mini.env);
 			}
 		}
-		g_sig = -1;
 	}
 	return (0);
 }
