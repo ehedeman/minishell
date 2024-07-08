@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/08 12:10:38 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/08 14:58:41 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct	s_mini
 	t_statement *temp;
 	char		**envp_dup; //dup of envp from main
 	t_env_list	*env; //linked list of env var names and values
-}				t_mini;
+}				t_mini;  //maybe i'll find a better way for now thats the way
 
 t_statement *parsing(char *input, int i, int j);
 int			is_onstr(const char *str, int c);
@@ -105,8 +105,8 @@ void		ft_echo(t_statement *temp, int fd, int i);
 
 void		ft_print(t_mini *mini, t_statement *current);
 int			main_error(int errnum);
-int			ft_rm(t_statement *temp);
 
+int	redirect_input(t_statement *temp);
 
 int	exec_file(t_statement *temp);
 int	exec_command(t_statement *temp);

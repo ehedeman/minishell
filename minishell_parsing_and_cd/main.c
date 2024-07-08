@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/08 12:11:18 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/08 14:57:33 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int g_exec_file;
 // (get_fd is for creating the right type of file if nessecary. else it just
 //  opens the right file)
 //test github
-int	check_redirect_output(t_mini *mini)
+int	check_redirect(t_mini *mini)
 {
 	int	fd;
 
@@ -33,8 +33,20 @@ int	check_redirect_output(t_mini *mini)
 			if (mini->temp->next->operator == RDR_OUT_REPLACE ||
 				mini->temp->next->operator == RDR_OUT_APPEND)
 				close(fd);
+			else
+				return (fd);
 		}
-		else if (mini->temp->operator > RDR_OUT_APPEND || mini->temp->operator == NONE)
+		else if (mini->temp->operator == RDR_INPUT ||
+			mini->temp->operator == RDR_INPUT_UNTIL)
+		{
+			if (mini->temp->next->operator != RDR_INPUT_UNTIL &&
+				mini->temp->next->operator != RDR_INPUT)
+			{
+				redirect_input(mini->temp);
+				return (1);
+			}
+		}
+		else if (mini->temp->operator == PIPE || mini->temp->operator == NONE)
 			break ;
 		if (!mini->temp->next)
 			break ;
@@ -54,8 +66,8 @@ int	check_command(t_mini *mini)
 	while (temp)
 	{
 		i = 0;
-		fd = check_redirect_output(mini); //standart is 1, if its got redirection then its set new
-		while (i < temp->argc)
+		fd = check_redirect(mini); //standart is 1, if its got redirection then its set new
+		while (i < temp->argc && *temp->argv)
 		{
 			if (!ft_strncmp(temp->argv[i], "./", 2) || !ft_strncmp(temp->argv[i], "/", 1))
 			{
@@ -87,11 +99,6 @@ int	check_command(t_mini *mini)
 			}
 			else if (ft_strncmp(temp->argv[i], "env", 3) == 0 && !temp->argv[i + 1])
 				return (ft_print_env_lst(mini->env));
-			else if (ft_strncmp(temp->argv[i], "rm", 2) == 0)
-			{
-				ft_rm(temp);
-				return (0);
-			}
 			else if (temp->operator != SKIP)
 			{
 				if (exec_command(temp) == -1)

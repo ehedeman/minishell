@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+         #
+#    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/06 16:55:25 by smatschu         ###   ########.fr        #
+#    Updated: 2024/07/08 12:23:21 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRC = 	main.c			\
 		exit.c			\
 		pwd.c			\
 		input_check.c	\
-		redirect.c		\
+		redirect_out.c	\
+		redirect_in.c	\
 		echo.c			\
 		main_utils.c	\
 		execute_file.c	\

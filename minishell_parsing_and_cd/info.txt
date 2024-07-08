@@ -45,6 +45,8 @@ redirection and such, since redirections etc arent really implemented yet. (it w
 
 NEW STUFF: (01.06.24)
 
+END
+
 -inplemented rm -f for fun and cuz its practical
 -fixed some parsing errors (you can now have as many redirections as you want)
 -added echo

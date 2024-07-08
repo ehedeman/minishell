@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 12:52:43 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/03 14:26:13 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/08 13:50:33 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 int	main_error(int errnum)
 {
+	if (errnum < 0)
+	{
+		write(2, strerror(errno), ft_strlen(strerror(errno)));
+		write(1, "\n", 1);
+	}
 	if (errnum == MALLOC_ERR)
 		write(2, FAILED_MALLOC, ft_strlen(FAILED_MALLOC));
 	if (errnum == SYNTAX_ERR)
@@ -25,26 +30,6 @@ int	main_error(int errnum)
 	if (errnum == EXECVE_ERR)
 		write(2, FAILED_EXECVE, ft_strlen(FAILED_EXECVE));
 	return (-1);
-}
-
-int	ft_rm(t_statement *temp)
-{
-	char *args[] = {"/bin/rm", temp->argv[1], temp->argv[2], NULL };
-	char *env[] = { NULL };
-	int status;
-
-	pid_t pid = fork();
-		
-	if (pid == -1)
-		return (main_error(FORK_ERR));
-	else if (pid == 0)
-	{
-		if (execve("/bin/rm", args, env) == -1)
-			return (main_error(EXECVE_ERR));
-	}
-	else
-		waitpid(pid, &status, 0);
-	return (0);
 }
 
 //to check the input/if everything was parsed correctly
