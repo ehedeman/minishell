@@ -6,13 +6,11 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/08 10:09:25 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/08 11:04:04 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_sig;
 
 //if theres multiple output redirections it creates all of the files, then
 //closes them if nessecary.
@@ -110,7 +108,8 @@ int	check_command(t_mini *mini)
 
 void	handler(int sig)
 {
-	g_sig = sig;
+	if (sig == SIGINT)
+		printf("\nminishell: ");
 }
 
 int main (int argc, char **argv, char **envp)
@@ -119,23 +118,18 @@ int main (int argc, char **argv, char **envp)
 	(void)argv;
 	(void)argc;
 	
-	g_sig = -1;
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
+	mini.input = NULL;
+	mini.com_tab = NULL;
 	while (1)
 	{
 		mini.input = readline("minishell: ");
 		if (!mini.input)
 		{
 			mini.com_tab = NULL;
+			mini.env = NULL;
 			ft_exit(&mini);
-		}
-		if (g_sig != -1)
-		{
-			if (mini.input)
-				free(mini.input);
-			g_sig = -1;
-			continue ;
 		}
 		ft_copy_env2lst(&mini, envp);
 		if (*mini.input)
@@ -157,10 +151,10 @@ int main (int argc, char **argv, char **envp)
 				}
 				if (mini.com_tab)
 					free_com_tab(&mini);
-				if (mini.env)
-					free_env(mini.env);
 			}
 		}
+		if (mini.env)
+			free_env(mini.env);
 	}
 	return (0);
 }
