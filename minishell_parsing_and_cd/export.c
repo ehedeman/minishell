@@ -62,6 +62,7 @@ int	ft_env_list_comp(t_env_list *env, char **val)
 		return (ft_env_list_comp(temp->next, val));
 }
 
+
 int	ft_export_add(t_mini *mini, t_env_list *temp, t_env_list *new, int i)
 {
 	char	**val;
@@ -109,36 +110,30 @@ int	ft_export(t_mini *mini)
 	i = 0;
 	new = NULL;
 	temp = mini->env; // Use the address of the list head
-	// if (!mini->com_tab->argv[1])
-	// {
-	// 	while (temp)
-	// 	{
-	// 		if(temp->name[0] != '_')
-	// 		{	
-	// 			if(temp->value == NULL)
-	// 				ft_printf("declare -x %s\n", temp->name);
-	// 			else if(temp->value != NULL)
-	// 				ft_printf("declare -x %s=\"%s\"\n", temp->name, temp->value);
-	// 		}
-	// 	 	temp = temp->next;
-	// 	}
-	// }
-	//TESTING
-	 if (!mini->com_tab->argv[1]) {
-        save_sorted_env(mini);
-        // Print the sorted environment variables
-        i = 0;
-        while (mini->envp_dup[i]) {
-            printf("%s\n", mini->envp_dup[i]);
-            i++;
-        }
+	if (!mini->com_tab->argv[1])
+	{
+		while (temp)
+		{
+			if(temp->name[0] != '_')
+			{
+				if(ft_strncmp(temp->value, "", 1) == 0) // If value is not "
+					ft_printf("declare -x %s\n", temp->name);
+				else
+					ft_printf("declare -x %s=\"%s\"\n", temp->name, temp->value);
+					
+			}
+			temp = temp->next;
+		}
+	}
 	else
 	{
-		while (mini->com_tab->argv[++i] != NULL)
+		i = 1;
+		while (mini->com_tab->argv[i] != NULL)
 		{
 			printf("mini->com_tab->argv[%d]: %s\n", i, mini->com_tab->argv[i]);
 			if(ft_export_add(mini, temp, new, i) == 1)
 				return (1);
+			i++;
 		}
 		// printf("\n\nLIST AFTER EXPORT @ft_export\n");
 		// ft_print_env_lst(mini->env);
