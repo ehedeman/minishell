@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:12:00 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/05 12:59:34 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/08 11:20:00 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,6 @@ static int	check_incomplete_in_red(char *input, int i)
 	return (0);
 }
 
-		// if (!is_onstr(OPERATORS, input[i]) && redirect)
-		// redirect = 0;
 bool input_check(char *input)
 {
 	bool    valid;
@@ -154,7 +152,7 @@ bool input_check(char *input)
 	}
 	else if (check_incomplete_in_red(input, 0))
 	{
-		write(1, UNFINISHED_in_RED, ft_strlen(UNFINISHED_in_RED));
+		write(1, UNFINISHED_IN_RED, ft_strlen(UNFINISHED_IN_RED));
 		valid = false;
 	}
 	if (!valid)

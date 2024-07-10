@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:46:10 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/08 22:30:37 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/10 10:27:32 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ t_env_list *ft_env_lst_new(char *key, char *value)
 	node->name = ft_strdup(key);
 	node->value = ft_strdup(value);
 	node->next = NULL;
+	free(key);
+	free(value);
 	return (node);
 }
 

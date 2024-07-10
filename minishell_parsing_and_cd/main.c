@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/10 09:54:08 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/10 10:32:01 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int g_exec_file;
 // (get_fd is for creating the right type of file if nessecary. else it just
 //  opens the right file)
 //test github
-int	check_redirect_output(t_mini *mini)
+int	check_redirect(t_mini *mini)
 {
 	int	fd;
 
@@ -33,8 +33,20 @@ int	check_redirect_output(t_mini *mini)
 			if (mini->temp->next->operator == RDR_OUT_REPLACE ||
 				mini->temp->next->operator == RDR_OUT_APPEND)
 				close(fd);
+			else
+				return (fd);
 		}
-		else if (mini->temp->operator > RDR_OUT_APPEND || mini->temp->operator == NONE)
+		else if (mini->temp->operator == RDR_INPUT ||
+			mini->temp->operator == RDR_INPUT_UNTIL)
+		{
+			if (mini->temp->next->operator != RDR_INPUT_UNTIL &&
+				mini->temp->next->operator != RDR_INPUT)
+			{
+				redirect_input(mini->temp);
+				return (1);
+			}
+		}
+		else if (mini->temp->operator == PIPE || mini->temp->operator == NONE)
 			break ;
 		if (!mini->temp->next)
 			break ;
@@ -55,8 +67,8 @@ int	check_command(t_mini *mini)
 	while (temp)
 	{
 		i = 0;
-		fd = check_redirect_output(mini); //standart is 1, if its got redirection then its set new
-		while (i < temp->argc)
+		fd = check_redirect(mini); //standart is 1, if its got redirection then its set new
+		while (i < temp->argc && *temp->argv)
 		{
 			if (!ft_strncmp(temp->argv[i], "./", 2) || !ft_strncmp(temp->argv[i], "/", 1))
 			{
@@ -106,6 +118,12 @@ int	check_command(t_mini *mini)
 			// 	write(1, "Command not found.\n", 19);
 			// 	return (0);
 			// }
+			else if (temp->operator != SKIP)
+			{
+				if (exec_command(temp) == -1)
+					return (-1);
+				return (0);
+			}
 			i++;
 		}
 		temp = mini->temp;
@@ -139,15 +157,19 @@ int main (int argc, char **argv, char **envp)
 	mini.input = NULL;
 	g_exec_file = 0;
 	ft_copy_env2lst(&mini, envp); //took out of the while(1) so it doesnt reset at every readline
+	
 	while (1)
 	{
 		mini.input = readline("minishell: ");
 
+		ft_copy_env2lst(&mini, envp);
 		if (!mini.input)
 		{
 			mini.com_tab = NULL;
+			mini.env = NULL;
 			ft_exit(&mini);
 		}
+		ft_copy_env2lst(&mini, envp);
 		if (*mini.input)
 		{
 			if (input_check(mini.input))

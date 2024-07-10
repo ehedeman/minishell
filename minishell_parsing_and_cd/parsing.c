@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:19:48 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/03 12:02:11 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/08 13:34:34 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,8 @@ t_statement *parsing(char *input, int i, int j)
 			break ;
 		temp->operator = get_operator(parsed[i]);
 		temp->next = p_new_node(get_argc(&parsed[i]));
-		temp->next->operator = SKIP;
+		// if (temp->operator <5 && temp->operator > 0) //i'll have to see if i still need this later
+		// 	temp->next->operator = SKIP;	//focus on input redirect that's why
 		if (!temp)
 		{
 			free(parsed);

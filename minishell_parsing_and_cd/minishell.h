@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/10 10:02:36 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/10 10:16:16 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,13 @@
 #define MISSMATCHED_QUOTES "minishell: syntax error missmatched quotes.\n"
 #define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token '.\n"
 #define UNFINISHED_OUT_RED "minishell: syntax error near unexpected token >.\n"
+#define UNFINISHED_IN_RED "minishell: syntax error near unexpected token '<'.\n"
 #define FAILED_MALLOC "minishell: failed to allocate needed memory.\n"
 #define FAILED_PATH "minishell: failed to find path.\n"
 #define FAILED_FORK "minishell: system error regarding forks\n"
 #define FAILED_EXECVE "minishell: system error regarding execve\n"
+
+extern int g_exec_file;
 
 typedef enum e_operator {
 	NONE = 0,
@@ -82,7 +85,7 @@ typedef struct	s_mini
 	t_statement *temp;
 	//char		**envp_dup; //will use linked list, can do as array if necessary later
 	t_env_list	*env; //linked list of env var names and values
-}				t_mini;
+}				t_mini;  //maybe i'll find a better way for now thats the way
 
 t_statement *parsing(char *input, int i, int j);
 int			is_onstr(const char *str, int c);
@@ -103,8 +106,8 @@ void		ft_echo(t_statement *temp, int fd, int i);
 
 void		ft_print(t_mini *mini, t_statement *current);
 int			main_error(int errnum);
-int			ft_rm(t_statement *temp);
 
+int	redirect_input(t_statement *temp);
 int	redirect_input(t_statement *temp);
 
 int	exec_file(t_statement *temp);

@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:12:06 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/10 10:08:42 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/10 10:33:04 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,23 @@ void	free_com_tab(t_mini *mini)
 		free(temp->argv);
 		free(temp);
 		temp = next;
+	}
+}
+
+void	free_env(t_env_list *env)
+{
+	t_env_list	*temp;
+
+	temp = env;
+	while (temp)
+	{
+		if (temp->name)
+			free(temp->name);
+		if (temp->value)
+			free(temp->value);
+		temp = temp->next;
+		free(env);
+		env = temp;
 	}
 }
 
