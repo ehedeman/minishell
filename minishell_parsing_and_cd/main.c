@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/10 11:50:45 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:26:03 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int g_exec_file;
 //returns only the last fd.
 // (get_fd is for creating the right type of file if nessecary. else it just
 //  opens the right file)
-//test github
 int	check_redirect(t_mini *mini)
 {
 	int	fd;
@@ -106,6 +105,15 @@ int	check_command(t_mini *mini)
 				ft_export(mini);
 				// printf("LIST AFTER EXPORT:\n");
 				// ft_print_env_lst(mini->env);
+				return (0);
+			}
+			else if (ft_strncmp(temp->argv[i], "unset", 5) == 0)
+			{
+				while (temp->argv[i])
+				{
+					ft_unset(mini->env, temp->argv[i]);
+					i++;
+				}
 				return (0);
 			}
 			else if (temp->operator != SKIP)
