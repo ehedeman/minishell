@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/06 18:11:51 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/10 10:02:36 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct	s_statement
 //linked list for env
 typedef struct s_env_list
 {
+	int					index; //export prints in alpha order, we should sort it somehow, maybe with index?
 	char				*name;
 	char				*value;
 	struct s_env_list	*next;
@@ -79,7 +80,7 @@ typedef struct	s_mini
 	char	*pwd_save;
 	t_statement	*com_tab;
 	t_statement *temp;
-	char		**envp_dup; //dup of envp from main
+	//char		**envp_dup; //will use linked list, can do as array if necessary later
 	t_env_list	*env; //linked list of env var names and values
 }				t_mini;
 
@@ -104,8 +105,10 @@ void		ft_print(t_mini *mini, t_statement *current);
 int			main_error(int errnum);
 int			ft_rm(t_statement *temp);
 
+int	redirect_input(t_statement *temp);
 
 int	exec_file(t_statement *temp);
+int	exec_command(t_statement *temp);
 
 //env functions
 void	ft_copy_env2lst(t_mini *mini, char **envp);
@@ -116,3 +119,9 @@ t_env_list *ft_env_lst_new(char *key, char *value);
 
 //print env
 int	ft_print_env_lst(t_env_list *env);
+
+//export
+int	ft_export(t_mini *mini);
+
+//changed the free function so it also del the content of the nodes
+void	ft_env_lst_clear(t_env_list *lst, void (*del)(void *)); 
