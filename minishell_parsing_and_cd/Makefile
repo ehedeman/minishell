@@ -6,7 +6,7 @@
 #    By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/10 10:30:09 by smatschu         ###   ########.fr        #
+#    Updated: 2024/07/10 11:12:39 by smatschu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC = 	main.c			\
 		main_utils.c	\
 		execute_file.c	\
 		env.c			\
+		env_list_utils.c\
 		export.c
 OBJS = $(SRC:.c=.o)
 OBJS_DIR = objs/

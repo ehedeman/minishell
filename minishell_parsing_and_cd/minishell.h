@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/10 10:16:16 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/10 11:48:14 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ void		ft_print(t_mini *mini, t_statement *current);
 int			main_error(int errnum);
 
 int	redirect_input(t_statement *temp);
-int	redirect_input(t_statement *temp);
 
 int	exec_file(t_statement *temp);
 int	exec_command(t_statement *temp);
@@ -125,6 +124,9 @@ int	ft_print_env_lst(t_env_list *env);
 
 //export
 int	ft_export(t_mini *mini);
+
+//unset
+int	unset(t_mini *mini);
 
 //changed the free function so it also del the content of the nodes
 void	ft_env_lst_clear(t_env_list *lst, void (*del)(void *)); 

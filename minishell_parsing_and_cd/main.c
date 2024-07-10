@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/10 10:32:01 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/10 11:50:45 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,22 +102,12 @@ int	check_command(t_mini *mini)
 				return (ft_print_env_lst(mini->env));
 			else if (ft_strncmp(temp->argv[i], "export", 6) == 0)
 			{
+				//return(ft_export(mini));
 				ft_export(mini);
 				// printf("LIST AFTER EXPORT:\n");
 				// ft_print_env_lst(mini->env);
-				//return (0);
-				//return (ft_export(mini));
-			}
-			else if (ft_strncmp(temp->argv[i], "rm", 2) == 0)
-			{
-				ft_rm(temp);
 				return (0);
 			}
-			// else if (temp->operator != SKIP)
-			// {
-			// 	write(1, "Command not found.\n", 19);
-			// 	return (0);
-			// }
 			else if (temp->operator != SKIP)
 			{
 				if (exec_command(temp) == -1)
@@ -151,25 +141,23 @@ int main (int argc, char **argv, char **envp)
 	(void)argv;
 	(void)argc;
 
+	ft_copy_env2lst(&mini, envp); //took out of the while(1) so it doesnt reset at every readline
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
 	mini.com_tab = NULL;
 	mini.input = NULL;
 	g_exec_file = 0;
-	ft_copy_env2lst(&mini, envp); //took out of the while(1) so it doesnt reset at every readline
 	
 	while (1)
 	{
 		mini.input = readline("minishell: ");
 
-		ft_copy_env2lst(&mini, envp);
 		if (!mini.input)
 		{
 			mini.com_tab = NULL;
-			mini.env = NULL;
+			//mini.env = NULL;
 			ft_exit(&mini);
 		}
-		ft_copy_env2lst(&mini, envp);
 		if (*mini.input)
 		{
 			if (input_check(mini.input))
@@ -178,20 +166,20 @@ int main (int argc, char **argv, char **envp)
 				mini.com_tab = parsing(mini.input, 0 , 0);
 				if (!mini.com_tab)
 				{
-					ft_env_lst_clear(mini.env, free);
+					//ft_env_lst_clear(mini.env, free);
 					return (0);
 				}
 				if (check_command(&mini) == -1)
 				{
 					free_com_tab(&mini);
-					ft_env_lst_clear(mini.env, free);
+					//ft_env_lst_clear(mini.env, free);
 					return (0);
 				}
 				if (mini.com_tab)
 					free_com_tab(&mini);
 			}
 		}
-		ft_env_lst_clear(mini.env, free);
+		//ft_env_lst_clear(mini.env, free);
 	}
 	return (0);
 }

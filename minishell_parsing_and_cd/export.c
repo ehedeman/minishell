@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 19:14:29 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/10 09:01:57 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/10 11:30:53 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,32 +69,6 @@ void	ft_free_env(t_env_list *enval)
 	free(enval);
 }
 
-void	ft_unset(t_env_list *env, char *tofind)
-{
-	t_env_list	*temp;
-
-	if (env == NULL || env->next == NULL)
-		return ;
-	temp = env;
-	if (ft_strncmp(env->next->name, tofind, ft_strlen(tofind)) == 0)
-	{
-		temp = env->next;
-		env->next = temp->next;
-		ft_free_env(temp);
-	}
-	else if (ft_strncmp(env->name, tofind, ft_strlen(tofind)) == 0)
-	{
-		temp = env;
-		env = env->next;
-		ft_free_env(temp);
-	}
-	else
-	{
-		temp = env;
-		ft_unset(temp->next, tofind);
-	}
-}
-
 int	ft_export_add(t_mini *mini, t_env_list *temp, t_env_list *new, int i)
 {
 	char	**val;
@@ -119,7 +93,7 @@ int	ft_export_add(t_mini *mini, t_env_list *temp, t_env_list *new, int i)
 				return (1);
 			}
 			ft_env_lst_addback(&temp, new);
-			printf("NODE SHOULD BE NOW ADDED TO THE BACK OF LIST\n");
+			//printf("NODE SHOULD BE NOW ADDED TO THE BACK OF LIST\n");
 			//ft_print_env_lst(temp);
 		}
 		ft_free_matrix(val);
