@@ -6,7 +6,7 @@
 #    By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/06 16:55:25 by smatschu         ###   ########.fr        #
+#    Updated: 2024/07/09 20:22:24 by smatschu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,13 @@ SRC = 	main.c			\
 		exit.c			\
 		pwd.c			\
 		input_check.c	\
-		redirect.c		\
+		redirect_out.c	\
+		redirect_in.c	\
 		echo.c			\
 		main_utils.c	\
 		execute_file.c	\
-		env.c
+		env.c			\
+		export.c
 OBJS = $(SRC:.c=.o)
 OBJS_DIR = objs/
 OBJS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJS))
