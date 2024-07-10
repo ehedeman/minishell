@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 19:14:29 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/10 11:30:53 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:36:48 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,31 +106,26 @@ int	ft_export(t_mini *mini)
 	t_env_list	*temp;
 	t_env_list	*new;
 	int			i;
+	int			count;
 
 	i = 0;
 	new = NULL;
 	temp = mini->env; // Use the address of the list head
 	if (!mini->com_tab->argv[1])
-	{
-		while (temp)
-		{
-			if(temp->name[0] != '_')
-			{
-				if(ft_strncmp(temp->value, "", 1) == 0) // If value is not "
-					ft_printf("declare -x %s\n", temp->name);
-				else
-					ft_printf("declare -x %s=\"%s\"\n", temp->name, temp->value);
-					
-			}
-			temp = temp->next;
-		}
+	{	count = count_env_vars(mini->env);
+        mini->envp_dup = copy_env_vars(mini->env, count);
+        if (!mini->envp_dup)
+			return (1);
+        sort_env_array(mini->envp_dup, count);
+        print_sorted_env_vars(mini->env, mini->envp_dup, count);
+        free(mini->envp_dup);
 	}
 	else
 	{
 		i = 1;
 		while (mini->com_tab->argv[i] != NULL)
 		{
-			printf("mini->com_tab->argv[%d]: %s\n", i, mini->com_tab->argv[i]);
+			//printf("mini->com_tab->argv[%d]: %s\n", i, mini->com_tab->argv[i]);
 			if(ft_export_add(mini, temp, new, i) == 1)
 				return (1);
 			i++;

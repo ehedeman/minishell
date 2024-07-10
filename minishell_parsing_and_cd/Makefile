@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+         #
+#    By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/10 11:54:07 by smatschu         ###   ########.fr        #
+#    Updated: 2024/07/10 15:57:29 by smatschu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC = 	main.c			\
 		env.c			\
 		env_list_utils.c\
 		export.c		\
+		export_utils.c	\
 		unset.c
 OBJS = $(SRC:.c=.o)
 OBJS_DIR = objs/

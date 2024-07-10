@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/10 12:03:30 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:06:30 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ typedef struct	s_mini
 	char	*pwd_save;
 	t_statement	*com_tab;
 	t_statement *temp;
-	//char		**envp_dup; //will use linked list, can do as array if necessary later
 	t_env_list	*env; //linked list of env var names and values
+	char		**envp_dup; //will save sorted for export
 }				t_mini;  //maybe i'll find a better way for now thats the way
 
 t_statement *parsing(char *input, int i, int j);
@@ -124,6 +124,10 @@ int	ft_print_env_lst(t_env_list *env);
 
 //export
 int	ft_export(t_mini *mini);
+void print_sorted_env_vars(t_env_list *env, char **env_array, int count);
+char **copy_env_vars(t_env_list *env, int count);
+int count_env_vars(t_env_list *env);
+void sort_env_array(char **arr, int n);
 
 //unset
 int	ft_unset(t_env_list *env, char *target_name);
