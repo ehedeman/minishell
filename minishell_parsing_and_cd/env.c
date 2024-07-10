@@ -22,7 +22,8 @@ int	ft_print_env_lst(t_env_list *env)
 		return (1);
 	while (node)
 	{
-		printf("%s=%s\n", node->name, node->value);
+		if(ft_strncmp(node->value, "", 1) != 0)
+			printf("%s=%s\n", node->name, node->value);
 		node = node->next;
 	}
 	return (0);
