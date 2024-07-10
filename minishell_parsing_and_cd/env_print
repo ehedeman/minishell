@@ -1,0 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_print                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/09 20:14:40 by smatschu          #+#    #+#             */
+/*   Updated: 2024/07/09 20:15:13 by smatschu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+//this will print the linked list
+int	ft_print_env_lst(t_env_list *env)
+{
+	t_env_list	*node;
+
+	node = env;
+	if (node == NULL)
+		return (1);
+	while (node)
+	{
+		printf("%s=%s\n", node->name, node->value);
+		node = node->next;
+	}
+	return (0);
+}
