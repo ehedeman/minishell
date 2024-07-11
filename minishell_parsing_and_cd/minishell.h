@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/10 16:06:30 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/11 22:49:50 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct	s_statement
 //linked list for env
 typedef struct s_env_list
 {
-	int					index; //export prints in alpha order, we should sort it somehow, maybe with index?
+	//int					index; //export prints in alpha order, we should sort it somehow, maybe with index?
 	char				*name;
 	char				*value;
 	struct s_env_list	*next;
@@ -134,3 +134,6 @@ int	ft_unset(t_env_list *env, char *target_name);
 
 //changed the free function so it also del the content of the nodes
 void	ft_env_lst_clear(t_env_list *lst, void (*del)(void *)); 
+
+//expansion $
+void	replace_env_vars(char **args);

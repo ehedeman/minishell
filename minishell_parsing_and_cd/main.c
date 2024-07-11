@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/10 12:26:03 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/11 22:55:48 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,13 +174,14 @@ int main (int argc, char **argv, char **envp)
 				mini.com_tab = parsing(mini.input, 0 , 0);
 				if (!mini.com_tab)
 				{
-					//ft_env_lst_clear(mini.env, free);
+					ft_env_lst_clear(mini.env, free);
 					return (0);
 				}
+				replace_env_vars(mini.com_tab->argv);
 				if (check_command(&mini) == -1)
 				{
 					free_com_tab(&mini);
-					//ft_env_lst_clear(mini.env, free);
+					ft_env_lst_clear(mini.env, free);
 					return (0);
 				}
 				if (mini.com_tab)

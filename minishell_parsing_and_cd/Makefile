@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+         #
+#    By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/10 15:57:29 by smatschu         ###   ########.fr        #
+#    Updated: 2024/07/11 22:43:52 by smatschu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ SRC = 	main.c			\
 		env_list_utils.c\
 		export.c		\
 		export_utils.c	\
-		unset.c
+		unset.c			\
+		arg_expansion.c
 OBJS = $(SRC:.c=.o)
 OBJS_DIR = objs/
 OBJS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJS))
