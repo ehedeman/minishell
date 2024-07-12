@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/11 22:49:50 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:24:22 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void		ft_echo(t_statement *temp, int fd, int i);
 void		ft_print(t_mini *mini, t_statement *current);
 int			main_error(int errnum);
 
-int	redirect_input(t_statement *temp);
+int	redirect_input(t_statement *command, t_statement *temp);
 
 int	exec_file(t_statement *temp);
 int	exec_command(t_statement *temp);

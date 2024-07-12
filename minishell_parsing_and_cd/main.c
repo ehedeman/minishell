@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/11 22:55:48 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:28:02 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int g_exec_file;
 //returns only the last fd.
 // (get_fd is for creating the right type of file if nessecary. else it just
 //  opens the right file)
-int	check_redirect(t_mini *mini)
+int	check_redirect(t_mini *mini, t_statement *command)
 {
 	int	fd;
 
@@ -41,8 +41,9 @@ int	check_redirect(t_mini *mini)
 			if (mini->temp->next->operator != RDR_INPUT_UNTIL &&
 				mini->temp->next->operator != RDR_INPUT)
 			{
-				redirect_input(mini->temp);
-				return (1);
+				redirect_input(command, mini->temp);
+				mini->temp = mini->temp->next;
+				return (-1);
 			}
 		}
 		else if (mini->temp->operator == PIPE || mini->temp->operator == NONE)
@@ -66,8 +67,8 @@ int	check_command(t_mini *mini)
 	while (temp)
 	{
 		i = 0;
-		fd = check_redirect(mini); //standart is 1, if its got redirection then its set new
-		while (i < temp->argc && *temp->argv)
+		fd = check_redirect(mini, temp); //standart is 1, if its got redirection then its set new
+		while (i < temp->argc && *temp->argv && fd != -1)
 		{
 			if (!ft_strncmp(temp->argv[i], "./", 2) || !ft_strncmp(temp->argv[i], "/", 1))
 			{
@@ -86,7 +87,7 @@ int	check_command(t_mini *mini)
 				ft_pwd(fd);
 			else if (ft_strncmp(temp->argv[i], "exit", 5) == 0)
 				ft_exit(mini);
-			else if (ft_strncmp(temp->argv[i], "print", 5) == 0)
+			else if (ft_strncmp(temp->argv[i], "ft_print", 5) == 0)
 			{
 				ft_print(mini, temp);
 				if (temp->operator == NONE)

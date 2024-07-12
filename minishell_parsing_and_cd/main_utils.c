@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 12:52:43 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/08 13:50:33 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:01:06 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ void	ft_print(t_mini *mini, t_statement *current)
 	{
 		i = 0;
 		nbr = ft_itoa(temp->operator);
-		write(fd, nbr, ft_strlen(nbr));
-		write(fd, "\n", 1);
+		write(1, nbr, ft_strlen(nbr));
+		write(1, "\n", 1);
 		while (temp->argv[i])
 		{
 //			printf("%s\n", temp->argv[i]);
-			write(fd, temp->argv[i], ft_strlen(temp->argv[i]));
-			write(fd, "\n", 1);
+			write(1, temp->argv[i], ft_strlen(temp->argv[i]));
+			write(1, "\n", 1);
 			// printf("%i\n", temp->operator);
 			// printf("%i\n", temp->argc);
 			i++;

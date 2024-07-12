@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:23:25 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/08 15:03:37 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:23:52 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	reset_stdin(int old_fd)
 	return (0);
 }
 
-static int	redirect_in(t_statement *temp)
+static int	redirect_in(t_statement *command, t_statement *temp)
 {
 	int fd_cpy;
 	int fd;
@@ -37,13 +37,14 @@ static int	redirect_in(t_statement *temp)
 		fd = open(temp->next->argv[0], O_RDONLY);
 		if (fd < 0)
 			exit(0);
+		command->next = temp;
 		fd_cpy = dup2(fd, 0);
 		if (fd_cpy < 0)
 		{
 			close (fd);
 			exit(0);
 		}
-		exec_command(temp);
+		exec_command(command);
 		if (reset_stdin(fd) < 0)
 			exit(0);
 		exit(0);
@@ -59,12 +60,12 @@ static int	redirect_in_until(t_statement *temp)
 	return (0);
 }
 
-int	redirect_input(t_statement *temp)
+int	redirect_input(t_statement *command, t_statement *temp)
 {
 	if (temp->operator == RDR_INPUT)
-		return (redirect_in(temp));
+		return (redirect_in(command, temp));
 	if (temp->operator == RDR_INPUT_UNTIL)
-		return (redirect_in_until(temp));
+		return (redirect_in_until( temp));
 	return (1);
 }
 //returns 1 so the fd is still 1 (makes sense cuz this is called by)
