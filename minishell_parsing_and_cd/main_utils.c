@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 12:52:43 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/12 11:01:06 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:40:52 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 int	main_error(int errnum)
 {
 	if (errnum < 0)
-	{
-		write(2, strerror(errno), ft_strlen(strerror(errno)));
-		write(1, "\n", 1);
-	}
+		printf("minishell: %s\n", strerror(errnum));
 	if (errnum == MALLOC_ERR)
 		write(2, FAILED_MALLOC, ft_strlen(FAILED_MALLOC));
 	if (errnum == SYNTAX_ERR)

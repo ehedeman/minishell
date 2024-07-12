@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:23:16 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/03 15:04:53 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:40:10 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	ft_cd_nothing(void)
 {
 	if (chdir(getenv("HOME")) == -1)
-		printf("%s\n", strerror(errno));
+		printf("minishell: %s\n", strerror(errno));
 }
 
 static int check_args_cd(t_statement *temp)
@@ -46,12 +46,12 @@ int	ft_cd(t_statement *temp, int i)
 		{
 			new_path = ft_strjoin(current_path, temp->argv[i]);
 			if (chdir(temp->argv[i + 1]) == -1)
-				printf("%s\n", strerror(errno));
+				printf("minishell: %s\n", strerror(errno));
 			free(new_path);
 		}
 		else
 			if (chdir(temp->argv[i + 1]) == -1)
-				printf("%s\n", strerror(errno));
+				printf("minishell: %s\n", strerror(errno));
 	}
 	free(current_path);
 	return (0);

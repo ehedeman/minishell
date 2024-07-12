@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/12 11:28:02 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:42:15 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int g_exec_file;
 //returns only the last fd.
 // (get_fd is for creating the right type of file if nessecary. else it just
 //  opens the right file)
+
+
 int	check_redirect(t_mini *mini, t_statement *command)
 {
 	int	fd;
@@ -33,7 +35,10 @@ int	check_redirect(t_mini *mini, t_statement *command)
 				mini->temp->next->operator == RDR_OUT_APPEND)
 				close(fd);
 			else
+			{
+				mini->temp = mini->temp->next;
 				return (fd);
+			}
 		}
 		else if (mini->temp->operator == RDR_INPUT ||
 			mini->temp->operator == RDR_INPUT_UNTIL)
@@ -41,7 +46,7 @@ int	check_redirect(t_mini *mini, t_statement *command)
 			if (mini->temp->next->operator != RDR_INPUT_UNTIL &&
 				mini->temp->next->operator != RDR_INPUT)
 			{
-				redirect_input(command, mini->temp);
+				redirect_input(command, mini->temp, mini);
 				mini->temp = mini->temp->next;
 				return (-1);
 			}
@@ -72,7 +77,7 @@ int	check_command(t_mini *mini)
 		{
 			if (!ft_strncmp(temp->argv[i], "./", 2) || !ft_strncmp(temp->argv[i], "/", 1))
 			{
-				if (exec_file(temp) == -1)
+				if (exec_file(temp, mini) == -1)
 					return (-1);
 				break ;
 			}
@@ -119,7 +124,7 @@ int	check_command(t_mini *mini)
 			}
 			else if (temp->operator != SKIP)
 			{
-				if (exec_command(temp) == -1)
+				if (exec_command(temp, mini) == -1)
 					return (-1);
 				return (0);
 			}

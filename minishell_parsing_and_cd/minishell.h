@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/12 11:24:22 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:28:26 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 #define UNCLOSED_QUOTES "minishell: syntax error unclosed quotes.\n"
 #define MISSMATCHED_QUOTES "minishell: syntax error missmatched quotes.\n"
 #define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token '.\n"
-#define UNFINISHED_OUT_RED "minishell: syntax error near unexpected token >.\n"
+#define UNFINISHED_OUT_RED "minishell: syntax error near unexpected token '>'.\n"
 #define UNFINISHED_IN_RED "minishell: syntax error near unexpected token '<'.\n"
 #define FAILED_MALLOC "minishell: failed to allocate needed memory.\n"
 #define FAILED_PATH "minishell: failed to find path.\n"
@@ -107,10 +107,13 @@ void		ft_echo(t_statement *temp, int fd, int i);
 void		ft_print(t_mini *mini, t_statement *current);
 int			main_error(int errnum);
 
-int	redirect_input(t_statement *command, t_statement *temp);
+int	redirect_input(t_statement *command, t_statement *temp, t_mini *mini);
 
-int	exec_file(t_statement *temp);
-int	exec_command(t_statement *temp);
+int		exec_file(t_statement *temp, t_mini *mini);
+int		exec_command(t_statement *temp, t_mini *mini);
+int		free_env_args(char **envp, char **args, int arg_zero);//frees the envp and args from the functions above
+int		exec_com_fork(t_statement *temp, char **envp, char **args, pid_t pid); //split half of exec_command | norm accurate
+int		exec_file_fork(t_statement *temp, char **envp, char **args, pid_t pid);//split half of exec_file | norma accurate
 
 //env functions
 void	ft_copy_env2lst(t_mini *mini, char **envp);

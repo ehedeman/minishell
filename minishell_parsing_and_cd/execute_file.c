@@ -3,114 +3,86 @@
 /*                                                        :::      ::::::::   */
 /*   execute_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 11:37:36 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/12 11:26:58 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:06:28 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void print_p(char **parsed, int j)
-// {
-// 	int i = 0;
-// 	printf("j: %i\n", j);
-// 	while (parsed[i])
-// 	{
-// 		printf("print_p: %s\n", parsed[i]);
-// 		i++;
-// 	}
-// 	printf("\n");
-// }
-int	exec_command(t_statement *temp)
+static	int	find_size(t_env_list *lst)
 {
-	char **args;
-	char **envp;
-	int status;
-	pid_t pid;
 	int	i;
 
-	i = 1;
-	g_exec_file = 1; //tells program that theres a file being executed
-	envp = NULL; //needs to be worked out -> with env function if done
-	args = malloc(sizeof(char *) * (temp->argc + 1));
-	args[0] = ft_strjoin("/bin/", temp->argv[0]);
-	while (i <= temp->argc)
+	i = 0;
+	while (lst)
 	{
-		if (i == temp->argc)
-		{
-			args[i] = NULL;
-			break ;
-		}
-		args[i] = temp->argv[i];
+		lst = lst->next;
 		i++;
 	}
-	pid = fork();	
-	if (pid == -1)
+	return (i);
+}
+
+static	char	**assign_link_pointer(t_env_list *env, char **envp)
+{
+	int		size;
+	char	*temp;
+	int		i;
+
+	i = 0;
+	size = find_size(env);
+	envp = malloc(sizeof(char *) * (size + 1));
+	while (env)
 	{
-		free(args);
-		return (main_error(FORK_ERR));
+		temp = ft_strjoin(env->name, "=");
+		envp[i] = ft_strjoin(temp, env->value);
+		free(temp);
+		env = env->next;
+		i++;
 	}
-	else if (pid == 0)
-	{
-		if (execve(args[0], args, envp) == -1)
-		{
-			free(args[0]);
-			free(args);
-			write(2, "Command not found.\n", 19);
-			return (-1);
-		}
-	}
-	else
-		waitpid(pid, &status, 0);
-	free(args[0]);
-	free(args);
+	envp[i++] = NULL;
+	return (envp);
+}
+
+int	exec_command(t_statement *temp, t_mini *mini)
+{
+	char	**args;
+	char	**envp;
+	pid_t	pid;
+	int		i;
+
+	i = 1;
+	pid = 0;
+	g_exec_file = 1; //tells program that theres a file being executed
+	envp = NULL;
+	envp = assign_link_pointer(mini->env, envp);
+	args = malloc(sizeof(char *) * (temp->argc + 1));
+	args[0] = ft_strjoin("/bin/", temp->argv[0]);
+	if (exec_com_fork(temp, envp, args, pid) == -1)
+		return (-1);
+	free_env_args(envp, args, 1);
 	g_exec_file = 0;
 	return (0);
 }
 
-int	exec_file(t_statement *temp)
+int	exec_file(t_statement *temp, t_mini *mini)
 {
-	char **args;
-	char **envp;
-	int status;
-	pid_t pid;
-	int	i;
+	char	**args;
+	char	**envp;
+	pid_t	pid;
+	int		i;
 
 	i = 0;
+	pid = 0;
 	g_exec_file = 1;
-	envp = NULL; //needs to be worked out -> with env function if done
+	envp = NULL;
+	envp = assign_link_pointer(mini->env, envp);
 	args = malloc(sizeof(char *) * (temp->argc + 1));
-	while (i <= temp->argc)
-	{
-		if (i == temp->argc)
-		{
-			args[i] = NULL;
-			break ;
-		}
-		args[i] = temp->argv[i];
-		i++;
-	}
-	pid = fork();	
-	if (pid == -1)
-	{
-		free(args);
-		return (main_error(FORK_ERR));
-	}
-	else if (pid == 0)
-	{
-		if (execve(args[0], args, envp) == -1)
-		{
-			free(args);
-			write(2, strerror(errno), ft_strlen(strerror(errno)));
-			write(1, "\n", 1);
-			return (-1);
-		}
-	}
-	else
-		waitpid(pid, &status, 0);
-	free(args);
+	if (exec_file_fork(temp, envp, args, pid) == -1)
+		return (-1);
+	free_env_args(envp, args, 0);
 	g_exec_file = 0;
 	return (0);
 }
