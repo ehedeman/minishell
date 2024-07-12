@@ -59,3 +59,14 @@ then skip the next node and just create the file with the name of the file (if n
 check if its got another redirect and if not write. otherwise close, open next etc.)
 
 ->works now
+
+smatschu>
+$path
+$?
+delete envp_dup and work only with linked list
+
+
+ehedeman>
+redirect_input_until
+"> fkhekfh echo hello" thing
+use linklist for envp in exec_command/file
