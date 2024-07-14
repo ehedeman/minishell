@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 22:48:44 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/10 12:20:15 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/14 17:23:19 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,22 @@ void	ft_unset_free(t_env_list *env_var)
 	free(env_var);
 }
 
-//this will search for the target name to unset in the linked list and then free it
-int	ft_unset(t_env_list *env, char *target_name)
+//this will search for the target name to unset in the list and then free it
+int	ft_unset(t_env_list *env, char *target)
 {
 	t_env_list	*temp;
 
 	if (env == NULL || env->next == NULL)
 		return (1);
 	temp = env;
-	if (env->next->name && ft_strncmp(env->next->name, target_name, ft_strlen(target_name)) == 0)
+	if (env->next->name && \
+		ft_strncmp(env->next->name, target, ft_strlen(target)) == 0)
 	{
 		temp = env->next;
 		env->next = temp->next;
 		ft_unset_free(temp);
 	}
-	else if (env->name && ft_strncmp(env->name, target_name, ft_strlen(target_name)) == 0)
+	else if (env->name && ft_strncmp(env->name, target, ft_strlen(target)) == 0)
 	{
 		temp = env;
 		env = env->next;
@@ -42,7 +43,7 @@ int	ft_unset(t_env_list *env, char *target_name)
 	else
 	{
 		temp = env;
-		ft_unset(temp->next, target_name);
+		ft_unset(temp->next, target);
 	}
-	return(0);
+	return (0);
 }
