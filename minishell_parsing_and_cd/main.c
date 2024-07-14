@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/14 17:12:25 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/14 22:31:00 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	check_command(t_mini *mini)
 			}
 			else if (ft_strncmp(temp->argv[i], "echo", 4) == 0)
 			{
-				ft_echo(temp, fd, i);
+				ft_echo(mini, temp, fd, i);
 				break ;
 			}
 			else if (ft_strncmp(temp->argv[i], "env", 3) == 0 && !temp->argv[i + 1])
@@ -153,7 +153,8 @@ int main (int argc, char **argv, char **envp)
 	mini.com_tab = NULL;
 	mini.input = NULL;
 	g_exec_file = 0;
-	
+	//just as example, have to make sure at every possible exit the value is stored in the struct so echo can acess it
+	mini.exit_status = 42;
 	while (1)
 	{
 		mini.input = readline("minishell: ");
