@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:28:15 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/03 15:00:48 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/14 17:59:52 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_echo(t_statement *temp, int fd, int i)
 
 	newline = false;
 	i++;
-	if (!ft_strncmp(temp->argv[i], "-n", 2) && !temp->argv[i][2])
+	if (temp->argv[i] && !ft_strncmp(temp->argv[i], "-n", 2) && !temp->argv[i][2])
 	{
 		newline = true;
 		i++;
