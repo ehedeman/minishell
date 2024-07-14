@@ -61,12 +61,12 @@ check if its got another redirect and if not write. otherwise close, open next e
 ->works now
 
 smatschu>
-$path
-$?
-delete envp_dup and work only with linked list
+$?: working on it
+[DONE] delete envp_dup and work only with linked list
 
 
 ehedeman>
 redirect_input_until
 "> fkhekfh echo hello" thing
 use linklist for envp in exec_command/file
+$PATH: '$PATH' should not work, should only print $PATH. $PATH and "$PATH" are ok. fix in the parsing.
