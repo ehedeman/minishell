@@ -6,14 +6,28 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:46:10 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/10 11:27:37 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/14 16:59:26 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//calculates the lengh of the env list
+int	ft_env_list_len(t_env_list *env)
+{
+	int	count;
+
+	count = 0;
+	while (env)
+	{
+		count++;
+		env = env->next;
+	}
+	return (count);
+}
+
 //this will create a new node for the linked list
-t_env_list *ft_env_lst_new(char *key, char *value)
+t_env_list	*ft_env_lst_new(char *key, char *value)
 {
 	t_env_list	*node;
 
@@ -21,10 +35,13 @@ t_env_list *ft_env_lst_new(char *key, char *value)
 	if (!node)
 		return (NULL);
 	node->name = ft_strdup(key);
-	node->value = ft_strdup(value);
+	if (value != NULL && value[0] == '\0')
+		node->value = ft_strdup("\0");
+	else if (value == NULL)
+		node->value = NULL;
+	else
+		node->value = ft_strdup(value);
 	node->next = NULL;
-	//free(key);
-	//free(value);
 	return (node);
 }
 
@@ -41,13 +58,6 @@ void	ft_env_lst_addback(t_env_list **lst, t_env_list *new)
 		while (node->next != NULL)
 			node = node->next;
 		node->next = new;
-		//printf("new node: %s\n", new->name);
-		//printf("new node: %s\n", new->value);
-		// while((*lst)->next)
-		// {
-		// 	printf("list->next: %s\n", (*lst)->next->name);
-		// 	printf("list->next: %s\n", (*lst)->next->value);
-		// }
 	}
 }
 
@@ -60,7 +70,7 @@ void	ft_lst_delone(t_env_list *lst, void (*del)(void *))
 }
 
 //this will free the linked list (added to the end of ft_exit)
-void ft_env_lst_clear(t_env_list *lst, void (*del)(void *))
+void	ft_env_lst_clear(t_env_list *lst, void (*del)(void *))
 {
 	t_env_list	*node;
 
@@ -73,4 +83,3 @@ void ft_env_lst_clear(t_env_list *lst, void (*del)(void *))
 	}
 	lst = NULL;
 }
-

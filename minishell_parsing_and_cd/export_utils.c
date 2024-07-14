@@ -3,82 +3,74 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:54:38 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/10 16:50:51 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/14 17:00:10 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	swap(char **a, char **b) {
-	char *temp = *a;
-	*a = *b;
-	*b = temp;
+t_env_list	*copy_linked_list(t_env_list *env)
+{
+	t_env_list	*current;
+	t_env_list	*new_head;
+	t_env_list	*new_node;
+
+	current = env;
+	new_head = NULL;
+	new_node = NULL;
+	while (current)
+	{
+		new_node = ft_env_lst_new(current->name, current->value);
+		if (!new_node)
+		{
+			ft_env_lst_clear(new_head, free);
+			return (NULL);
+		}
+		ft_env_lst_addback(&new_head, new_node);
+		current = current->next;
+	}
+	return (new_head);
 }
 
-void	sort_env_array(char **arr, int n) {
-	int i, j;
-	int swapped;
-	i = 0;
-	while (i < n - 1) {
-		j = 0;
+void	ft_swap_env_nodes(t_env_list *a, t_env_list *b)
+{
+	char	*temp_name;
+	char	*temp_value;
+
+	temp_name = a->name;
+	temp_value = a->value;
+	a->name = b->name;
+	a->value = b->value;
+	b->name = temp_name;
+	b->value = temp_value;
+}
+
+void	sort_linked_list(t_env_list *temp_env)
+{
+	int			swapped;
+	t_env_list	*ptr1;
+	t_env_list	*lptr;
+
+	swapped = 1;
+	lptr = NULL;
+	if (!temp_env)
+		return ;
+	while (swapped)
+	{
 		swapped = 0;
-		while (j < n - i - 1) {
-			if (ft_strncmp(arr[j], arr[j + 1], strlen(arr[j]) + 1) > 0) {
-				swap(&arr[j], &arr[j + 1]);
+		ptr1 = temp_env;
+		while (ptr1->next != lptr)
+		{
+			if (ft_strcmp(ptr1->name, ptr1->next->name) > 0)
+			{
+				ft_swap_env_nodes(ptr1, ptr1->next);
 				swapped = 1;
 			}
-			j++;
+			ptr1 = ptr1->next;
 		}
-		if (!swapped) break;
-		i++;
-	}
-}
-
-int	count_env_vars(t_env_list *env) {
-	int count = 0;
-	while (env) {
-		count++;
-		env = env->next;
-	}
-	return count;
-}
-
-char	**copy_env_vars(t_env_list *env, int count) {
-	char **env_array = (char **)malloc(count * sizeof(char *));
-	if (!env_array) {
-		perror("malloc");
-		return NULL;
-	}
-	int i = 0;
-	while (i < count) {
-		env_array[i] = env->name;
-		env = env->next;
-		i++;
-	}
-	return (env_array);
-}
-
-//env var without value should not be printed by env and only name should be printed by export, without =
-void print_sorted_env_vars(t_env_list *env, char **env_array, int count) {
-	int i = 0;
-	while (i < count) {
-		t_env_list *temp = env;
-		while (temp) {
-			if (ft_strncmp(temp->name, env_array[i], strlen(temp->name) + 1) == 0) {
-				if (temp->name[0] != '_')
-				{
-					if (ft_strncmp(temp->value, "", 1) == 0) 
-						ft_printf("declare -x %s\n", temp->name);
-					else
-						ft_printf("declare -x %s=\"%s\"\n", temp->name, temp->value);
-				}
-				break;
-			}
-			temp = temp->next;
-		}
-		i++;
+		lptr = ptr1;
 	}
 }

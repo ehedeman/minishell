@@ -6,7 +6,7 @@
 #    By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/11 22:43:52 by smatschu         ###   ########.fr        #
+#    Updated: 2024/07/14 15:02:49 by smatschu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC = 	main.c			\
 		execute_file.c	\
 		env.c			\
 		env_list_utils.c\
+		env_list_print.c\
 		export.c		\
 		export_utils.c	\
 		unset.c			\

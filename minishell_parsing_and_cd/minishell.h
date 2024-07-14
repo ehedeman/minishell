@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/12 11:24:22 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/14 16:39:07 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ typedef struct	s_statement
 //linked list for env
 typedef struct s_env_list
 {
-	//int					index; //export prints in alpha order, we should sort it somehow, maybe with index?
 	char				*name;
 	char				*value;
 	struct s_env_list	*next;
@@ -84,7 +83,6 @@ typedef struct	s_mini
 	t_statement	*com_tab;
 	t_statement *temp;
 	t_env_list	*env; //linked list of env var names and values
-	char		**envp_dup; //will save sorted for export
 }				t_mini;  //maybe i'll find a better way for now thats the way
 
 t_statement *parsing(char *input, int i, int j);
@@ -107,33 +105,33 @@ void		ft_echo(t_statement *temp, int fd, int i);
 void		ft_print(t_mini *mini, t_statement *current);
 int			main_error(int errnum);
 
-int	redirect_input(t_statement *command, t_statement *temp);
+int			redirect_input(t_statement *command, t_statement *temp);
 
-int	exec_file(t_statement *temp);
-int	exec_command(t_statement *temp);
+int			exec_file(t_statement *temp);
+int			exec_command(t_statement *temp);
 
 //env functions
-void	ft_copy_env2lst(t_mini *mini, char **envp);
+void		ft_copy_env2lst(t_mini *mini, char **envp);
 
 //env list functions
-void	ft_env_lst_addback(t_env_list **lst, t_env_list *new);
-t_env_list *ft_env_lst_new(char *key, char *value);
+void		ft_env_lst_addback(t_env_list **lst, t_env_list *new);
+t_env_list 	*ft_env_lst_new(char *key, char *value);
+int			ft_env_list_len(t_env_list *env);
 
 //print env
-int	ft_print_env_lst(t_env_list *env);
+int			print_env_lst(t_env_list *env);
 
 //export
-int	ft_export(t_mini *mini);
-void print_sorted_env_vars(t_env_list *env, char **env_array, int count);
-char **copy_env_vars(t_env_list *env, int count);
-int count_env_vars(t_env_list *env);
-void sort_env_array(char **arr, int n);
+int			ft_export(t_mini *mini);
+void		print_export_list(t_env_list *sorted_env);
+t_env_list	*copy_linked_list(t_env_list *env);
+void		sort_linked_list(t_env_list *temp_env);
 
 //unset
-int	ft_unset(t_env_list *env, char *target_name);
+int			ft_unset(t_env_list *env, char *target_name);
 
 //changed the free function so it also del the content of the nodes
-void	ft_env_lst_clear(t_env_list *lst, void (*del)(void *)); 
+void		ft_env_lst_clear(t_env_list *lst, void (*del)(void *)); 
 
 //expansion $
-void	replace_env_vars(char **args);
+void		replace_env_vars(char **args);
