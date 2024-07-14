@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/12 11:28:02 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/14 17:12:25 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,10 @@ int	check_command(t_mini *mini)
 				break ;
 			}
 			else if (ft_strncmp(temp->argv[i], "env", 3) == 0 && !temp->argv[i + 1])
-				return (ft_print_env_lst(mini->env));
+				return (print_env_lst(mini->env));
 			else if (ft_strncmp(temp->argv[i], "export", 6) == 0)
 			{
-				//return(ft_export(mini));
 				ft_export(mini);
-				// printf("LIST AFTER EXPORT:\n");
-				// ft_print_env_lst(mini->env);
 				return (0);
 			}
 			else if (ft_strncmp(temp->argv[i], "unset", 5) == 0)
@@ -178,7 +175,7 @@ int main (int argc, char **argv, char **envp)
 					ft_env_lst_clear(mini.env, free);
 					return (0);
 				}
-				replace_env_vars(mini.com_tab->argv);
+				replace_env_vars(mini.com_tab->argv, &mini);
 				if (check_command(&mini) == -1)
 				{
 					free_com_tab(&mini);

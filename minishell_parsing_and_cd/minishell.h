@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/14 16:39:07 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/14 17:09:18 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,4 +134,4 @@ int			ft_unset(t_env_list *env, char *target_name);
 void		ft_env_lst_clear(t_env_list *lst, void (*del)(void *)); 
 
 //expansion $
-void		replace_env_vars(char **args);
+void		replace_env_vars(char **args, t_mini *mini);
