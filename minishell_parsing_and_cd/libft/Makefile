@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
+#    By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 13:09:29 by ehedeman          #+#    #+#              #
-#    Updated: 2024/03/06 13:34:18 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/07/14 15:06:18 by smatschu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,8 @@ SRC = 	ft_isalpha.c			\
 		ft_lstlast.c			\
 		ft_lstmap.c				\
 		ft_lstnew.c				\
-		ft_lstsize.c
+		ft_lstsize.c			\
+		ft_strcmp.c
 
 SRC_DIR = src/
 #SRC_PREF = $(addprefix $(SRC_DIR), $(SRC))
