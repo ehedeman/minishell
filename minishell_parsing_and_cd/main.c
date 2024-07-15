@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 16:11:25 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:01:55 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ int main (int argc, char **argv, char **envp)
 		}
 		if (*mini.input)
 		{
+			if (whitespace_check(mini.input))
+				break ;
 			if (input_check(mini.input))
 			{
 				add_history(mini.input);

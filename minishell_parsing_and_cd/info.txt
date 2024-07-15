@@ -77,7 +77,7 @@ use linklist for envp in exec_command/file
 
 TO DO:
 [	]test only spaces is giving segv
-[	]tab is running ls ?
+[	]tab is running ls ? (ehedeman: that is a readline quirk according to internet)
 [	]"echo test" should give command not found, instead is runnign echo
 [	]$PATH: '$PATH' should not work, should only print $PATH. $PATH and "$PATH" are ok.
 should we fix in the parsing? subject says:
@@ -85,5 +85,5 @@ should we fix in the parsing? subject says:
 characters in the quoted sequence.
 • Handle " (double quote) which should prevent the shell from interpreting the meta-
 characters in the quoted sequence except for $ (dollar sign).
-[	]$PATH $? is printing, but $PATH$? not yet
+[ x ]$PATH $? is printing, but $PATH$? not yet 
 [	]for $?, at every possible exit, update exit value in mini struct
