@@ -76,8 +76,8 @@ use linklist for envp in exec_command/file
 
 
 TO DO:
-[ x ]test only spaces is giving segv (leaks from env link list, please add nesecary free's to main())
-[	]tab is running ls ? (ehedeman: that is a readline quirk according to internet)
+[	]test only spaces is giving segv
+[	]tab is running ls ?
 [	]"echo test" should give command not found, instead is runnign echo
 [	]$PATH: '$PATH' should not work, should only print $PATH. $PATH and "$PATH" are ok.
 should we fix in the parsing? subject says:
@@ -85,5 +85,23 @@ should we fix in the parsing? subject says:
 characters in the quoted sequence.
 • Handle " (double quote) which should prevent the shell from interpreting the meta-
 characters in the quoted sequence except for $ (dollar sign).
+
+examples:
+
+echo "This is a double quote: \" and a backslash: \\."
+
+echo "Current directory is `pwd`."
+
+echo 'Hello $USER, today is $(date).'
+should print: Hello $USER, today is $(date).
+
+USER=smatschu
+echo "Hello $USER, today is $(date)."
+should print sth like: Hello smatschu, today is Mo 15. Jul 18:xx:xx CEST 2024.
+
+echo "This is a double quote: \" and a backslash: \\."
+should print: This is a double quote: " and a backslash: \.
+
+
 [	]$PATH $? is printing, but $PATH$? not yet
 [	]for $?, at every possible exit, update exit value in mini struct
