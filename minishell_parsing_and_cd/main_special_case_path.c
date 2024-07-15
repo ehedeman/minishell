@@ -6,13 +6,13 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 17:28:40 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 18:59:14 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 19:03:04 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	remove_quotes_path(t_statement *temp, int i)
+int	remove_quotes_main(t_statement *temp, int i)
 {
 	char	*temp_pointer;
 	char	buff[4000];
@@ -49,7 +49,7 @@ int	check_for_path_quoted(t_statement *temp)
 	while (temp->argv[i])
 	{
 		if (!ft_strncmp(temp->argv[i], "'$", 2) && !echo_found)
-			remove_quotes_path(temp, i);
+			remove_quotes_main(temp, i);
 		i++;
 	}
 	return (0);
