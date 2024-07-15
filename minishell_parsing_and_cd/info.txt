@@ -61,9 +61,8 @@ check if its got another redirect and if not write. otherwise close, open next e
 ->works now
 
 smatschu>
-$path
-$?
-delete envp_dup and work only with linked list
+$?: working on it
+[DONE] delete envp_dup and work only with linked list
 
 
 ehedeman>
@@ -73,3 +72,18 @@ use linklist for envp in exec_command/file ->done
 
 (also exec_command is now split into execute_file.c and execute_file_utils.c, 
 both are norminette friendly except for the comments still left in it)
+use linklist for envp in exec_command/file
+
+
+TO DO:
+[	]test only spaces is giving segv
+[	]tab is running ls ?
+[	]"echo test" should give command not found, instead is runnign echo
+[	]$PATH: '$PATH' should not work, should only print $PATH. $PATH and "$PATH" are ok.
+should we fix in the parsing? subject says:
+• Handle ’ (single quote) which should prevent the shell from interpreting the meta-
+characters in the quoted sequence.
+• Handle " (double quote) which should prevent the shell from interpreting the meta-
+characters in the quoted sequence except for $ (dollar sign).
+[	]$PATH $? is printing, but $PATH$? not yet
+[	]for $?, at every possible exit, update exit value in mini struct

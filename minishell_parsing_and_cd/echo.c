@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:28:15 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/12 16:27:44 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:50:24 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int	ft_echo(t_statement *temp, int fd, int i)
 
 	newline = false;
 	i++;
-	if (!temp->argv[i])
-		return (main_error(SYNTAX_ERR));
 	if (!ft_strncmp(temp->argv[i], "-n", 2) && !temp->argv[i][2])
 	{
 		newline = true;
@@ -27,9 +25,12 @@ int	ft_echo(t_statement *temp, int fd, int i)
 	}
 	while (temp->argv[i])
 	{
-		write(fd, temp->argv[i], ft_strlen(temp->argv[i]));
+		if(!ft_strcmp(temp->argv[i], "$?"))
+			ft_putnbr_fd(mini->exit_status, fd);
+		else
+			write(fd, temp->argv[i], ft_strlen(temp->argv[i]));
 		if (i < temp->argc -1)
-			write(fd, " ", 1);
+				write(fd, " ", 1);
 		i++;
 	}
 	if (!newline)

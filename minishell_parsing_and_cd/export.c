@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 19:14:29 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/10 16:36:48 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/14 16:48:21 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,16 @@ char	**ft_join_env(char *env_var)
 	index = 0;
 	len = ft_strlen(env_var);
 	pair = malloc(sizeof(char *) * 3);
+	if (!pair)
+		return (NULL);
 	while (env_var[index] && env_var[index] != '=')
 		index++;
 	pair[0] = ft_substr(env_var, 0, index);
-	pair[1] = ft_substr(env_var, index + 1, len);
+	if (index < len)
+		pair[1] = ft_substr(env_var, index + 1, len - index - 1);
+	else
+		pair[1] = NULL;
 	pair[2] = NULL;
-	printf("pair[0]: %s\n", pair[0]);
-	printf("pair[1]: %s\n", pair[1]);
-	printf("pair[2]: %s\n", pair[2]);
 	return (pair);
 }
 
@@ -50,52 +52,44 @@ int	ft_env_list_comp(t_env_list *env, char **val)
 	t_env_list	*temp;
 
 	temp = env;
-	if (temp == NULL)
-		return (1);
-	else if (ft_strncmp(temp->name, val[0], ft_strlen(val[0])) == 0)
+	while (temp != NULL)
 	{
-		free(temp->value);
-		temp->value = ft_strdup(val[1]);
-		return (0);
+		if (ft_strncmp(temp->name, val[0], ft_strlen(val[0])) == 0)
+		{
+			free(temp->value);
+			if (val[1] != NULL)
+				temp->value = ft_strdup(val[1]);
+			else
+				temp->value = NULL;
+			return (0);
+		}
+		temp = temp->next;
 	}
-	else
-		return (ft_env_list_comp(temp->next, val));
+	return (1);
 }
-
 
 int	ft_export_add(t_mini *mini, t_env_list *temp, t_env_list *new, int i)
 {
 	char	**val;
 
 	val = ft_join_env(mini->com_tab->argv[i]);
-	if (!val || !val[0]) // Check if val is NULL or val[0] is NULL
+	if (!val || !val[0])
+		return (main_error(MALLOC_ERR));
+	if (ft_isalpha(val[0][0]) == 1 && ft_env_list_comp(mini->env, val) != 0)
 	{
-		write(2, "export: error processing arguments\n", 35);
-		return (1);
-	}
-	if (ft_isalpha(val[0][0]) == 1)
-	{
-		if (ft_env_list_comp(mini->env, val) != 0)
+		new = ft_env_lst_new(val[0], val[1]);
+		if (!new)
 		{
-			printf("val[0]: %s\n", val[0]);
-			printf("val[1]: %s\n", val[1]);
-			new = ft_env_lst_new(val[0], val[1]);
-			if(!new)
-			{
-				ft_free_matrix(val);
-				printf("new is NULL\n");
-				return (1);
-			}
-			ft_env_lst_addback(&temp, new);
-			//printf("NODE SHOULD BE NOW ADDED TO THE BACK OF LIST\n");
-			//ft_print_env_lst(temp);
+			ft_free_matrix(val);
+			return (1);
 		}
+		ft_env_lst_addback(&temp, new);
 		ft_free_matrix(val);
 	}
 	else
 	{
-		write(2, "export: not a valid identifier\n", 31);
 		ft_free_matrix(val);
+		write(2, "export: not a valid identifier\n", 31);
 		return (1);
 	}
 	return (0);
@@ -106,32 +100,24 @@ int	ft_export(t_mini *mini)
 	t_env_list	*temp;
 	t_env_list	*new;
 	int			i;
-	int			count;
 
 	i = 0;
 	new = NULL;
-	temp = mini->env; // Use the address of the list head
 	if (!mini->com_tab->argv[1])
-	{	count = count_env_vars(mini->env);
-        mini->envp_dup = copy_env_vars(mini->env, count);
-        if (!mini->envp_dup)
-			return (1);
-        sort_env_array(mini->envp_dup, count);
-        print_sorted_env_vars(mini->env, mini->envp_dup, count);
-        free(mini->envp_dup);
+	{	
+		temp = copy_linked_list(mini->env);
+		if (!temp)
+			return (main_error(MALLOC_ERR));
+		sort_linked_list(temp);
+		print_export_list(temp);
+		ft_env_lst_clear(temp, free);
 	}
 	else
 	{
-		i = 1;
-		while (mini->com_tab->argv[i] != NULL)
-		{
-			//printf("mini->com_tab->argv[%d]: %s\n", i, mini->com_tab->argv[i]);
-			if(ft_export_add(mini, temp, new, i) == 1)
+		temp = mini->env;
+		while (mini->com_tab->argv[++i] != NULL)
+			if (ft_export_add(mini, temp, new, i) == -1)
 				return (1);
-			i++;
-		}
-		// printf("\n\nLIST AFTER EXPORT @ft_export\n");
-		// ft_print_env_lst(mini->env);
 	}
 	return (0);
 }

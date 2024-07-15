@@ -6,7 +6,7 @@
 #    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/15 15:34:06 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/07/15 15:49:11 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,10 +30,12 @@ SRC = 	main.c							\
 		execute_file_utils.c			\
 		env.c							\
 		env_list_utils.c				\
+		env_list_print.c				\
 		export.c						\
 		export_utils.c					\
 		unset.c							\
 		arg_expansion.c
+		
 OBJS = $(SRC:.c=.o)
 OBJS_DIR = objs/
 OBJS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJS))

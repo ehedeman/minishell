@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 15:42:07 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:49:35 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef struct	s_statement
 //linked list for env
 typedef struct s_env_list
 {
-	//int					index; //export prints in alpha order, we should sort it somehow, maybe with index?
 	char				*name;
 	char				*value;
 	struct s_env_list	*next;
@@ -85,7 +84,6 @@ typedef struct	s_mini
 	t_statement	*com_tab;
 	t_statement *temp;
 	t_env_list	*env; //linked list of env var names and values
-	char		**envp_dup; //will save sorted for export
 }				t_mini;  //maybe i'll find a better way for now thats the way
 
 t_statement *parsing(char *input, int i, int j);
@@ -121,6 +119,10 @@ int			exec_command(t_statement *temp, t_mini *mini);
 int			free_env_args(char **envp, char **args, int arg_zero);//frees the envp and args from the functions above
 int			exec_com_fork(t_statement *temp, char **envp, char **args, pid_t pid); //split half of exec_command | norm accurate
 int			exec_file_fork(t_statement *temp, char **envp, char **args, pid_t pid);//split half of exec_file | norma accurate
+int			redirect_input(t_statement *command, t_statement *temp);
+
+int			exec_file(t_statement *temp);
+int			exec_command(t_statement *temp);
 
 //env functions
 void		ft_copy_env2lst(t_mini *mini, char **envp);
@@ -138,6 +140,17 @@ void		print_sorted_env_vars(t_env_list *env, char **env_array, int count);
 char		**copy_env_vars(t_env_list *env, int count);
 int			count_env_vars(t_env_list *env);
 void		sort_env_array(char **arr, int n);
+t_env_list 	*ft_env_lst_new(char *key, char *value);
+int			ft_env_list_len(t_env_list *env);
+
+//print env
+int			print_env_lst(t_env_list *env);
+
+//export
+int			ft_export(t_mini *mini);
+void		print_export_list(t_env_list *sorted_env);
+t_env_list	*copy_linked_list(t_env_list *env);
+void		sort_linked_list(t_env_list *temp_env);
 
 //unset
 int			ft_unset(t_env_list *env, char *target_name);
@@ -147,3 +160,4 @@ void		ft_env_lst_clear(t_env_list *lst, void (*del)(void *));
 
 //expansion $
 void		replace_env_vars(char **args);
+void		replace_env_vars(char **args, t_mini *mini);
