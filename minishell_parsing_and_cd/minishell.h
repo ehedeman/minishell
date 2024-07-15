@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 17:44:28 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:04:01 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int			ft_pwd(int fd);
 void		ft_exit(t_mini *mini);
 void		free_com_tab(t_mini *mini);
 bool		input_check(char *input);
+int			whitespace_check(char *input);
 
 int			check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i);
 int			check_redirect(t_mini *mini, t_statement *command);

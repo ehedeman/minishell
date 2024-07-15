@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 12:52:43 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/12 15:40:52 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:05:51 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,19 @@ void	ft_print(t_mini *mini, t_statement *current)
 		temp = temp->next;
 		free(nbr);
 	}
+}
+
+int	whitespace_check(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (!is_spaces(input[i]))
+			return (0);
+		i++;
+	}
+	free(input);
+	return (1);
 }
