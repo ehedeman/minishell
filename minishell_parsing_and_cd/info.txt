@@ -86,7 +86,7 @@ characters in the quoted sequence.
 • Handle " (double quote) which should prevent the shell from interpreting the meta-
 characters in the quoted sequence except for $ (dollar sign).
 
-ex: 
+examples:
 
 echo "This is a double quote: \" and a backslash: \\."
 
