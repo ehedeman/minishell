@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 18:04:01 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:34:00 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef enum e_operator {
 	RDR_INPUT = 3,
 	RDR_INPUT_UNTIL = 4,
 	PIPE = 5,
-	SKIP = 6,
+//	SKIP = 6,
 }			t_operator;
 
 typedef enum e_errors {

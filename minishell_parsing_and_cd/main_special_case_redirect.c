@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:28:14 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 16:34:06 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:34:29 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	check_commands_rdr(t_statement *temp, t_mini *mini, int fd, int i)
 				return (-1);
 			break ;
 		}
-		else if (temp->operator != SKIP)
+		else// if (temp->operator != SKIP)
 		{
 			if (exec_command(temp, mini) == -1)
 				return (-1);

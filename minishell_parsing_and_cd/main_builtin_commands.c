@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 18:30:29 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:38:49 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 			i = check_builtins(temp, mini, i, fd);
 			if (i >= temp->argc)
 				break ;
-			if (!!ft_strncmp(temp->argv[i], "./", 2) || !!ft_strncmp(temp->argv[i], "/", 1))
+			if (!ft_strncmp(temp->argv[i], "./", 2) || !ft_strncmp(temp->argv[i], "/", 1))
 			{
 				if (exec_file(temp, mini) == -1)
 					exit(0);
 				break ;
 			}
-			else if (temp->operator != SKIP)
+			else //if (temp->operator != SKIP)
 			{
 				if (exec_command(temp, mini) == -1)
 					exit(0);
