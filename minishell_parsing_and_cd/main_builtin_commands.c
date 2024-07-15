@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 16:37:29 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:22:07 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int	check_builtins(t_statement *temp, t_mini *mini, int i, int fd) // needs to r
 	}
 	else if (ft_strncmp(temp->argv[i], "cd", ft_strlen(temp->argv[i])) == 0)
 	{
-		if (ft_cd(temp, i))
-			i = temp->argc;
+		ft_cd(temp, i);
+		i = temp->argc;
 	} //skips the path after use
 	else if (ft_strncmp(temp->argv[i], "pwd", ft_strlen(temp->argv[i])) == 0)
 		ft_pwd(fd);
