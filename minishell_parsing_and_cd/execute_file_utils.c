@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:04:56 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/12 15:39:00 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:22:51 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	free_env_args(char **envp, char **args, int arg_zero)
 	if (arg_zero)
 	{
 		if (arg_zero == 2)
-			printf("minishell: %s\n", strerror(errno));
+			printf("minishell: Command not found.\n");
 		free(args[0]);
 	}
 	free(args);

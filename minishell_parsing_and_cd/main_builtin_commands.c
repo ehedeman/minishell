@@ -6,16 +6,11 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 16:13:14 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:37:29 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static int	compare()
-// {
-	
-// }
 
 int	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 {
@@ -30,14 +25,13 @@ int	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 			if (!ft_strncmp(temp->argv[i], "./", 2) || !ft_strncmp(temp->argv[i], "/", 1))
 			{
 				if (exec_file(temp, mini) == -1)
-					return (-1);
+					exit(0);
 				break ;
 			}
 			else if (temp->operator != SKIP)
 			{
 				if (exec_command(temp, mini) == -1)
-					return (-1);
-				return (0);
+					exit(0);
 			}
 			i++;
 		}
@@ -52,28 +46,28 @@ int	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 
 int	check_builtins(t_statement *temp, t_mini *mini, int i, int fd) // needs to return i so other thing knows what word we're at
 {
-	if (ft_strncmp(temp->argv[i], "echo", 4) == 0)
+	if (ft_strncmp(temp->argv[i], "echo", ft_strlen(temp->argv[i])) == 0)
 	{
 		ft_echo(mini, temp, fd, i);
 		i = temp->argc;
 	}
-	else if (ft_strncmp(temp->argv[i], "cd", 2) == 0)
+	else if (ft_strncmp(temp->argv[i], "cd", ft_strlen(temp->argv[i])) == 0)
 	{
 		if (ft_cd(temp, i))
 			i = temp->argc;
 	} //skips the path after use
-	else if (ft_strncmp(temp->argv[i], "pwd", 3) == 0)
+	else if (ft_strncmp(temp->argv[i], "pwd", ft_strlen(temp->argv[i])) == 0)
 		ft_pwd(fd);
-	else if (ft_strncmp(temp->argv[i], "exit", 5) == 0)
+	else if (ft_strncmp(temp->argv[i], "exit", ft_strlen(temp->argv[i])) == 0)
 		ft_exit(mini);
-	else if (ft_strncmp(temp->argv[i], "env", 3) == 0 && !temp->argv[i + 1])
+	else if (ft_strncmp(temp->argv[i], "env", ft_strlen(temp->argv[i])) == 0 && !temp->argv[i + 1])
 		return (ft_print_env_lst(mini->env));
-	else if (ft_strncmp(temp->argv[i], "export", 6) == 0)
+	else if (ft_strncmp(temp->argv[i], "export", ft_strlen(temp->argv[i])) == 0)
 	{
 		ft_export(mini);
 		i = temp->argc;
 	}
-	else if (ft_strncmp(temp->argv[i], "unset", 5) == 0)
+	else if (ft_strncmp(temp->argv[i], "unset", ft_strlen(temp->argv[i])) == 0)
 	{
 		while (temp->argv[i])
 		{
