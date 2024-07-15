@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 18:38:49 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 19:23:42 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 		while (i < temp->argc && *temp->argv && fd != -1)
 		{
 			i = check_builtins(temp, mini, i, fd);
-			if (i >= temp->argc)
+			if (i == 1)
 				break ;
 			if (!ft_strncmp(temp->argv[i], "./", 2) || !ft_strncmp(temp->argv[i], "/", 1))
 			{
@@ -29,7 +29,7 @@ int	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 					exit(0);
 				break ;
 			}
-			else //if (temp->operator != SKIP)
+			else
 			{
 				if (exec_command(temp, mini) == -1)
 					exit(0);
@@ -48,29 +48,17 @@ int	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 int	check_builtins(t_statement *temp, t_mini *mini, int i, int fd) // needs to return i so other thing knows what word we're at
 {
 	if (!ft_strncmp(temp->argv[i], "echo", ft_strlen(temp->argv[i])))
-	{
 		ft_echo(mini, temp, fd, i);
-		i = temp->argc;
-	}
 	else if (!ft_strncmp(temp->argv[i], "cd", ft_strlen(temp->argv[i])))
-	{
 		ft_cd(temp, i);
-		i = temp->argc;
-	} //skips the path after use
 	else if (!ft_strncmp(temp->argv[i], "pwd", ft_strlen(temp->argv[i])))
 		ft_pwd(fd);
 	else if (!ft_strncmp(temp->argv[i], "exit", ft_strlen(temp->argv[i])))
 		ft_exit(mini);
 	else if (!ft_strncmp(temp->argv[i], "env", ft_strlen(temp->argv[i])) && !temp->argv[i + 1])
-	{
 		ft_print_env_lst(mini->env);
-		i = temp->argc;
-	}
 	else if (!ft_strncmp(temp->argv[i], "export", ft_strlen(temp->argv[i])))
-	{
 		ft_export(mini);
-		i = temp->argc;
-	}
 	else if (!ft_strncmp(temp->argv[i], "unset", ft_strlen(temp->argv[i])))
 	{
 		while (temp->argv[i])
@@ -78,8 +66,8 @@ int	check_builtins(t_statement *temp, t_mini *mini, int i, int fd) // needs to r
 			ft_unset(mini->env, temp->argv[i]);
 			i++;
 		}
-		i = temp->argc;
 	}
-	i++;
-	return (i);
+	else
+		return (0);
+	return (1);
 }
