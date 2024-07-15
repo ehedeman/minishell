@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 22:23:35 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/14 17:18:38 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/15 21:10:35 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,25 @@ char	*get_env_value(const char *var_name, t_mini *mini)
 	return (NULL);
 }
 
+char	*extract_var_name_braces(char *arg)
+{
+	char	*var_name;
+	char	*start;
+	char	*end;
+	int		len;
+
+	start = arg + 2; // Skip ${
+	end = ft_strchr(start, '}');
+	if (!end)
+		return (NULL); // No closing brace
+	len = end - start;
+	var_name = (char *)malloc(len + 1);
+	if (!var_name)
+		return (NULL);
+	ft_strlcpy(var_name, start, len + 1);
+	return (var_name);
+}
+
 // Replace environment variables in args
 void	replace_env_vars(char **args, t_mini *mini)
 {
@@ -61,16 +80,34 @@ void	replace_env_vars(char **args, t_mini *mini)
 	{
 		if (starts_with_dollar(args[i]))
 		{
-			var_name = extract_var_name(args[i]);
-			if (var_name != NULL)
+			if (args[i][1] == '{') // Check if it starts with ${
 			{
-				var_value = get_env_value(var_name, mini);
-				if (var_value != NULL)
+				// Extract variable name within the braces
+				var_name = extract_var_name_braces(args[i]);
+				if (var_name != NULL)
 				{
-					free(args[i]);
-					args[i] = ft_strdup(var_value);
+					var_value = get_env_value(var_name, mini);
+					if (var_value != NULL)
+					{
+						free(args[i]);
+						args[i] = ft_strdup(var_value);
+					}
+					free(var_name);
 				}
-				free(var_name);
+			}
+			else // Handle the case without braces
+			{
+				var_name = extract_var_name(args[i]);
+				if (var_name != NULL)
+				{
+					var_value = get_env_value(var_name, mini);
+					if (var_value != NULL)
+					{
+						free(args[i]);
+						args[i] = ft_strdup(var_value);
+					}
+					free(var_name);
+				}
 			}
 		}
 		i++;
