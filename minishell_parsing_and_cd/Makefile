@@ -6,7 +6,7 @@
 #    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/15 15:49:11 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/07/15 17:46:18 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRC = 	main.c							\
 		main_utils.c					\
 		main_builtin_commands.c			\
 		main_special_case_redirect.c	\
+		main_special_case_path.c		\
 		input_check.c					\
 		parsing.c						\
 		parsing_utils.c					\

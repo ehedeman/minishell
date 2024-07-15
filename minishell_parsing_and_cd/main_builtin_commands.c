@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 17:22:07 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:47:44 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 {
 	while (temp)
 	{
+		check_for_path_quoted(temp);
 		fd = check_redirect(mini, temp); //standart is 1, if its got redirection then its set new
 		while (i < temp->argc && *temp->argv && fd != -1)
 		{

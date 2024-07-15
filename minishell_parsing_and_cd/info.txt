@@ -67,7 +67,7 @@ $?: working on it
 
 ehedeman>
 redirect_input_until
-"> fkhekfh echo hello" thing
+"> fkhekfh echo hello" thing -> done
 use linklist for envp in exec_command/file ->done
 
 (also exec_command is now split into execute_file.c and execute_file_utils.c, 
