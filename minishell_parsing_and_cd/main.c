@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 18:01:55 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 19:29:33 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ int	check_command(t_mini *mini)
 	t_statement *temp;
 	//t_mini		*testmini;
 	int fd;
-	int	i;
+	//int	i;
 
 	mini->temp = mini->com_tab;
 	temp = mini->temp;
-	i = 0;
+	//i = 0;
 	fd = 0;
 	if (check_command_after_file_rdr(temp))
 		temp = command_after_file_rdr(temp, mini);
@@ -101,7 +101,7 @@ int main (int argc, char **argv, char **envp)
 	mini.input = NULL;
 	g_exec_file = 0;
 	//just as example, have to make sure at every possible exit the value is stored in the struct so echo can acess it
-//	mini.exit_status = 42;
+	mini.exit_status = 42;
 	while (1)
 	{
 		mini.input = readline("minishell: ");
@@ -109,13 +109,12 @@ int main (int argc, char **argv, char **envp)
 		if (!mini.input)
 		{
 			mini.com_tab = NULL;
-			//mini.env = NULL;
 			ft_exit(&mini);
 		}
 		if (*mini.input)
 		{
 			if (whitespace_check(mini.input))
-				break ;
+				continue ;
 			if (input_check(mini.input))
 			{
 				add_history(mini.input);
@@ -136,7 +135,6 @@ int main (int argc, char **argv, char **envp)
 					free_com_tab(&mini);
 			}
 		}
-		//ft_env_lst_clear(mini.env, free);
 	}
 	return (0);
 }
