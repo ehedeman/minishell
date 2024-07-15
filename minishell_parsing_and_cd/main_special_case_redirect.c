@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:28:14 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 15:41:44 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:34:06 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ int	check_command_after_file_rdr(t_statement *temp)
 {
 	if (!*temp->argv)
 	{
+		while ((temp->operator == RDR_OUT_REPLACE
+			|| temp->operator == RDR_OUT_APPEND) && temp->next->next)
+			temp = temp->next;
 		if (temp->next->argc > 1)
 			return (1);
 	}
