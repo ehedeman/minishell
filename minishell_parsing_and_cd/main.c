@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/12 15:42:15 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:41:57 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,72 +69,11 @@ int	check_command(t_mini *mini)
 
 	mini->temp = mini->com_tab;
 	temp = mini->temp;
-	while (temp)
-	{
-		i = 0;
-		fd = check_redirect(mini, temp); //standart is 1, if its got redirection then its set new
-		while (i < temp->argc && *temp->argv && fd != -1)
-		{
-			if (!ft_strncmp(temp->argv[i], "./", 2) || !ft_strncmp(temp->argv[i], "/", 1))
-			{
-				if (exec_file(temp, mini) == -1)
-					return (-1);
-				break ;
-			}
-			if (ft_strncmp(temp->argv[i], "cd", 2) == 0)
-			{
-				if (ft_cd(temp, i))
-					return (0);
-				if (temp->argv[i + 1])
-					i++;
-			} //skips the path after use
-			else if (ft_strncmp(temp->argv[i], "pwd", 3) == 0)
-				ft_pwd(fd);
-			else if (ft_strncmp(temp->argv[i], "exit", 5) == 0)
-				ft_exit(mini);
-			else if (ft_strncmp(temp->argv[i], "ft_print", 5) == 0)
-			{
-				ft_print(mini, temp);
-				if (temp->operator == NONE)
-					return (0);
-			}
-			else if (ft_strncmp(temp->argv[i], "echo", 4) == 0)
-			{
-				ft_echo(temp, fd, i);
-				break ;
-			}
-			else if (ft_strncmp(temp->argv[i], "env", 3) == 0 && !temp->argv[i + 1])
-				return (ft_print_env_lst(mini->env));
-			else if (ft_strncmp(temp->argv[i], "export", 6) == 0)
-			{
-				//return(ft_export(mini));
-				ft_export(mini);
-				// printf("LIST AFTER EXPORT:\n");
-				// ft_print_env_lst(mini->env);
-				return (0);
-			}
-			else if (ft_strncmp(temp->argv[i], "unset", 5) == 0)
-			{
-				while (temp->argv[i])
-				{
-					ft_unset(mini->env, temp->argv[i]);
-					i++;
-				}
-				return (0);
-			}
-			else if (temp->operator != SKIP)
-			{
-				if (exec_command(temp, mini) == -1)
-					return (-1);
-				return (0);
-			}
-			i++;
-		}
-		temp = mini->temp;
-		if (fd != 1 && fd != 2)
-			close(fd);
-		temp = temp->next;
-	}
+	i = 0;
+	fd = 0;
+	if (check_command_after_file_rdr(temp))
+		temp = command_after_file_rdr(temp, mini);
+	check_commands_loop(temp, mini, fd, 0);
 	// printf("\n\nLIST BEFORE RETURNING FROM CHECK_COM:\n");
 	// ft_print_env_lst(mini->env);
 	return (0);

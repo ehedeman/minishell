@@ -6,18 +6,20 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:28:15 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/03 15:00:48 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/12 16:27:44 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_echo(t_statement *temp, int fd, int i)
+int	ft_echo(t_statement *temp, int fd, int i)
 {
 	bool newline;
 
 	newline = false;
 	i++;
+	if (!temp->argv[i])
+		return (main_error(SYNTAX_ERR));
 	if (!ft_strncmp(temp->argv[i], "-n", 2) && !temp->argv[i][2])
 	{
 		newline = true;
@@ -32,4 +34,5 @@ void	ft_echo(t_statement *temp, int fd, int i)
 	}
 	if (!newline)
 		write(fd, "\n", 1);
+	return (0);
 }

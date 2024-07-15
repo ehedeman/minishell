@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/12 15:28:26 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:42:07 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 #define REDIRECTS "<>"
 
 #define UNCLOSED_QUOTES "minishell: syntax error unclosed quotes.\n"
+#define SYNTAX_ERR_STR "minishell: syntax error.\n"
 #define MISSMATCHED_QUOTES "minishell: syntax error missmatched quotes.\n"
 #define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token '.\n"
 #define UNFINISHED_OUT_RED "minishell: syntax error near unexpected token '>'.\n"
@@ -99,44 +100,50 @@ int			ft_cd(t_statement *temp, int i);
 int			ft_pwd(int fd);
 void		ft_exit(t_mini *mini);
 void		free_com_tab(t_mini *mini);
-bool 		input_check(char *input);
+bool		input_check(char *input);
+
+int			check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i);
+int			check_redirect(t_mini *mini, t_statement *command);
+int			check_builtins(t_statement *temp, t_mini *mini, int i, int fd) ;
+t_statement	*command_after_file_rdr(t_statement *temp, t_mini *mini);
+int			check_command_after_file_rdr(t_statement *temp);
 
 int			get_fd(t_statement *temp);
-void		ft_echo(t_statement *temp, int fd, int i);
+int			ft_echo(t_statement *temp, int fd, int i);
 
 void		ft_print(t_mini *mini, t_statement *current);
 int			main_error(int errnum);
 
-int	redirect_input(t_statement *command, t_statement *temp, t_mini *mini);
+int			redirect_input(t_statement *command, t_statement *temp, t_mini *mini);
 
-int		exec_file(t_statement *temp, t_mini *mini);
-int		exec_command(t_statement *temp, t_mini *mini);
-int		free_env_args(char **envp, char **args, int arg_zero);//frees the envp and args from the functions above
-int		exec_com_fork(t_statement *temp, char **envp, char **args, pid_t pid); //split half of exec_command | norm accurate
-int		exec_file_fork(t_statement *temp, char **envp, char **args, pid_t pid);//split half of exec_file | norma accurate
+int			exec_file(t_statement *temp, t_mini *mini);
+int			exec_command(t_statement *temp, t_mini *mini);
+int			free_env_args(char **envp, char **args, int arg_zero);//frees the envp and args from the functions above
+int			exec_com_fork(t_statement *temp, char **envp, char **args, pid_t pid); //split half of exec_command | norm accurate
+int			exec_file_fork(t_statement *temp, char **envp, char **args, pid_t pid);//split half of exec_file | norma accurate
 
 //env functions
-void	ft_copy_env2lst(t_mini *mini, char **envp);
+void		ft_copy_env2lst(t_mini *mini, char **envp);
 
 //env list functions
-void	ft_env_lst_addback(t_env_list **lst, t_env_list *new);
+void		ft_env_lst_addback(t_env_list **lst, t_env_list *new);
 t_env_list *ft_env_lst_new(char *key, char *value);
 
 //print env
-int	ft_print_env_lst(t_env_list *env);
+int			ft_print_env_lst(t_env_list *env);
 
 //export
-int	ft_export(t_mini *mini);
-void print_sorted_env_vars(t_env_list *env, char **env_array, int count);
-char **copy_env_vars(t_env_list *env, int count);
-int count_env_vars(t_env_list *env);
-void sort_env_array(char **arr, int n);
+int			ft_export(t_mini *mini);
+void		print_sorted_env_vars(t_env_list *env, char **env_array, int count);
+char		**copy_env_vars(t_env_list *env, int count);
+int			count_env_vars(t_env_list *env);
+void		sort_env_array(char **arr, int n);
 
 //unset
-int	ft_unset(t_env_list *env, char *target_name);
+int			ft_unset(t_env_list *env, char *target_name);
 
 //changed the free function so it also del the content of the nodes
-void	ft_env_lst_clear(t_env_list *lst, void (*del)(void *)); 
+void		ft_env_lst_clear(t_env_list *lst, void (*del)(void *)); 
 
 //expansion $
-void	replace_env_vars(char **args);
+void		replace_env_vars(char **args);

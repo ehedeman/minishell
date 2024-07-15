@@ -6,31 +6,33 @@
 #    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/12 14:31:05 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/07/15 15:34:06 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = minishell
-SRC = 	main.c					\
-		main_utils.c			\
-		input_check.c			\
-		parsing.c				\
-		parsing_utils.c			\
-		p_list_utils.c			\
-		cd.c					\
-		exit.c					\
-		pwd.c					\
-		echo.c					\
-		redirect_out.c			\
-		redirect_in.c			\
-		execute_file.c			\
-		execute_file_utils.c	\
-		env.c					\
-		env_list_utils.c		\
-		export.c				\
-		export_utils.c			\
-		unset.c					\
+SRC = 	main.c							\
+		main_utils.c					\
+		main_builtin_commands.c			\
+		main_special_case_redirect.c	\
+		input_check.c					\
+		parsing.c						\
+		parsing_utils.c					\
+		p_list_utils.c					\
+		cd.c							\
+		exit.c							\
+		pwd.c							\
+		echo.c							\
+		redirect_out.c					\
+		redirect_in.c					\
+		execute_file.c					\
+		execute_file_utils.c			\
+		env.c							\
+		env_list_utils.c				\
+		export.c						\
+		export_utils.c					\
+		unset.c							\
 		arg_expansion.c
 OBJS = $(SRC:.c=.o)
 OBJS_DIR = objs/
