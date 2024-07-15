@@ -6,25 +6,27 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 17:28:40 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 17:50:02 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:59:14 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	remove_quotes_path(t_statement *temp, int i)
+int	remove_quotes_path(t_statement *temp, int i)
 {
 	char	*temp_pointer;
+	char	buff[4000];
 
 	temp_pointer = temp->argv[i];
-	temp->argv[i] = malloc(sizeof(char) * 6);
+	temp->argv[i] = malloc(sizeof(char) * ft_strlen(temp->argv[i]) - 1);
 	if (!temp->argv[i])
 	{
 		printf("minishell: System Error.\n");
 		temp->argv[i] = temp_pointer;
 		return (-1);
 	}
-	ft_strlcpy(temp->argv[i], "$PATH", 6);
+	ft_strlcpy(buff, &temp_pointer[1], ft_strlen(temp->argv[i]));
+	ft_strlcpy(temp->argv[i], buff, ft_strlen(temp->argv[i]));
 	free(temp_pointer);
 	return (0);
 }
@@ -46,7 +48,7 @@ int	check_for_path_quoted(t_statement *temp)
 		echo_found = false;
 	while (temp->argv[i])
 	{
-		if (!ft_strcmp(temp->argv[i], "'$PATH'") && !echo_found)
+		if (!ft_strncmp(temp->argv[i], "'$", 2) && !echo_found)
 			remove_quotes_path(temp, i);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 11:57:45 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 16:50:32 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:43:38 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ static int	remove_quotes_size(char *parsed)
 
 	i = 0;
 	size = 0;
-	if (!ft_strncmp(parsed, "'$PATH'", ft_strlen(parsed)))
-		return (7);
+	if (!ft_strncmp(parsed, "'$", 2))
+		return (ft_strlen(parsed));
 	while (parsed[i])
 	{
 		while (parsed[i] && is_onstr(QUOTES, parsed[i]))
@@ -101,9 +101,9 @@ char *remove_quotes(char *parsed)
 		parsing_error(MALLOC_ERR);
 		return (NULL);
 	}
-	if (!ft_strncmp(parsed, "'$PATH'", ft_strlen(parsed)))
+	if (!ft_strncmp(parsed, "'$", 2))
 	{
-		ft_strlcpy(unquoted_parsed, parsed, 8);
+		ft_strlcpy(unquoted_parsed, parsed, ft_strlen(parsed) + 1);
 		free(parsed);
 		return (unquoted_parsed);
 	}
