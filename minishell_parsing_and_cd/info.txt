@@ -85,5 +85,23 @@ should we fix in the parsing? subject says:
 characters in the quoted sequence.
 • Handle " (double quote) which should prevent the shell from interpreting the meta-
 characters in the quoted sequence except for $ (dollar sign).
+
+ex: 
+
+echo "This is a double quote: \" and a backslash: \\."
+
+echo "Current directory is `pwd`."
+
+echo 'Hello $USER, today is $(date).'
+should print: Hello $USER, today is $(date).
+
+USER=smatschu
+echo "Hello $USER, today is $(date)."
+should print sth like: Hello smatschu, today is Mo 15. Jul 18:xx:xx CEST 2024.
+
+echo "This is a double quote: \" and a backslash: \\."
+should print: This is a double quote: " and a backslash: \.
+
+
 [	]$PATH $? is printing, but $PATH$? not yet
 [	]for $?, at every possible exit, update exit value in mini struct
