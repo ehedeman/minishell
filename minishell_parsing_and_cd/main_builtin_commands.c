@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 15:27:53 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:13:14 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,13 @@ int	check_builtins(t_statement *temp, t_mini *mini, int i, int fd) // needs to r
 {
 	if (ft_strncmp(temp->argv[i], "echo", 4) == 0)
 	{
-		ft_echo(temp, fd, i);
+		ft_echo(mini, temp, fd, i);
 		i = temp->argc;
 	}
 	else if (ft_strncmp(temp->argv[i], "cd", 2) == 0)
 	{
 		if (ft_cd(temp, i))
 			i = temp->argc;
-		if (temp->argv[i + 1])
-			i++;
 	} //skips the path after use
 	else if (ft_strncmp(temp->argv[i], "pwd", 3) == 0)
 		ft_pwd(fd);
@@ -72,10 +70,7 @@ int	check_builtins(t_statement *temp, t_mini *mini, int i, int fd) // needs to r
 		return (ft_print_env_lst(mini->env));
 	else if (ft_strncmp(temp->argv[i], "export", 6) == 0)
 	{
-		//return(ft_export(mini));
 		ft_export(mini);
-		// printf("LIST AFTER EXPORT:\n");
-		// ft_print_env_lst(mini->env);
 		i = temp->argc;
 	}
 	else if (ft_strncmp(temp->argv[i], "unset", 5) == 0)

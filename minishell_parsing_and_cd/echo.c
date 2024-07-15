@@ -6,19 +6,19 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:28:15 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 15:50:24 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:12:20 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_echo(t_statement *temp, int fd, int i)
+void	ft_echo(t_mini *mini, t_statement *temp, int fd, int i)
 {
 	bool newline;
 
 	newline = false;
 	i++;
-	if (!ft_strncmp(temp->argv[i], "-n", 2) && !temp->argv[i][2])
+	if (temp->argv[i] && !ft_strncmp(temp->argv[i], "-n", 2) && !temp->argv[i][2])
 	{
 		newline = true;
 		i++;
@@ -35,5 +35,4 @@ int	ft_echo(t_statement *temp, int fd, int i)
 	}
 	if (!newline)
 		write(fd, "\n", 1);
-	return (0);
 }

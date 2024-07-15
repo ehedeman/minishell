@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   env_list_print.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:14:40 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/14 15:46:07 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:15:49 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //in Bash env prints the var in the order they were defined in the environment
-int	print_env_lst(t_env_list *env)
+int	ft_print_env_lst(t_env_list *env)
 {
 	t_env_list	*node;
 

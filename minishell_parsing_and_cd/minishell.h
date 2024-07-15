@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 15:49:35 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:15:38 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,9 @@ typedef struct	s_mini
 	t_statement	*com_tab;
 	t_statement *temp;
 	t_env_list	*env; //linked list of env var names and values
-}				t_mini;  //maybe i'll find a better way for now thats the way
+	int	exit_status;
+}				t_mini;
+
 
 t_statement *parsing(char *input, int i, int j);
 int			is_onstr(const char *str, int c);
@@ -107,7 +109,7 @@ t_statement	*command_after_file_rdr(t_statement *temp, t_mini *mini);
 int			check_command_after_file_rdr(t_statement *temp);
 
 int			get_fd(t_statement *temp);
-int			ft_echo(t_statement *temp, int fd, int i);
+void		ft_echo(t_mini *mini, t_statement *temp, int fd, int i);
 
 void		ft_print(t_mini *mini, t_statement *current);
 int			main_error(int errnum);
@@ -119,10 +121,10 @@ int			exec_command(t_statement *temp, t_mini *mini);
 int			free_env_args(char **envp, char **args, int arg_zero);//frees the envp and args from the functions above
 int			exec_com_fork(t_statement *temp, char **envp, char **args, pid_t pid); //split half of exec_command | norm accurate
 int			exec_file_fork(t_statement *temp, char **envp, char **args, pid_t pid);//split half of exec_file | norma accurate
-int			redirect_input(t_statement *command, t_statement *temp);
 
-int			exec_file(t_statement *temp);
-int			exec_command(t_statement *temp);
+int			exec_file(t_statement *temp, t_mini *mini);
+int			exec_command(t_statement *temp, t_mini *mini);
+
 
 //env functions
 void		ft_copy_env2lst(t_mini *mini, char **envp);
@@ -159,5 +161,5 @@ int			ft_unset(t_env_list *env, char *target_name);
 void		ft_env_lst_clear(t_env_list *lst, void (*del)(void *)); 
 
 //expansion $
-void		replace_env_vars(char **args);
+//void		replace_env_vars(char **args);
 void		replace_env_vars(char **args, t_mini *mini);
