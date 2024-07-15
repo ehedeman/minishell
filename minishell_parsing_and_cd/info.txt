@@ -76,7 +76,7 @@ use linklist for envp in exec_command/file
 
 
 TO DO:
-[	]test only spaces is giving segv
+[ x ]test only spaces is giving segv (leaks from env link list, please add nesecary free's to main())
 [	]tab is running ls ? (ehedeman: that is a readline quirk according to internet)
 [	]"echo test" should give command not found, instead is runnign echo
 [	]$PATH: '$PATH' should not work, should only print $PATH. $PATH and "$PATH" are ok.
