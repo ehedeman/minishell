@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:23:25 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 13:35:10 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:34:40 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	reset_stdin(int old_fd)
 {
-	if (dup2(0 , old_fd) < 0)
+	if (dup2(0, old_fd) < 0)
 		return (main_error(-1));
 	close(old_fd);
 	return (0);
@@ -22,13 +22,11 @@ int	reset_stdin(int old_fd)
 
 static int	redirect_in(t_statement *command, t_statement *temp, t_mini *mini)
 {
-	int fd_cpy;
-	int fd;
+	int		fd_cpy;
+	int		fd;
 	pid_t	pid;
-	int	status;
+	int		status;
 
-	if (!*temp->argv)
-		return (-1);
 	pid = fork();
 	if (pid == -1)
 		return (main_error(-1));
@@ -36,20 +34,13 @@ static int	redirect_in(t_statement *command, t_statement *temp, t_mini *mini)
 	{
 		fd = open(temp->next->argv[0], O_RDONLY);
 		if (fd < 0)
-		{
-			printf("minishell: %s\n", strerror(errno));
-			exit(0);
-		}
+			exit(printf("minishell: %s\n", strerror(errno)));
 		command->next = temp;
 		fd_cpy = dup2(fd, 0);
 		if (fd_cpy < 0)
-		{
-			close (fd);
-			exit(0);
-		}
+			exit(close (fd));
 		exec_command(command, mini);
-		if (reset_stdin(fd) < 0)
-			exit(0);
+		reset_stdin(fd);
 		exit(0);
 	}
 	else
@@ -59,9 +50,9 @@ static int	redirect_in(t_statement *command, t_statement *temp, t_mini *mini)
 
 static int	redirect_in_until(t_statement *temp, int i, int fd, t_mini *mini)
 {
-	char	*end_word;
-	char	**input;
-	t_statement *rm_node;
+	char		*end_word;
+	char		**input;
+	t_statement	*rm_node;
 
 	end_word = temp->next->argv[0];
 	input = init_input();
@@ -78,7 +69,7 @@ static int	redirect_in_until(t_statement *temp, int i, int fd, t_mini *mini)
 	fd = copy_content(input); //creates invisible file, copies content
 	if (fd < 0)
 		return (1);
-	rdr_in_until(temp, mini);
+	rdr_in_until(temp, mini, 0, 0);
 	rm_node = create_rm_node(); // creates node with rm and invisible file name
 	exec_command(rm_node, mini);
 	free_node_input(rm_node, input);

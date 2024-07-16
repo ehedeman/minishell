@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:28:14 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 18:34:29 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:03:23 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ static int	check_commands_rdr(t_statement *temp, t_mini *mini, int fd, int i)
 {
 	while (i < temp->argc && *temp->argv && fd != -1)
 	{
-		i = check_builtins(temp, mini, i, fd);
-		if (i >= temp->argc)
+		if (check_builtins(temp, mini, i, fd))
 			break ;
 		if (!ft_strncmp(temp->argv[i], "./", 2)
 			|| !ft_strncmp(temp->argv[i], "/", 1))
@@ -28,8 +27,7 @@ static int	check_commands_rdr(t_statement *temp, t_mini *mini, int fd, int i)
 		}
 		else// if (temp->operator != SKIP)
 		{
-			if (exec_command(temp, mini) == -1)
-				return (-1);
+			exec_command(temp, mini);
 			return (0);
 		}
 		i++;

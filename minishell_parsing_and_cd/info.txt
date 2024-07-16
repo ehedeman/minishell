@@ -66,7 +66,7 @@ $?: working on it
 
 
 ehedeman>
-redirect_input_until
+redirect_input_until -> done and norminetter friendly
 "> fkhekfh echo hello" thing -> done
 use linklist for envp in exec_command/file ->done
 

@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:09:40 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 13:34:29 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:31:09 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@
 
 int	copy_content(char **input)
 {
-	int	fd;
-	mode_t mode;
-	int	i;
+	int		fd;
+	mode_t	mode;
+	int		i;
 
 	i = 0;
 	mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
@@ -44,7 +44,7 @@ int	copy_content(char **input)
 		printf("minishell: system error.");
 		return (1);
 	}
-	while(input[i])
+	while (input[i])
 	{
 		write(fd, input[i], ft_strlen(input[i]));
 		write(fd, "\n", 1);
@@ -54,9 +54,9 @@ int	copy_content(char **input)
 	return (0);
 }
 
-t_statement *create_rm_node(void)
+t_statement	*create_rm_node(void)
 {
-	t_statement *temp;
+	t_statement	*temp;
 
 	temp = p_new_node(2);
 	if (!temp)
@@ -117,12 +117,10 @@ char	**init_input(void)
 	return (input);
 }
 
-int	rdr_in_until(t_statement *command, t_mini *mini)
+int	rdr_in_until(t_statement *command, t_mini *mini, int fd, int fd_cpy)
 {
-	int fd_cpy;
-	int fd;
 	pid_t	pid;
-	int	status;
+	int		status;
 
 	pid = fork();
 	if (pid == -1)
@@ -131,10 +129,7 @@ int	rdr_in_until(t_statement *command, t_mini *mini)
 	{
 		fd = open(".temp_file", O_RDONLY);
 		if (fd < 0)
-		{
-			printf("minishell: %s\n", strerror(errno));
-			exit(0);
-		}
+			exit(printf("minishell: %s\n", strerror(errno)));
 		fd_cpy = dup2(fd, 0);
 		if (fd_cpy < 0)
 		{

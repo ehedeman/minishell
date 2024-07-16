@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 13:35:28 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:54:24 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void		free_com_tab(t_mini *mini);
 bool		input_check(char *input);
 int			whitespace_check(char *input);
 
-int			check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i);
+void		check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i);
 int			check_redirect(t_mini *mini, t_statement *command);
 int			check_builtins(t_statement *temp, t_mini *mini, int i, int fd) ;
 t_statement	*command_after_file_rdr(t_statement *temp, t_mini *mini);
@@ -126,7 +126,7 @@ t_statement *create_rm_node(void);
 int			copy_content(char **input);
 int			reset_stdin(int old_fd);
 //int			add_argument(t_statement *temp);
-int			rdr_in_until(t_statement *command, t_mini *mini);
+int			rdr_in_until(t_statement *command, t_mini *mini, int fd, int fd_cpy);
 
 int			exec_file(t_statement *temp, t_mini *mini);
 int			exec_command(t_statement *temp, t_mini *mini);

@@ -6,33 +6,40 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 13:19:03 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:00:48 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
+static int	check_execute(t_statement *temp, int i, t_mini *mini)
+{
+	if (!ft_strncmp(temp->argv[i], "./", 2)
+		|| !ft_strncmp(temp->argv[i], "/", 1))
+	{
+		exec_file(temp, mini);
+		return (1);
+	}
+	else
+	{
+		exec_command(temp, mini);
+		return (1);
+	}
+	return (0);
+}
+
+void	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 {
 	while (temp)
 	{
 		check_for_path_quoted(temp);
-		fd = check_redirect(mini, temp); //standart is 1, if its got redirection then its set new
+		fd = check_redirect(mini, temp);
 		while (i < temp->argc && *temp->argv && fd != -1)
 		{
 			if (check_builtins(temp, mini, i, fd))
 				break ;
-			if (!ft_strncmp(temp->argv[i], "./", 2) || !ft_strncmp(temp->argv[i], "/", 1))
-			{
-				if (exec_file(temp, mini) == -1)
-					exit(0);
+			if (check_execute(temp, i, mini))
 				break ;
-			}
-			else
-			{
-				if (exec_command(temp, mini) == -1)
-					exit(0);
-			}
 			i++;
 		}
 		i = 0;
@@ -41,10 +48,9 @@ int	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 			close(fd);
 		temp = temp->next;
 	}
-	return (0);
 }
 
-int	check_builtins(t_statement *temp, t_mini *mini, int i, int fd) // needs to return i so other thing knows what word we're at
+int	check_builtins(t_statement *temp, t_mini *mini, int i, int fd)
 {
 	if (!ft_strncmp(temp->argv[i], "echo", ft_strlen(temp->argv[i])))
 		ft_echo(mini, temp, fd, i);
@@ -54,7 +60,8 @@ int	check_builtins(t_statement *temp, t_mini *mini, int i, int fd) // needs to r
 		ft_pwd(fd);
 	else if (!ft_strncmp(temp->argv[i], "exit", ft_strlen(temp->argv[i])))
 		ft_exit(mini);
-	else if (!ft_strncmp(temp->argv[i], "env", ft_strlen(temp->argv[i])) && !temp->argv[i + 1])
+	else if (!ft_strncmp(temp->argv[i], "env", ft_strlen(temp->argv[i]))
+		&& !temp->argv[i + 1])
 		ft_print_env_lst(mini->env);
 	else if (!ft_strncmp(temp->argv[i], "export", ft_strlen(temp->argv[i])))
 		ft_export(mini);

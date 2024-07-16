@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:04:56 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 13:21:29 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:55:42 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ int	exec_com_fork(t_statement *temp, char **envp, char **args, pid_t pid)
 	}
 	pid = fork();
 	if (pid == -1)
-		return (free_env_args(envp, args, 1));
+		exit(free_env_args(envp, args, 1));
 	else if (pid == 0)
 	{
 		if (execve(args[0], args, envp) == -1)
-			return (free_env_args(envp, args, 2));
+			exit(free_env_args(envp, args, 2));
 	}
 	else
 		waitpid(pid, &status, 0);
@@ -80,11 +80,11 @@ int	exec_file_fork(t_statement *temp, char **envp, char **args, pid_t pid)
 	}
 	pid = fork();
 	if (pid == -1)
-		return (free_env_args(envp, args, 0));
+		exit(free_env_args(envp, args, 0));
 	else if (pid == 0)
 	{
 		if (execve(args[0], args, envp) == -1)
-			return (free_env_args(envp, args, 2));
+			exit(free_env_args(envp, args, 2));
 	}
 	else
 		waitpid(pid, &status, 0);
