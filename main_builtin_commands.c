@@ -6,13 +6,53 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 15:00:48 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:00:32 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_execute(t_statement *temp, int i, t_mini *mini)
+int	check_redirect(t_mini *mini, t_statement *command)
+{
+	int	fd;
+
+	fd = 1;
+	while (1)
+	{
+		if (mini->temp->operator == RDR_OUT_REPLACE ||
+			mini->temp->operator == RDR_OUT_APPEND)
+		{
+			fd = get_fd(mini->temp);
+			if (mini->temp->next->operator == RDR_OUT_REPLACE ||
+				mini->temp->next->operator == RDR_OUT_APPEND)
+				close(fd);
+			else
+			{
+				mini->temp = mini->temp->next;
+				return (fd);
+			}
+		}
+		else if (mini->temp->operator == RDR_INPUT ||
+			mini->temp->operator == RDR_INPUT_UNTIL)
+		{
+			if (mini->temp->next->operator != RDR_INPUT_UNTIL &&
+				mini->temp->next->operator != RDR_INPUT)
+			{
+				redirect_input(command, mini->temp, mini);
+				mini->temp = mini->temp->next;
+				return (-1);
+			}
+		}
+		else
+			break ;
+		if (!mini->temp->next)
+			break ;
+		mini->temp = mini->temp->next;
+	}
+	return (fd);
+}
+ 
+ static int	check_execute(t_statement *temp, int i, t_mini *mini)
 {
 	if (!ft_strncmp(temp->argv[i], "./", 2)
 		|| !ft_strncmp(temp->argv[i], "/", 1))
@@ -28,12 +68,28 @@ static int	check_execute(t_statement *temp, int i, t_mini *mini)
 	return (0);
 }
 
+// static t_statement	*check_pipe(t_statement *temp)
+// {
+// 	if (mini->temp->operator == PIPE)
+// 	{
+// 		do the pipe thing;
+
+// 		check_builtins;
+// 		check_execute;
+		
+// 		run the other pipe 
+// 	}
+// 	temp = temp->next;
+// 	return (temp);
+// }
+
 void	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 {
 	while (temp)
 	{
-		check_for_path_quoted(temp);
+		check_for_dollar_quoted(temp);
 		fd = check_redirect(mini, temp);
+//		temp = check_pipe();
 		while (i < temp->argc && *temp->argv && fd != -1)
 		{
 			if (check_builtins(temp, mini, i, fd))

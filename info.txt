@@ -65,16 +65,6 @@ $?: working on it
 [DONE] delete envp_dup and work only with linked list
 
 
-ehedeman>
-redirect_input_until -> done and norminetter friendly
-"> fkhekfh echo hello" thing -> done
-use linklist for envp in exec_command/file ->done
-
-(also exec_command is now split into execute_file.c and execute_file_utils.c, 
-both are norminette friendly except for the comments still left in it)
-use linklist for envp in exec_command/file
-
-
 TO DO:
 [	]test only spaces is giving segv
 [	]tab is running ls ?
@@ -88,9 +78,7 @@ characters in the quoted sequence except for $ (dollar sign).
 
 examples:
 
-echo "This is a double quote: \" and a backslash: \\."
-
-echo "Current directory is `pwd`."
+(echo "Current directory is `pwd`.") //perhaps not
 
 echo 'Hello $USER, today is $(date).'
 should print: Hello $USER, today is $(date).
@@ -99,9 +87,8 @@ USER=smatschu
 echo "Hello $USER, today is $(date)."
 should print sth like: Hello smatschu, today is Mo 15. Jul 18:xx:xx CEST 2024.
 
-echo "This is a double quote: \" and a backslash: \\."
-should print: This is a double quote: " and a backslash: \.
 
 
 [	]$PATH $? is printing, but $PATH$? not yet
 [	]for $?, at every possible exit, update exit value in mini struct
+[   ]input check for pipe without content

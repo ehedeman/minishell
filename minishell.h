@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 14:54:24 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:29:13 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int			check_redirect(t_mini *mini, t_statement *command);
 int			check_builtins(t_statement *temp, t_mini *mini, int i, int fd) ;
 t_statement	*command_after_file_rdr(t_statement *temp, t_mini *mini);
 int			check_command_after_file_rdr(t_statement *temp);
-int			check_for_path_quoted(t_statement *temp); //checks if its echo '$PATH', if any other command then quotes get removed
+int			check_for_dollar_quoted(t_statement *temp); //checks if its echo '$PATH', if any other command then quotes get removed
 int			remove_quotes_main(t_statement *temp, int i);
 
 int			get_fd(t_statement *temp);

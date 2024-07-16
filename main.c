@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 19:29:33 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:28:03 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,46 +19,6 @@ int g_exec_file;
 // (get_fd is for creating the right type of file if nessecary. else it just
 //  opens the right file)
 
-
-int	check_redirect(t_mini *mini, t_statement *command)
-{
-	int	fd;
-
-	fd = 1;
-	while (1)
-	{
-		if (mini->temp->operator == RDR_OUT_REPLACE ||
-			mini->temp->operator == RDR_OUT_APPEND)
-		{
-			fd = get_fd(mini->temp);
-			if (mini->temp->next->operator == RDR_OUT_REPLACE ||
-				mini->temp->next->operator == RDR_OUT_APPEND)
-				close(fd);
-			else
-			{
-				mini->temp = mini->temp->next;
-				return (fd);
-			}
-		}
-		else if (mini->temp->operator == RDR_INPUT ||
-			mini->temp->operator == RDR_INPUT_UNTIL)
-		{
-			if (mini->temp->next->operator != RDR_INPUT_UNTIL &&
-				mini->temp->next->operator != RDR_INPUT)
-			{
-				redirect_input(command, mini->temp, mini);
-				mini->temp = mini->temp->next;
-				return (-1);
-			}
-		}
-		else if (mini->temp->operator == PIPE || mini->temp->operator == NONE)
-			break ;
-		if (!mini->temp->next)
-			break ;
-		mini->temp = mini->temp->next;
-	}
-	return (fd);
-}
 
 int	check_command(t_mini *mini)
 {

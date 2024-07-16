@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_special_case_path.c                           :+:      :+:    :+:   */
+/*   main_special_case_dollar.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 17:28:40 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 19:03:04 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:29:08 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	remove_quotes_main(t_statement *temp, int i)
 	return (0);
 }
 
-int	check_for_path_quoted(t_statement *temp)
+int	check_for_dollar_quoted(t_statement *temp)
 {
 	int		i;
 	bool	echo_found;
