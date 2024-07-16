@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 17:00:32 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:14:19 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	check_redirect(t_mini *mini, t_statement *command)
 	return (fd);
 }
  
- static int	check_execute(t_statement *temp, int i, t_mini *mini)
+static int	check_execute(t_statement *temp, int i, t_mini *mini)
 {
 	if (!ft_strncmp(temp->argv[i], "./", 2)
 		|| !ft_strncmp(temp->argv[i], "/", 1))
@@ -106,6 +106,15 @@ void	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 	}
 }
 
+int	check_builtins_two(t_statement *temp, int i)
+{
+	if (!ft_strncmp(temp->argv[i], "history", ft_strlen(temp->argv[i])))
+		ft_history();
+	else
+		return (0);
+	return (1);
+}
+
 int	check_builtins(t_statement *temp, t_mini *mini, int i, int fd)
 {
 	if (!ft_strncmp(temp->argv[i], "echo", ft_strlen(temp->argv[i])))
@@ -130,6 +139,6 @@ int	check_builtins(t_statement *temp, t_mini *mini, int i, int fd)
 		}
 	}
 	else
-		return (0);
+		return (check_builtins_two(temp, i));
 	return (1);
 }

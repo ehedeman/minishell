@@ -6,7 +6,7 @@
 #    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/16 15:04:16 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/07/16 17:18:59 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRC = 	main.c							\
 		main_builtin_commands.c			\
 		main_special_case_dollar.c		\
 		input_check.c					\
+		input_check_two.c				\
 		parsing.c						\
 		parsing_utils.c					\
 		p_list_utils.c					\
@@ -24,6 +25,7 @@ SRC = 	main.c							\
 		exit.c							\
 		pwd.c							\
 		echo.c							\
+		history.c						\
 		redirect_out.c					\
 		redirect_in.c					\
 		redirect_in_until_utils.c		\

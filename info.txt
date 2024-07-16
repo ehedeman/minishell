@@ -67,7 +67,7 @@ $?: working on it
 
 TO DO:
 [	]test only spaces is giving segv
-[	]tab is running ls ?
+[	]tab is running ls ? (readline does that, dont know if we can change that)
 [	]"echo test" should give command not found, instead is runnign echo
 [	]$PATH: '$PATH' should not work, should only print $PATH. $PATH and "$PATH" are ok.
 should we fix in the parsing? subject says:
@@ -92,3 +92,4 @@ should print sth like: Hello smatschu, today is Mo 15. Jul 18:xx:xx CEST 2024.
 [	]$PATH $? is printing, but $PATH$? not yet
 [	]for $?, at every possible exit, update exit value in mini struct
 [   ]input check for pipe without content
+[   ] history command is there but not working

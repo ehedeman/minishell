@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 16:29:13 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:25:57 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 #define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token '.\n"
 #define UNFINISHED_OUT_RED "minishell: syntax error near unexpected token '>'.\n"
 #define UNFINISHED_IN_RED "minishell: syntax error near unexpected token '<'.\n"
+#define UNFINISHED_PIPE "minishell: syntax error near unexpected token '|'.\n"
 #define FAILED_MALLOC "minishell: failed to allocate needed memory.\n"
 #define FAILED_PATH "minishell: failed to find path.\n"
 #define FAILED_FORK "minishell: system error regarding forks\n"
@@ -101,6 +102,7 @@ int			ft_pwd(int fd);
 void		ft_exit(t_mini *mini);
 void		free_com_tab(t_mini *mini);
 bool		input_check(char *input);
+bool		input_check_two(char *input, bool valid);
 int			whitespace_check(char *input);
 
 void		check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i);
@@ -113,6 +115,8 @@ int			remove_quotes_main(t_statement *temp, int i);
 
 int			get_fd(t_statement *temp);
 void		ft_echo(t_mini *mini, t_statement *temp, int fd, int i);
+
+void		ft_history(void);
 
 void		ft_print(t_mini *mini, t_statement *current);
 int			main_error(int errnum);
