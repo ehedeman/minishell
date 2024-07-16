@@ -6,7 +6,7 @@
 #    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/15 17:46:18 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/07/16 12:58:30 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC = 	main.c							\
 		echo.c							\
 		redirect_out.c					\
 		redirect_in.c					\
+		redirect_in_until_utils.c		\
 		execute_file.c					\
 		execute_file_utils.c			\
 		env.c							\

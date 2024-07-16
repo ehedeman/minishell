@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 19:02:53 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/16 13:35:28 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,15 @@ void		ft_print(t_mini *mini, t_statement *current);
 int			main_error(int errnum);
 
 int			redirect_input(t_statement *command, t_statement *temp, t_mini *mini);
+
+//functions for redirect_input_until()
+char		**init_input(void);
+void		free_node_input(t_statement *temp, char **input);
+t_statement *create_rm_node(void);
+int			copy_content(char **input);
+int			reset_stdin(int old_fd);
+//int			add_argument(t_statement *temp);
+int			rdr_in_until(t_statement *command, t_mini *mini);
 
 int			exec_file(t_statement *temp, t_mini *mini);
 int			exec_command(t_statement *temp, t_mini *mini);
