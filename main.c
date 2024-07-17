@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 16:28:03 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:58:10 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int main (int argc, char **argv, char **envp)
 	(void)argc;
 
 	ft_copy_env2lst(&mini, envp); //took out of the while(1) so it doesnt reset at every readline
+	init_history(&(mini.history));
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
 	mini.com_tab = NULL;
@@ -64,7 +65,7 @@ int main (int argc, char **argv, char **envp)
 	mini.exit_status = 42;
 	while (1)
 	{
-		mini.input = readline("minishell: ");
+		mini.input = readline("the minishell: ");
 
 		if (!mini.input)
 		{
@@ -78,6 +79,7 @@ int main (int argc, char **argv, char **envp)
 			if (input_check(mini.input))
 			{
 				add_history(mini.input);
+				add_to_hist_arr(&(mini.history), mini.input);
 				mini.com_tab = parsing(mini.input, 0 , 0);
 				if (!mini.com_tab)
 				{

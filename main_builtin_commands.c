@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_builtin_commands.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 17:14:19 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/17 12:15:01 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,10 @@ void	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 	}
 }
 
-int	check_builtins_two(t_statement *temp, int i)
+int	check_history(t_mini *mini, int i)
 {
-	if (!ft_strncmp(temp->argv[i], "history", ft_strlen(temp->argv[i])))
-		ft_history();
+	if (!ft_strncmp(mini->com_tab->argv[i], "history", ft_strlen(mini->com_tab->argv[i])))
+		ft_history(&(mini->history));
 	else
 		return (0);
 	return (1);
@@ -139,6 +139,6 @@ int	check_builtins(t_statement *temp, t_mini *mini, int i, int fd)
 		}
 	}
 	else
-		return (check_builtins_two(temp, i));
+		return (check_history(mini, i));
 	return (1);
 }

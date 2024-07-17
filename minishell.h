@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 17:25:57 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:58:10 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,15 @@ typedef struct	s_statement
 	struct s_statement *next;
 }				t_statement;
 
+typedef struct	s_history
+{
+	char	**commands;
+	int		size;
+	int		capacity;
+	int		oldest;
+	int		total;
+}				t_history;
+
 //linked list for env
 typedef struct s_env_list
 {
@@ -79,15 +88,15 @@ typedef struct s_env_list
 
 typedef struct	s_mini
 {
-	char	*input;
-	int 	operator;
-	char	*pwd_save;
-	t_statement	*com_tab;
-	t_statement *temp;
-	t_env_list	*env; //linked list of env var names and values
-	int	exit_status;
+	char				*input;
+	int 				operator;
+	char				*pwd_save;
+	t_statement			*com_tab;
+	t_statement 		*temp;
+	t_env_list			*env;
+	int					exit_status;
+	t_history			history;
 }				t_mini;
-
 
 t_statement *parsing(char *input, int i, int j);
 int			is_onstr(const char *str, int c);
@@ -115,8 +124,6 @@ int			remove_quotes_main(t_statement *temp, int i);
 
 int			get_fd(t_statement *temp);
 void		ft_echo(t_mini *mini, t_statement *temp, int fd, int i);
-
-void		ft_history(void);
 
 void		ft_print(t_mini *mini, t_statement *current);
 int			main_error(int errnum);
@@ -177,5 +184,10 @@ int			ft_unset(t_env_list *env, char *target_name);
 void		ft_env_lst_clear(t_env_list *lst, void (*del)(void *)); 
 
 //expansion $
-//void		replace_env_vars(char **args);
 void		replace_env_vars(char **args, t_mini *mini);
+
+
+void init_history(t_history *history);	
+void	ft_history(const t_history *history);
+void	add_to_hist_arr(t_history *history, char *command);
+void free_history(t_history *history);
