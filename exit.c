@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:12:06 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 14:47:07 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:19:41 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	ft_exit(t_mini *mini)
 {
 	free_com_tab(mini);
 	ft_env_lst_clear(mini->env, free);
+	free_history(&(mini->history));
 	rl_clear_history();
 	printf("Bye then :)\n");
 	exit(0);
