@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/17 12:15:01 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:05:32 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,14 @@ void	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 int	check_history(t_mini *mini, int i)
 {
 	if (!ft_strncmp(mini->com_tab->argv[i], "history", ft_strlen(mini->com_tab->argv[i])))
+	{
+		if (mini->com_tab->argv[i + 1])
+		{
+			printf("history: too many arguments\n");
+			return(1);
+		}
 		ft_history(&(mini->history));
+	}
 	else
 		return (0);
 	return (1);
