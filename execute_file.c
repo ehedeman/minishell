@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 11:37:36 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 18:32:51 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/17 09:51:14 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ int	exec_command(t_statement *temp, t_mini *mini)
 	char	**args;
 	char	**envp;
 	pid_t	pid;
-	int		i;
 
-	i = 1;
 	pid = 0;
 	g_exec_file = 1; //tells program that theres a file being executed
 	envp = NULL;
@@ -72,9 +70,7 @@ int	exec_file(t_statement *temp, t_mini *mini)
 	char	**args;
 	char	**envp;
 	pid_t	pid;
-	int		i;
 
-	i = 0;
 	pid = 0;
 	g_exec_file = 1;
 	envp = NULL;
