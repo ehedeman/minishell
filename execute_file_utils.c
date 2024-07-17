@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_file_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:04:56 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 14:55:42 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:36:10 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int	free_env_args(char **envp, char **args, int arg_zero)
 {
-	int	i;
+	int		i;
+	char	*trimmed_cmd;
 
 	i = 0;
+	trimmed_cmd = ft_strtrim((args[0]), "/bin/");
 	while (envp[i])
 	{
 		free(envp[i]);
@@ -26,7 +28,8 @@ int	free_env_args(char **envp, char **args, int arg_zero)
 	if (arg_zero)
 	{
 		if (arg_zero == 2)
-			printf("minishell: Command not found.\n");
+			printf("%s: Command not found.\n", trimmed_cmd);
+		free(trimmed_cmd);
 		free(args[0]);
 	}
 	free(args);
