@@ -3,25 +3,95 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:11:09 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 17:26:12 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:58:16 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_history(void)
+void	free_history(t_history *history)
 {
-	HIST_ENTRY **history_list;
 	int	i;
 
 	i = 0;
-
-	while (history_list[i])
+	if (history->commands)
 	{
-		printf("%s\n", history_list[i]);
+		while (i < history->capacity)
+		{
+			free(history->commands[i]);
+			i++;
+		}
+		free(history->commands);
+		history->commands = NULL;
+	}
+}
+
+//capacity in bash is 2000, try echo $HISTFILESIZE
+void	init_history(t_history *history)
+{
+	int	i;
+
+	i = 0;
+	history->capacity = 5;
+	history->size = 0;
+	history->commands = malloc(history->capacity * sizeof(char *));
+	history->oldest = 0;
+	history->total = 0;
+	while (i < history->capacity)
+	{
+		history->commands[i] = NULL;
 		i++;
+	}
+}
+
+void	add_to_hist_arr(t_history *history, char *command)
+{
+	int		i;
+	int		last_i;
+	char	*last_command;
+
+	if (history->size > 0)
+	{
+		last_i = (history->oldest + history->size - 1) % history->capacity;
+		last_command = history->commands[last_i];
+		if (ft_strcmp(last_command, command) == 0)
+			return ;
+	}	
+	history->total++;
+	if (history->size >= history->capacity)
+	{
+		free(history->commands[history->oldest]);
+		history->commands[history->oldest] = ft_strdup(command);
+		history->oldest = (history->oldest + 1) % history->capacity;
+	}
+	else
+	{
+		i = (history->oldest + history->size) % history->capacity;
+		history->commands[i] = ft_strdup(command);
+		history->size++;
+	}
+}
+
+void	ft_history(const t_history *history)
+{
+	int	count;
+	int	i;
+	int	start;
+
+	if (history->total > history->capacity)
+		start = history->total - history->capacity + 1;
+	else
+		start = 1;
+	count = 0;
+	i = history->oldest;
+	while (count < history->size)
+	{
+		printf("%d %s\n", start, history->commands[i]);
+		i = (i + 1) % history->capacity;
+		count++;
+		start++;
 	}
 }
