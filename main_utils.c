@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 12:52:43 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 18:05:51 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/17 09:44:18 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	ft_print(t_mini *mini, t_statement *current)
 
 	temp = mini->com_tab;
 	fd = get_fd(current);
+	printf("fd = %d", fd);
 	while (temp)
 	{
 		i = 0;
