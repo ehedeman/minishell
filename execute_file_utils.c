@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:04:56 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/18 17:51:53 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:49:49 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ int	free_env_args(char **envp, char **args, int arg_zero)
 	char	*trimmed_cmd;
 
 	i = 0;
-	trimmed_cmd = ft_strtrim((args[0]), "/bin/");
+	if(ft_strncmp(args[0], "/bin/", 6))
+		trimmed_cmd = ft_strdup((args[0] + 5));
+	else
+		trimmed_cmd = ft_strdup(args[0]);
 	while (envp[i])
 	{
 		free(envp[i]);
