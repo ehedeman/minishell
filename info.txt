@@ -1,95 +1,25 @@
-how parsing works step-by-step:
+TO DO
+[]input check for pipe without content
+[]for $?, at every possible exit, update exit value in mini struct
+[]command + CTRL+c + ENTER should not execute command (handler?)
+[]echo $PATH$NAME$WHATEVERALLTOGETHER
 
-1. pasing() returns a linklist (similar to the one in libft)
+OPTIONAL(?)
+[]history: with one value as argument to change ammount of lines from history to print
+[]history: -c to clear the history
 
-it takes the input, cllocates a node (consisting of an argument list argv, the number of arguments argc,
-the operator for those arguments saved and the next node in line)
+IN PROGRESS
+[smatschu]pipes
 
-so a list would perhabs look like this:
+PLEASE TEST (set as DONE if you think is ok or put back as TO DO)
+[ehedeman]history command (capacity is set to 5 for easy visualization, can change to 2000 later like bash)
+[ehedeman]SHLVL
 
-Node 1:
+QUESTIONS
+[] what is this exactly?
+	mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 
-argv[0] = pwd
-argc = 1
-operator = PIPE
-next = (pointer to) Node 2
-
-Node 2:
-
-argv[0] = cat
-argv[1] = -e
-argc = 2
-operator = NONE
-next = NULL
-
-there might be errors (lots of them probably) but the basic idea works.
-
-things to know:
-
--quotation marks will be removed before putting it into the list
--operator signs (<>|) can be typed both "pwd>out" and "pwd > out".
--operator signs will not get listed in argv (they get skipped and instead
-the operator value is set)
-
--currently working on checking the input for invalid stuff (such as single quotation marks because the parser 
-cannot and is not supposed to handle that)
-
--parsing is very much not norminette conforming but i dont think its smart to clean everything up
-before making sure everything works properly.
-
-cd is also working and tailored to the parsing method. if you type cd then it gets you to home/user.
-if you type cd Directory (without the /), then it gets itself the path youre currently on and adds the new
-Directory. Then it heads there (worked when i tried it).
-if you type cd /whatever_path, then it just gets you there. pwd works somewhat but i havent changed it to work with
-redirection and such, since redirections etc arent really implemented yet. (it works to test cd but thats it.)
-
-NEW STUFF: (01.06.24)
-
--inplemented rm -f for fun and cuz its practical
--fixed some parsing errors (you can now have as many redirections as you want)
--added echo
-
-working on: getting redirections correct if its multiple after another (e.g "echo hello > out > out_1",
-in example the "hello" would land in the last file listed in the command)
-
-
-For parsing redirect: Operator is always for the next. if theres a redirect the thing on the right has
-to be the place its going to. therefor you can just say if your on argv[argc] and the operator is redirect
-then skip the next node and just create the file with the name of the file (if nessecary, otherwise just open,
-check if its got another redirect and if not write. otherwise close, open next etc.)
-
-->works now
-
-smatschu>
-$?: working on it
-[DONE] delete envp_dup and work only with linked list
-
-
-TO DO:
-[	]test only spaces is giving segv
-[	]tab is running ls ? (readline does that, dont know if we can change that)
-[	]"echo test" should give command not found, instead is runnign echo
-[	]$PATH: '$PATH' should not work, should only print $PATH. $PATH and "$PATH" are ok.
-should we fix in the parsing? subject says:
-• Handle ’ (single quote) which should prevent the shell from interpreting the meta-
-characters in the quoted sequence.
-• Handle " (double quote) which should prevent the shell from interpreting the meta-
-characters in the quoted sequence except for $ (dollar sign).
-
-examples:
-
-(echo "Current directory is `pwd`.") //perhaps not
-
-echo 'Hello $USER, today is $(date).'
-should print: Hello $USER, today is $(date).
-
-USER=smatschu
-echo "Hello $USER, today is $(date)."
-should print sth like: Hello smatschu, today is Mo 15. Jul 18:xx:xx CEST 2024.
-
-
-
-[	]$PATH $? is printing, but $PATH$? not yet
-[	]for $?, at every possible exit, update exit value in mini struct
-[   ]input check for pipe without content
-[   ] history command is there but not working
+DONE
+[x]tab is running ls: if you press Tab twice without typing anything or 
+just after typing a part of a filename or directory name, 
+readline will list all files and directories in the current directory.
