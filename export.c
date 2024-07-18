@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 19:14:29 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/14 16:48:21 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/17 18:32:41 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	ft_export(t_mini *mini)
 		if (!temp)
 			return (main_error(MALLOC_ERR));
 		sort_linked_list(temp);
-		print_export_list(temp);
+		ft_print_export_list(temp);
 		ft_env_lst_clear(temp, free);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:04:56 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/17 17:38:31 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:51:53 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	free_env_args(char **envp, char **args, int arg_zero)
 	{
 		if (arg_zero == 2)
 			printf("%s: Command not found.\n", trimmed_cmd);
-		free(trimmed_cmd);
 		free(args[0]);
 	}
+	free(trimmed_cmd);
 	free(args);
 	return (-1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list_print.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:14:40 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/15 16:15:49 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/17 18:32:41 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_print_env_lst(t_env_list *env)
 }
 
 //export prints in alphabetical order
-void	print_export_list(t_env_list *sorted_env)
+void	ft_print_export_list(t_env_list *sorted_env)
 {
 	t_env_list	*node;
 

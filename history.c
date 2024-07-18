@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:11:09 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/17 15:58:16 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:55:09 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ void	init_history(t_history *history)
 
 	i = 0;
 	history->capacity = 5;
-	history->size = 0;
 	history->commands = malloc(history->capacity * sizeof(char *));
+	if (!history->commands)
+		perror("history malloc");
+	history->size = 0;
 	history->oldest = 0;
 	history->total = 0;
 	while (i < history->capacity)
