@@ -1,16 +1,27 @@
 TO DO
 []input check for pipe without content
 []for $?, at every possible exit, update exit value in mini struct
-[]command + CTRL+c + ENTER should not execute command (handler?)
+[]expr $? + $?
+[]ctrl-C in a prompt after you wrote some stuff should show a new line with a new prompt
+	and command + CTRL+c + ENTER should not execute command (handler?)
+[]ctrl-\ in a prompt after you wrote some stuff should quit minishell
+[]if you run ctrl+c and no enter, ctrl+d doesnt work
 []echo $PATH$NAME$WHATEVERALLTOGETHER
 []blabla"blabla" heap-buffer-overflow instead of command not found
+[]cat < file leaks
+[]echo "cat lol.c | cat > lol.c" should print cat lol.c | cat > lol.c
+[]'' not giving command not found
+[]deal with functions >25lines
+[]bonus only?
+	echo "'$USER'" should print 'USER_VALUE'
+	echo '"$USER"' should print "$USER"
 
 OPTIONAL(?)
 []history: with one value as argument to change ammount of lines from history to print
 []history: -c to clear the history
 
 IN PROGRESS
-[smatschu]pipes: basic pipes work, working on pipes with redirection
+[smatschu]pipes: basic and multiple pipes work, working on pipes with redirection
 
 PLEASE TEST (set as DONE if you think is ok or put back as TO DO)
 [ehedeman]history command (capacity is set to 5 for easy visualization, can change to 2000 later like bash)
@@ -19,8 +30,10 @@ PLEASE TEST (set as DONE if you think is ok or put back as TO DO)
 QUESTIONS
 [] what is this exactly?
 	mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
+[] whats this flag -fno-omit-frame-pointer for?
 
 DONE
 [x]tab is running ls: if you press Tab twice without typing anything or 
 just after typing a part of a filename or directory name, 
 readline will list all files and directories in the current directory.
+[x]p is running pwd, c cd, e echo and so on.
