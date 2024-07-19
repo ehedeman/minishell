@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/19 11:20:07 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/19 14:44:08 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,20 +114,20 @@ int	check_history(t_mini *mini, int i)
 
 int	check_builtins(t_statement *temp, t_mini *mini, int i, int fd)
 {
-	if (!ft_strncmp(temp->argv[i], "echo", ft_strlen(temp->argv[i])))
+	if (!ft_strncmp(temp->argv[i], "echo", ft_strlen("echo") + 1))
 		ft_echo(mini, temp, fd, i);
-	else if (!ft_strncmp(temp->argv[i], "cd", ft_strlen(temp->argv[i])))
+	else if (!ft_strncmp(temp->argv[i], "cd", ft_strlen("cd") + 1))
 		ft_cd(temp, i);
-	else if (!ft_strncmp(temp->argv[i], "pwd", ft_strlen(temp->argv[i])))
+	else if (!ft_strncmp(temp->argv[i], "pwd", ft_strlen("pwd") + 1))
 		ft_pwd(fd);
-	else if (!ft_strncmp(temp->argv[i], "exit", ft_strlen(temp->argv[i])))
+	else if (!ft_strncmp(temp->argv[i], "exit", ft_strlen("exit") + 1))
 		ft_exit(mini);
-	else if (!ft_strncmp(temp->argv[i], "env", ft_strlen(temp->argv[i]))
+	else if (!ft_strncmp(temp->argv[i], "env", ft_strlen("env") + 1) \
 		&& !temp->argv[i + 1])
 		ft_print_env_lst(mini->env);
-	else if (!ft_strncmp(temp->argv[i], "export", ft_strlen(temp->argv[i])))
+	else if (!ft_strncmp(temp->argv[i], "export", ft_strlen("export") + 1))
 		ft_export(mini);
-	else if (!ft_strncmp(temp->argv[i], "unset", ft_strlen(temp->argv[i])))
+	else if (!ft_strncmp(temp->argv[i], "unset", ft_strlen("unset") + 1))
 	{
 		while (temp->argv[i])
 		{
