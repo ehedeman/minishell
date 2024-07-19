@@ -3,13 +3,14 @@ TO DO
 []for $?, at every possible exit, update exit value in mini struct
 []command + CTRL+c + ENTER should not execute command (handler?)
 []echo $PATH$NAME$WHATEVERALLTOGETHER
+[]blabla"blabla" heap-buffer-overflow instead of command not found
 
 OPTIONAL(?)
 []history: with one value as argument to change ammount of lines from history to print
 []history: -c to clear the history
 
 IN PROGRESS
-[smatschu]pipes
+[smatschu]pipes: basic pipes work, working on pipes with redirection
 
 PLEASE TEST (set as DONE if you think is ok or put back as TO DO)
 [ehedeman]history command (capacity is set to 5 for easy visualization, can change to 2000 later like bash)

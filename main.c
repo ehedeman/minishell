@@ -6,19 +6,18 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/17 15:58:10 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/19 11:19:02 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int g_exec_file;
+int	g_exec_file;
 //if theres multiple output redirections it creates all of the files, then
 //closes them if nessecary.
 //returns only the last fd.
 // (get_fd is for creating the right type of file if nessecary. else it just
 //  opens the right file)
-
 
 int	check_command(t_mini *mini)
 {
@@ -42,61 +41,95 @@ int	check_command(t_mini *mini)
 void	handler(int sig)
 {
 	if (sig == SIGINT && !g_exec_file)
-		printf("\nminishell: ");
+		write(STDOUT_FILENO, "\nminishell: ", 12);
 	else if (sig == SIGINT && g_exec_file) //had issues with closing endless programs (usually you use ctrl c)
 		printf("\n");					   //without else if the programm displays "minishell: " twice in that case
 }										   //used global var to tell the program "hey theres smth else beign closed with ctrl c right now"
 										   //so theres no need to display the new prompt cuz minishell does that anyways
 
-int main (int argc, char **argv, char **envp)
+int	ft_shlvl(t_mini *mini)
 {
-	t_mini	mini;
-	(void)argv;
-	(void)argc;
+	t_env_list	*temp;
+	int			num;
 
-	ft_copy_env2lst(&mini, envp); //took out of the while(1) so it doesnt reset at every readline
-	init_history(&(mini.history));
+	temp = mini->env;
+	while (temp)
+	{
+		if (temp == NULL)
+			return (1);
+		if (ft_strncmp(temp->name, "SHLVL", 5) == 0)
+		{
+			num = ft_atoi(temp->value);
+			free(temp->value);
+			num++;
+			temp->value = ft_itoa(num);
+			break ;
+		}
+		temp = temp->next;
+	}
+	return (0);
+}
+
+void	initialize_mini(t_mini *mini, char **envp)
+{
+	ft_copy_env2lst(mini, envp);
+	init_history(&(mini->history));
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
-	mini.com_tab = NULL;
-	mini.input = NULL;
+	mini->com_tab = NULL;
+	mini->input = NULL;
 	g_exec_file = 0;
-	//just as example, have to make sure at every possible exit the value is stored in the struct so echo can acess it
-	mini.exit_status = 42;
+	mini->exit_status = 42; //should change this for $?, init at 0
+	ft_shlvl(mini);
+}
+
+void	process_input(t_mini *mini)
+{
 	while (1)
 	{
-		mini.input = readline("the minishell: ");
-
-		if (!mini.input)
+		mini->input = readline("the minishell: ");
+		if (!mini->input)
 		{
-			mini.com_tab = NULL;
-			ft_exit(&mini);
+			mini->com_tab = NULL;
+			ft_exit(mini);
 		}
-		if (*mini.input)
+		if (*mini->input)
 		{
-			if (whitespace_check(mini.input))
+			if (whitespace_check(mini->input))
 				continue ;
-			if (input_check(mini.input))
+			if (input_check(mini->input))
 			{
-				add_history(mini.input);
-				add_to_hist_arr(&(mini.history), mini.input);
-				mini.com_tab = parsing(mini.input, 0 , 0);
-				if (!mini.com_tab)
+				add_history(mini->input);
+				add_to_hist_arr(&(mini->history), mini->input);
+				mini->com_tab = parsing(mini->input, 0, 0);
+				if (!mini->com_tab)
 				{
-					ft_env_lst_clear(mini.env, free);
-					return (0);
+					ft_env_lst_clear(mini->env, free);
+					return ;
 				}
-				replace_env_vars(mini.com_tab->argv, &mini);
-				if (check_command(&mini) == -1)
+				replace_env_vars(mini->com_tab->argv, mini);
+				if (check_command(mini) == -1)
 				{
-					free_com_tab(&mini);
-					ft_env_lst_clear(mini.env, free);
-					return (0);
+					free_com_tab(mini);
+					ft_env_lst_clear(mini->env, free);
+					return ;
 				}
-				if (mini.com_tab)
-					free_com_tab(&mini);
+				if (mini->com_tab)
+					free_com_tab(mini);
 			}
 		}
 	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_mini	mini;
+
+	(void)argv;
+	(void)argc;
+	initialize_mini(&mini, envp);
+	process_input(&mini);
+	if (mini.com_tab)
+		free_com_tab(&mini);
 	return (0);
 }

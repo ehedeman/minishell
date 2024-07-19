@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/17 17:05:32 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/19 11:20:07 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	check_redirect(t_mini *mini, t_statement *command)
 	fd = 1;
 	while (1)
 	{
-		if (mini->temp->operator == RDR_OUT_REPLACE ||
+		if (mini->temp->operator == RDR_OUT_REPLACE || \
 			mini->temp->operator == RDR_OUT_APPEND)
 		{
 			fd = get_fd(mini->temp);
-			if (mini->temp->next->operator == RDR_OUT_REPLACE ||
+			if (mini->temp->next->operator == RDR_OUT_REPLACE || \
 				mini->temp->next->operator == RDR_OUT_APPEND)
 				close(fd);
 			else
@@ -32,10 +32,10 @@ int	check_redirect(t_mini *mini, t_statement *command)
 				return (fd);
 			}
 		}
-		else if (mini->temp->operator == RDR_INPUT ||
+		else if (mini->temp->operator == RDR_INPUT || \
 			mini->temp->operator == RDR_INPUT_UNTIL)
 		{
-			if (mini->temp->next->operator != RDR_INPUT_UNTIL &&
+			if (mini->temp->next->operator != RDR_INPUT_UNTIL && \
 				mini->temp->next->operator != RDR_INPUT)
 			{
 				redirect_input(command, mini->temp, mini);
@@ -51,10 +51,10 @@ int	check_redirect(t_mini *mini, t_statement *command)
 	}
 	return (fd);
 }
- 
+
 static int	check_execute(t_statement *temp, int i, t_mini *mini)
 {
-	if (!ft_strncmp(temp->argv[i], "./", 2)
+	if (!ft_strncmp(temp->argv[i], "./", 2) \
 		|| !ft_strncmp(temp->argv[i], "/", 1))
 	{
 		exec_file(temp, mini);
@@ -68,28 +68,17 @@ static int	check_execute(t_statement *temp, int i, t_mini *mini)
 	return (0);
 }
 
-// static t_statement	*check_pipe(t_statement *temp)
-// {
-// 	if (mini->temp->operator == PIPE)
-// 	{
-// 		do the pipe thing;
-
-// 		check_builtins;
-// 		check_execute;
-		
-// 		run the other pipe 
-// 	}
-// 	temp = temp->next;
-// 	return (temp);
-// }
-
 void	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 {
 	while (temp)
 	{
+		if (command_involves_pipes(temp))
+		{
+			execute_pipeline(temp, mini);
+			break ;
+		}
 		check_for_dollar_quoted(temp);
 		fd = check_redirect(mini, temp);
-//		temp = check_pipe();
 		while (i < temp->argc && *temp->argv && fd != -1)
 		{
 			if (check_builtins(temp, mini, i, fd))
@@ -108,12 +97,13 @@ void	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 
 int	check_history(t_mini *mini, int i)
 {
-	if (!ft_strncmp(mini->com_tab->argv[i], "history", ft_strlen(mini->com_tab->argv[i])))
+	if (!ft_strncmp(mini->com_tab->argv[i], "history", \
+		ft_strlen(mini->com_tab->argv[i])))
 	{
 		if (mini->com_tab->argv[i + 1])
 		{
 			printf("history: too many arguments\n");
-			return(1);
+			return (1);
 		}
 		ft_history(&(mini->history));
 	}

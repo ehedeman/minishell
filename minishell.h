@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/17 15:58:10 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/19 11:09:57 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,55 +139,42 @@ int			reset_stdin(int old_fd);
 //int			add_argument(t_statement *temp);
 int			rdr_in_until(t_statement *command, t_mini *mini, int fd, int fd_cpy);
 
+//execution
 int			exec_file(t_statement *temp, t_mini *mini);
 int			exec_command(t_statement *temp, t_mini *mini);
 int			free_env_args(char **envp, char **args, int arg_zero);//frees the envp and args from the functions above
 int			exec_com_fork(t_statement *temp, char **envp, char **args, pid_t pid); //split half of exec_command | norm accurate
 int			exec_file_fork(t_statement *temp, char **envp, char **args, pid_t pid);//split half of exec_file | norma accurate
 
-int			exec_file(t_statement *temp, t_mini *mini);
-int			exec_command(t_statement *temp, t_mini *mini);
-
-
-//env functions
+//env
 void		ft_copy_env2lst(t_mini *mini, char **envp);
-
-//env list functions
 void		ft_env_lst_addback(t_env_list **lst, t_env_list *new);
 t_env_list *ft_env_lst_new(char *key, char *value);
-
-//print env
 int			ft_print_env_lst(t_env_list *env);
 
 //export
 int			ft_export(t_mini *mini);
-void		print_sorted_env_vars(t_env_list *env, char **env_array, int count);
-char		**copy_env_vars(t_env_list *env, int count);
-int			count_env_vars(t_env_list *env);
-void		sort_env_array(char **arr, int n);
 t_env_list 	*ft_env_lst_new(char *key, char *value);
 int			ft_env_list_len(t_env_list *env);
-
-//print env
-int			print_env_lst(t_env_list *env);
-
-//export
-int			ft_export(t_mini *mini);
-void		print_export_list(t_env_list *sorted_env);
+void		ft_env_lst_clear(t_env_list *lst, void (*del)(void *)); 
+void		ft_print_export_list(t_env_list *sorted_env);
 t_env_list	*copy_linked_list(t_env_list *env);
 void		sort_linked_list(t_env_list *temp_env);
 
 //unset
 int			ft_unset(t_env_list *env, char *target_name);
 
-//changed the free function so it also del the content of the nodes
-void		ft_env_lst_clear(t_env_list *lst, void (*del)(void *)); 
 
 //expansion $
-void		replace_env_vars(char **args, t_mini *mini);
+void	replace_env_vars(char **args, t_mini *mini);
 
-
-void init_history(t_history *history);	
+//history
+void	init_history(t_history *history);	
 void	ft_history(const t_history *history);
 void	add_to_hist_arr(t_history *history, char *command);
-void free_history(t_history *history);
+void	free_history(t_history *history);
+
+//pipes
+int		command_involves_pipes(t_statement *parsed_input);
+int		create_pipe(int pipefd[]);
+void	execute_pipeline(t_statement *commands, t_mini *mini);
