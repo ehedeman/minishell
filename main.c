@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/19 11:19:02 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/19 14:51:37 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	process_input(t_mini *mini)
 {
 	while (1)
 	{
-		mini->input = readline("the minishell: ");
+		mini->input = readline("\033[1;31mthe minishell: \033[0m");
 		if (!mini->input)
 		{
 			mini->com_tab = NULL;
