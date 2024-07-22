@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 22:23:35 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/22 22:54:09 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/22 23:06:36 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ char	*expand_arg(char *arg, t_mini *mini)
 		else
 		{
 			len = ft_strlen(new_arg);
-			new_arg = realloc(new_arg, len + 2);
+			new_arg = ft_resize_mem(new_arg, len + 2);
 			new_arg[len] = *arg;
 			new_arg[len + 1] = '\0';
 			arg++;
