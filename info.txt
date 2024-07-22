@@ -1,31 +1,30 @@
 TO DO
+[]pipes with redirection (basic and multiple pipes work)
 []input check for pipe without content
-[]for $?, at every possible exit, update exit value in mini struct
-[]expr $? + $?
 []ctrl-C in a prompt after you wrote some stuff should show a new line with a new prompt
 	and command + CTRL+c + ENTER should not execute command (handler?)
 []ctrl-\ in a prompt after you wrote some stuff should quit minishell
 []if you run ctrl+c and no enter, ctrl+d doesnt work
-[]echo $PATH$NAME$WHATEVERALLTOGETHER
 []blabla"blabla" heap-buffer-overflow instead of command not found
 []cat < file leaks
 []echo "cat lol.c | cat > lol.c" should print cat lol.c | cat > lol.c
 []'' not giving command not found
 []deal with functions >25lines
-[]bonus only?
-	echo "'$USER'" should print 'USER_VALUE'
-	echo '"$USER"' should print "$USER"
 
 OPTIONAL(?)
 []history: with one value as argument to change ammount of lines from history to print
 []history: -c to clear the history
+[]bonus only?
+	echo "'$USER'" should print 'USER_VALUE'
+	echo '"$USER"' should print "$USER"
 
 IN PROGRESS
-[smatschu]pipes: basic and multiple pipes work, working on pipes with redirection
+[smatschu]for $?, at every possible exit, update exit value in mini struct
 
 PLEASE TEST (set as DONE if you think is ok or put back as TO DO)
 [ehedeman]history command (capacity is set to 5 for easy visualization, can change to 2000 later like bash)
 [ehedeman]SHLVL
+[ehedeman]basic and multiple pipes
 
 QUESTIONS
 [] what is this exactly?
@@ -37,3 +36,5 @@ DONE
 just after typing a part of a filename or directory name, 
 readline will list all files and directories in the current directory.
 [x]p is running pwd, c cd, e echo and so on.
+[x]echo $PATH${NAME}$WTVR
+[x]expr $? + $?

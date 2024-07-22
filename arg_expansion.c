@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 22:23:35 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/15 21:10:35 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/22 22:54:09 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,26 @@
 
 #include "minishell.h"
 
-// Check if an argument starts with '$'
-int	starts_with_dollar(const char *arg)
+void	*ft_resize_mem(void *ptr, size_t new_size)
 {
-	return (arg[0] == '$');
-}
+	void	*new_ptr;
 
-// Extract the variable name from an argumentm skip the $
-char	*extract_var_name(const char *arg)
-{
-	if (starts_with_dollar(arg))
+	if (new_size == 0)
 	{
-		return (ft_strdup(arg + 1));
+		free(ptr);
+		return (NULL);
 	}
-	return (NULL);
+	new_ptr = malloc(new_size);
+	if (!new_ptr)
+		return (NULL);
+	if (ptr)
+	{
+		ft_memcpy(new_ptr, ptr, new_size);
+		free(ptr);
+	}
+	return (new_ptr);
 }
 
-//if you find the var, return its value, if not null
 char	*get_env_value(const char *var_name, t_mini *mini)
 {
 	t_env_list	*current;
@@ -49,67 +52,96 @@ char	*get_env_value(const char *var_name, t_mini *mini)
 	return (NULL);
 }
 
-char	*extract_var_name_braces(char *arg)
+char	*extract_var_name(char	**arg)
 {
+	char	*start_var;
 	char	*var_name;
-	char	*start;
-	char	*end;
-	int		len;
+	size_t	name_len;
 
-	start = arg + 2; // Skip ${
-	end = ft_strchr(start, '}');
-	if (!end)
-		return (NULL); // No closing brace
-	len = end - start;
-	var_name = (char *)malloc(len + 1);
-	if (!var_name)
-		return (NULL);
-	ft_strlcpy(var_name, start, len + 1);
+	start_var = *arg;
+	while (**arg && (ft_isalnum(**arg) || **arg == '_'))
+		(*arg)++;
+	name_len = *arg - start_var;
+	var_name = ft_calloc(name_len + 1, 1);
+	ft_strlcpy(var_name, start_var, name_len + 1);
+	var_name[name_len] = '\0';
 	return (var_name);
 }
 
-// Replace environment variables in args
-void	replace_env_vars(char **args, t_mini *mini)
+void	append_var_value(char **new_arg, const char *var_value)
 {
-	int		i;
+	int	new_len;
+	int	val_len;
+
+	if (var_value != NULL)
+	{
+		new_len = ft_strlen(*new_arg);
+		val_len = ft_strlen(var_value);
+		*new_arg = ft_resize_mem(*new_arg, new_len + val_len + 1);
+		ft_strlcat(*new_arg, var_value, new_len + val_len + 1);
+	}
+}
+
+char	*expand_arg(char *arg, t_mini *mini)
+{
+	char	*new_arg;
+	int		use_braces;
 	char	*var_name;
 	char	*var_value;
+	char	*exit_status;
+	size_t	len;
+
+	new_arg = ft_calloc(1, 1);
+	while (*arg)
+	{
+		if (*arg == '$')
+		{
+			arg++;
+			use_braces = (*arg == '{');
+			if (use_braces)
+				arg++;
+			if (*arg == '?')
+			{
+				exit_status = ft_itoa(mini->exit_status);
+				append_var_value(&new_arg, exit_status);
+				free(exit_status);
+				arg++;
+				if (use_braces && *arg == '}')
+					arg++;
+			}
+			else
+			{
+				var_name = extract_var_name(&arg);
+				if (use_braces && *arg == '}')
+					arg++;
+				var_value = get_env_value(var_name, mini);
+				append_var_value(&new_arg, var_value);
+				free(var_name);
+			}
+		}
+		else
+		{
+			len = ft_strlen(new_arg);
+			new_arg = realloc(new_arg, len + 2);
+			new_arg[len] = *arg;
+			new_arg[len + 1] = '\0';
+			arg++;
+		}
+	}
+	return (new_arg);
+}
+
+void	replace_env_vars(char **args, t_mini *mini)
+{
+	char	*new_arg;
+	int		i;
 
 	i = 0;
 	while (args[i] != NULL)
 	{
-		if (starts_with_dollar(args[i]))
-		{
-			if (args[i][1] == '{') // Check if it starts with ${
-			{
-				// Extract variable name within the braces
-				var_name = extract_var_name_braces(args[i]);
-				if (var_name != NULL)
-				{
-					var_value = get_env_value(var_name, mini);
-					if (var_value != NULL)
-					{
-						free(args[i]);
-						args[i] = ft_strdup(var_value);
-					}
-					free(var_name);
-				}
-			}
-			else // Handle the case without braces
-			{
-				var_name = extract_var_name(args[i]);
-				if (var_name != NULL)
-				{
-					var_value = get_env_value(var_name, mini);
-					if (var_value != NULL)
-					{
-						free(args[i]);
-						args[i] = ft_strdup(var_value);
-					}
-					free(var_name);
-				}
-			}
-		}
+		new_arg = expand_arg(args[i], mini);
+		free(args[i]);
+		args[i] = new_arg;
 		i++;
 	}
 }

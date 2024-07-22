@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 19:14:29 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/17 18:32:41 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/19 14:21:24 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int	ft_export_add(t_mini *mini, t_env_list *temp, t_env_list *new, int i)
 	else
 	{
 		ft_free_matrix(val);
-		write(2, "export: not a valid identifier\n", 31);
 		return (1);
 	}
 	return (0);
