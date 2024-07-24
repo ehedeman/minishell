@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:19:48 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/08 13:34:34 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:47:42 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,19 @@ int	get_nbr_statements(char *input, int i)
 		if (is_onstr(QUOTES, input[i]) && input[i] == input[i + 1])
 			i++;
 		else if (is_onstr(QUOTES, input[i]))
+		{
 			quotes = !quotes;
+			i++;
+		}
 		if (input[i] != ' ' && !is_onstr(OPERATORS, input[i]))
 		{
 			count++;
 			while (input[i + 1] && !is_onstr(OPERATORS, input[i + 1]))
 			{
 				if (is_onstr(QUOTES, input[i]) && quotes)
-				{
 					quotes = !quotes;
-				}
+				if (is_onstr(QUOTES, input[i]) && !quotes)
+					break ;
 				if (is_spaces(input[i]) && !quotes)
 					break ;
 				i++;
@@ -76,8 +79,10 @@ int	get_token_len(char *input)
 		i++;
 	while (input[i])
 	{
-		if (input[i] == '\'' || input[i] == '\"')
+		if (is_onstr(QUOTES, input[i]) && quotes)
 			quotes = !quotes;
+		else if (is_onstr(QUOTES, input[i]) && !quotes)
+			break ;
 		if (is_spaces(input[i]) && !quotes)
 			break ;
 		if (is_onstr(OPERATORS, input[i]))

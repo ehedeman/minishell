@@ -1,12 +1,12 @@
 TO DO
 []pipes with redirection (basic and multiple pipes work)
 []input check for pipe without content
-[]ctrl-C in a prompt after you wrote some stuff should show a new line with a new prompt
+[x]ctrl-C in a prompt after you wrote some stuff should show a new line with a new prompt
 	and command + CTRL+c + ENTER should not execute command (handler?)
 []ctrl-\ in a prompt after you wrote some stuff should quit minishell
-[]if you run ctrl+c and no enter, ctrl+d doesnt work
-[]blabla"blabla" heap-buffer-overflow instead of command not found
-[]cat < file leaks
+[x]if you run ctrl+c and no enter, ctrl+d doesnt work
+[x]blabla"blabla" heap-buffer-overflow instead of command not found
+[]cat < file leaks ------------ no it doesnt -----------
 []echo "cat lol.c | cat > lol.c" should print cat lol.c | cat > lol.c
 []'' not giving command not found
 []deal with functions >25lines

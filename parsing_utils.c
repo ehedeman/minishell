@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 11:57:45 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/15 18:43:38 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:36:14 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	remove_quotes_size(char *parsed)
 
 	i = 0;
 	size = 0;
-	if (!ft_strncmp(parsed, "'$", 2))
+	if (!ft_strncmp(parsed, "\'$", 2))
 		return (ft_strlen(parsed));
 	while (parsed[i])
 	{
