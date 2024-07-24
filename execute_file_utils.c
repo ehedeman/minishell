@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:04:56 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 12:22:05 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:36:55 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	free_env_args(char **envp, char **args, int arg_zero)
 
 	i = 0;
 	if(!ft_strncmp(args[0], "/bin/", 5))
-		trimmed_cmd = ft_strdup((args[0] + 5));
+		trimmed_cmd = ft_strdup(&args[0][5]);
 	else
 		trimmed_cmd = ft_strdup(args[0]);
 	while (envp[i])
@@ -39,60 +39,62 @@ int	free_env_args(char **envp, char **args, int arg_zero)
 	return (-1);
 }
 
-int	exec_com_fork(t_statement *temp, char **envp, char **args, pid_t pid)
+static void	copy_temp(t_statement *temp, int i, char **args)
+{
+	while (i <= temp->argc)
+	{
+		if (i == temp->argc)
+		{
+			args[i] = NULL;
+			break ;
+		}
+		args[i] = temp->argv[i];
+		i++;
+	}
+}
+
+int	exec_com_fork(t_statement *temp, char **envp, char **args, t_mini *mini)
 {
 	int		i;
 	int		status;
 
 	i = 1;
-	while (i <= temp->argc)
-	{
-		if (i == temp->argc)
-		{
-			args[i] = NULL;
-			break ;
-		}
-		args[i] = temp->argv[i];
-		i++;
-	}
-	pid = fork();
-	if (pid == -1)
+	copy_temp(temp, i, args);
+	mini->pid = fork();
+	if (mini->pid == -1)
 		exit(free_env_args(envp, args, 1));
-	else if (pid == 0)
+	else if (mini->pid == 0)
 	{
 		if (execve(args[0], args, envp) == -1)
 			exit(free_env_args(envp, args, 2));
 	}
 	else
-		waitpid(pid, &status, 0);
+	{
+		waitpid(mini->pid, &status, 0);
+		mini->exit_status = WEXITSTATUS(status);
+	}
 	return (0);
 }
 
-int	exec_file_fork(t_statement *temp, char **envp, char **args, pid_t pid)
-{
+int	exec_file_fork(t_statement *temp, char **envp, char **args, t_mini *mini)
+{ 
 	int		i;
 	int		status;
 
 	i = 0;
-	while (i <= temp->argc)
-	{
-		if (i == temp->argc)
-		{
-			args[i] = NULL;
-			break ;
-		}
-		args[i] = temp->argv[i];
-		i++;
-	}
-	pid = fork();
-	if (pid == -1)
+	copy_temp(temp, i, args);
+	mini->pid = fork();
+	if (mini->pid == -1)
 		exit(free_env_args(envp, args, 0));
-	else if (pid == 0)
+	else if (mini->pid == 0)
 	{
 		if (execve(args[0], args, envp) == -1)
 			exit(free_env_args(envp, args, 2));
 	}
 	else
-		waitpid(pid, &status, 0);
+	{
+		waitpid(mini->pid, &status, 0);
+		mini->exit_status = WEXITSTATUS(status);
+	}
 	return (0);
 }

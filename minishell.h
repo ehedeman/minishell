@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 10:29:27 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:25:07 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ typedef struct	s_mini
 	t_env_list			*env;
 	int					exit_status;
 	t_history			history;
+	pid_t pid;
 }				t_mini;
 
 t_statement *parsing(char *input, int i, int j);
@@ -143,8 +144,8 @@ int			rdr_in_until(t_statement *command, t_mini *mini, int fd, int fd_cpy);
 int			exec_file(t_statement *temp, t_mini *mini);
 int			exec_command(t_statement *temp, t_mini *mini);
 int			free_env_args(char **envp, char **args, int arg_zero);//frees the envp and args from the functions above
-int			exec_com_fork(t_statement *temp, char **envp, char **args, pid_t pid); //split half of exec_command | norm accurate
-int			exec_file_fork(t_statement *temp, char **envp, char **args, pid_t pid);//split half of exec_file | norma accurate
+int			exec_com_fork(t_statement *temp, char **envp, char **args, t_mini *mini); //split half of exec_command | norm accurate
+int			exec_file_fork(t_statement *temp, char **envp, char **args, t_mini *mini);//split half of exec_file | norma accurate
 
 //env
 void		ft_copy_env2lst(t_mini *mini, char **envp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 11:37:36 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/17 09:51:14 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:37:23 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,14 @@ int	exec_command(t_statement *temp, t_mini *mini)
 {
 	char	**args;
 	char	**envp;
-	pid_t	pid;
 
-	pid = 0;
+	mini->pid = 0;
 	g_exec_file = 1; //tells program that theres a file being executed
 	envp = NULL;
 	envp = assign_link_pointer(mini->env, envp);
 	args = malloc(sizeof(char *) * (temp->argc + 1));
 	args[0] = ft_strjoin("/bin/", temp->argv[0]);
-	if (exec_com_fork(temp, envp, args, pid) == -1)
+	if (exec_com_fork(temp, envp, args, mini) == -1)
 		return (-1);
 	free_env_args(envp, args, 1);
 	g_exec_file = 0;
@@ -69,14 +68,13 @@ int	exec_file(t_statement *temp, t_mini *mini)
 {
 	char	**args;
 	char	**envp;
-	pid_t	pid;
 
-	pid = 0;
+	mini->pid = 0;
 	g_exec_file = 1;
 	envp = NULL;
 	envp = assign_link_pointer(mini->env, envp);
 	args = malloc(sizeof(char *) * (temp->argc + 1));
-	if (exec_file_fork(temp, envp, args, pid) == -1)
+	if (exec_file_fork(temp, envp, args, mini) == -1)
 		return (-1);
 	free_env_args(envp, args, 0);
 	g_exec_file = 0;
