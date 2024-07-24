@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:24:36 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/12 15:28:32 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:11:31 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	set_fd(char *filename, int red_type)
 	fd = 0;
 
 	if (red_type == 1)
-		fd = open(filename,  O_RDWR | O_APPEND, mode);
+		fd = open(filename,  O_RDWR | O_CREAT  | O_APPEND, mode);
 	else if (red_type == 2)
 		fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, mode);
 	if (fd < 0)

@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 10:57:01 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:08:03 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,13 @@ void	process_input(t_mini *mini)
 			{
 				add_history(mini->input);
 				add_to_hist_arr(&(mini->history), mini->input);
-				mini->com_tab = parsing(mini->input, 0, 0);
+				mini->com_tab = parsing(mini->input);
 				if (!mini->com_tab)
 				{
 					ft_env_lst_clear(mini->env, free);
 					return ;
 				}
+		//		ft_print(mini, mini->com_tab);
 				replace_env_vars(mini->com_tab->argv, mini);
 				if (check_command(mini) == -1)
 				{

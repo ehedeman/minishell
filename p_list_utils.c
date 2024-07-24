@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:38:26 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 12:47:56 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:51:11 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,11 @@ t_statement	*p_new_node(int argc)
 	new_node->operator = NONE;
 	new_node->next = NULL;
 	return(new_node);
+}
+
+int	parsing_error(int errnum)
+{
+	errnum += 1;
+	printf("An Error has occured while processing input.\n");
+	return (0);
 }

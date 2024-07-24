@@ -5,16 +5,53 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 11:57:45 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 12:12:24 by ehedeman         ###   ########.fr       */
+/*   Created: 2024/07/24 15:45:16 by ehedeman          #+#    #+#             */
+/*   Updated: 2024/07/24 15:49:37 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	parsing_error(int errnum)
+t_operator	get_operator(char *operator)
 {
-	errnum += 1;
+	t_operator	op;
+
+	if (!operator)
+		op = NONE;
+	else if (!ft_strncmp(operator, "|", 1))
+		op = PIPE;
+	else if (!ft_strncmp(operator, ">>", 2))
+		op = RDR_OUT_APPEND;
+	else if (!ft_strncmp(operator, ">", 1))
+		op = RDR_OUT_REPLACE;
+	else if (!ft_strncmp(operator, "<<", 2))
+		op = RDR_INPUT_UNTIL;
+	else if (!ft_strncmp(operator, "<", 1))
+		op = RDR_INPUT;
+	else
+		op = NONE;
+	return (op);
+}
+
+int	check_doubles(char *input, int i)
+{
+	if (is_onstr(QUOTES, input[i]) && input[i] == input[i + 1])
+		return (2);
+	else if (is_onstr(QUOTES, input[i]))
+		return (1);
+	else if (is_onstr(OPERATORS, input[i]) && input[i] == input[i + 1])
+		return (2);
+	else if (is_onstr(OPERATORS, input[i]))
+		return (1);
+	else
+		return (0);
+}
+
+int	is_spaces(char c)
+{
+	if (c == '\t' || c == '\n' || c == '\v'
+		|| c == '\f' || c == '\r' || c == ' ')
+		return (1);
 	return (0);
 }
 
@@ -53,99 +90,4 @@ int	get_argc(char **parsed)
 		i++;
 	}
 	return(count);
-}
-
-static int	remove_quotes_size(char *parsed)
-{
-	int	i;
-	int	size;
-	//char	quotes;
-
-	i = 0;
-	size = 0;
-	if (!ft_strncmp(parsed, "\'$", 2))
-		return (ft_strlen(parsed));
-	while (parsed[i])
-	{
-		while (parsed[i] && is_onstr(QUOTES, parsed[i]))
-		{
-			//quotes = parsed[i];
-			i++;
-		}
-		while (parsed[i] && !is_onstr(QUOTES, parsed[i]))
-		{
-			i++;
-			size++;
-		}
-		if (!parsed[i])
-			break ;
-		//quotes = 0;
-	}
-	return (size);
-}
-
-char *remove_quotes(char *parsed)
-{
-	int		i;
-	int		j;
-	char	quotes;
-	char	*unquoted_parsed;
-
-	i = 0;
-	j = 0;
-	quotes = '\0';
-	unquoted_parsed = malloc((remove_quotes_size(parsed) + 1) * sizeof(char));
-	if (!unquoted_parsed)
-	{
-		free(parsed);
-		parsing_error(MALLOC_ERR);
-		return (NULL);
-	}
-	if (!ft_strncmp(parsed, "'$", 2))
-	{
-		ft_strlcpy(unquoted_parsed, parsed, ft_strlen(parsed) + 1);
-		free(parsed);
-		return (unquoted_parsed);
-	}
-	while (parsed[i])
-	{
-		while (parsed[i] && (parsed[i] == '\'' || parsed[i] == '\"'))
-		{
-			quotes = parsed[i];
-			i++;
-		}
-		if (!parsed[i])
-			break ;
-		while (parsed[i] && parsed[i] != quotes)
-		{
-			unquoted_parsed[j] = parsed[i];
-			i++;
-			j++;
-		}
-		quotes = '\0';
-	}
-	unquoted_parsed[j] = '\0';
-	free(parsed);
-	return (unquoted_parsed);
-}
-
-t_operator	get_operator(char *operator)
-{
-	t_operator	op;
-
-	if (!operator)
-		op = NONE;
-	else if (!ft_strncmp(operator, "|", 1))
-		op = PIPE;
-	else if (!ft_strncmp(operator, ">>", 2))
-		op = RDR_OUT_APPEND;
-	else if (!ft_strncmp(operator, ">", 1))
-		op = RDR_OUT_REPLACE;
-	else if (!ft_strncmp(operator, "<<", 2))
-		op = RDR_INPUT_UNTIL;
-	else if (!ft_strncmp(operator, "<", 1))
-		op = RDR_INPUT;
-	else
-		op = NONE;
-	return (op);
 }

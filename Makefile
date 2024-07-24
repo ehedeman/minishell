@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+         #
+#    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/19 11:08:00 by smatschu         ###   ########.fr        #
+#    Updated: 2024/07/24 15:50:01 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC = 	main.c							\
 		input_check_two.c				\
 		parsing.c						\
 		parsing_utils.c					\
+		parsing_remove_quotes.c			\
 		p_list_utils.c					\
 		cd.c							\
 		exit.c							\

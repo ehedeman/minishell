@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 12:25:07 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:49:30 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,16 @@ typedef struct	s_mini
 	pid_t pid;
 }				t_mini;
 
-t_statement *parsing(char *input, int i, int j);
+t_statement	*parsing(char *input);
+
+char		*remove_quotes(char *parsed);
+
 int			is_onstr(const char *str, int c);
 int			is_spaces(char c);
-int			get_argc(char **parsed);
-char 		*remove_quotes(char	*parsed);
+int			check_doubles(char *input, int i);
 t_operator	get_operator(char *operator);
+int			get_argc(char **parsed);
+
 t_statement	*p_new_node(int argc);
 int			parsing_error(int errnum);
 int			ft_cd(t_statement *temp, int i);

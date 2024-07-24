@@ -5,7 +5,6 @@ TO DO
 	and command + CTRL+c + ENTER should not execute command (handler?)
 []ctrl-\ in a prompt after you wrote some stuff should quit minishell
 [x]if you run ctrl+c and no enter, ctrl+d doesnt work
-[x]blabla"blabla" heap-buffer-overflow instead of command not found
 []cat < file leaks ------------ no it doesnt -----------
 []echo "cat lol.c | cat > lol.c" should print cat lol.c | cat > lol.c
 []'' not giving command not found
@@ -39,3 +38,4 @@ readline will list all files and directories in the current directory.
 [x]p is running pwd, c cd, e echo and so on.
 [x]echo $PATH${NAME}$WTVR
 [x]expr $? + $?
+[x]blabla"blabla" heap-buffer-overflow instead of command not found
