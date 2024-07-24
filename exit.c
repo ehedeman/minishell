@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:12:06 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/17 11:19:41 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:59:03 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void	free_com_tab(t_mini *mini)
 {
 	t_statement	*temp;
 	t_statement	*next;
-	int	i;
+	int			i;
 
 	i = 0;
 	temp = mini->com_tab;
-	while(temp)
+	while (temp)
 	{
 		next = temp->next;
 		i = 0;
@@ -44,4 +44,3 @@ void	ft_exit(t_mini *mini)
 	printf("Bye then :)\n");
 	exit(0);
 }
-
