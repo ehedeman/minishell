@@ -12,10 +12,6 @@ OPTIONAL(?)
 
 IN PROGRESS
 [smatschu]for $?, at every possible exit, update exit value in mini struct
-[smatschu]echo '$ and whatever withOUT arg_expansion first
-	[] $PATH and "$PATH" should expand
-	[] '$PATH' should not expand
-	[] echo $ is not printing $
 	
 [ehedeman] new parsing
 	[]blabla"blabla" heap-buffer-overflow instead of command not found
@@ -49,3 +45,8 @@ readline will list all files and directories in the current directory.
 [x]from some eval sheet: "ctrl-\ in a prompt after you wrote some stuff should quit minishell?" Seems to be working like in bash, so wtvr.
 [x] norm arg_expansion
 [x]on bash: export HISTCONTROL=ignoredups , so history in bash ignores consecutive dup cmds
+[x]echo '$ and whatever withOUT arg_expansion first:
+--> I added a condition to not replace de var if the arg passe starts and ends with ', because the " are already removed, but ' not
+	[x] $PATH and "$PATH" should expand
+	[x] '$PATH' should not expand
+	[x] echo $ is not printing $
