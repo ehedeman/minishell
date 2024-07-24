@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 19:14:29 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/24 13:42:52 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:20:50 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	ft_export(t_mini *mini)
 	i = 0;
 	new = NULL;
 	if (!mini->com_tab->argv[1])
-	{	
+	{
 		temp = copy_linked_list(mini->env);
 		if (!temp)
 			return (main_error(MALLOC_ERR));
