@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 12:15:30 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:45:57 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 		{
 			if (check_builtins(temp, mini, i, fd))
 				break ;
+			if (!ft_strncmp(temp->argv[i], "\'$", 2))
+				remove_quotes_main(temp, i);
 			if (check_execute(temp, i, mini))
 				break ;
 			i++;

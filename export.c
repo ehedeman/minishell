@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 19:14:29 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/19 14:21:24 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/24 13:42:52 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ int	ft_env_list_comp(t_env_list *env, char **val)
 	temp = env;
 	while (temp != NULL)
 	{
-		if (ft_strncmp(temp->name, val[0], ft_strlen(val[0])) == 0)
+		if ((ft_strncmp(temp->name, val[0], ft_strlen(val[0])) == 0))
 		{
-			free(temp->value);
 			if (val[1] != NULL)
+			{
+				free(temp->value);
 				temp->value = ft_strdup(val[1]);
-			else
-				temp->value = NULL;
+			}
 			return (0);
 		}
 		temp = temp->next;

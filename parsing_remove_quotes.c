@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:44:15 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 16:02:50 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:42:16 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	remove_quotes_length(char *parsed)
 		}
 		while (parsed[i])
 		{
-			while (is_onstr(QUOTES, parsed[i]))
+			while (parsed[i] && is_onstr(QUOTES, parsed[i]))
 				i++;
 			if (!parsed[i])
 				return (size);

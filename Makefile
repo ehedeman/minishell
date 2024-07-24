@@ -6,7 +6,7 @@
 #    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/24 16:13:43 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/07/24 16:17:06 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRC = 	main.c							\
 		export_utils.c					\
 		unset.c							\
 		arg_expansion.c					\
+		arg_expansion_utils.c			\
 		pipes.c							\
 		
 OBJS = $(SRC:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 15:49:30 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:18:23 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,10 @@ int			ft_unset(t_env_list *env, char *target_name);
 
 //expansion $
 void	replace_env_vars(char **args, t_mini *mini);
+void	append_var_value(char **new_arg, const char *var_value);
+char	*extract_var_name(char	**arg);
+char	*get_env_value(const char *var_name, t_mini *mini);
+void	*ft_resize_mem(void *ptr, size_t new_size);
 
 //history
 void	init_history(t_history *history);	

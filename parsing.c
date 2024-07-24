@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 13:10:38 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 16:03:27 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:42:31 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,20 @@ static int	get_token_len(char *input)
 	while (is_spaces(input[i]))
 		i++; //skip whitespace
 	if(is_onstr(QUOTES, input[i]) == 1)
+	{
 		quotes = !quotes; //if there's a quote, either it completes or is a new one
+		length++;
+		i++;
+	}
 	while (input[i])
 	{
 		if (is_spaces(input[i]) && !quotes) //if there is space without it being in quotation
 			break ;
 		else if (is_onstr(OPERATORS, input[i]) && !quotes)//if theres unquoted operators
 			break ;
-		else if (is_onstr(QUOTES, input[i])) //if we have quote the word is over 100%
-			break ;
 		length++;
+		if (is_onstr(QUOTES, input[i])) //if we have quote the word is over 100%
+			break ;
 		i++;
 	}
 	return (length);
@@ -89,7 +93,7 @@ static int	copy_input_to_parsed(char *input, char **parsed, int i, int j)
 	length = get_token_len(&input[i]);
 	while (input[i] && k < length)
 	{
-		if (is_onstr(QUOTES, input[i + 1])) //just nessecary to know if space needs to be copied
+		if (is_onstr(QUOTES, input[i])) //just nessecary to know if space needs to be copied
 			quotes = !quotes;
 		if (is_spaces(input[i]) && !quotes)
 			i++;

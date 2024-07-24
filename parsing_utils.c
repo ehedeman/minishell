@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:45:16 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 15:49:37 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:28:35 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	check_doubles(char *input, int i)
 {
 	if (is_onstr(QUOTES, input[i]) && input[i] == input[i + 1])
 		return (2);
-	else if (is_onstr(QUOTES, input[i]))
-		return (1);
+	// else if (is_onstr(QUOTES, input[i]))
+	// 	return (1);
 	else if (is_onstr(OPERATORS, input[i]) && input[i] == input[i + 1])
 		return (2);
 	else if (is_onstr(OPERATORS, input[i]))

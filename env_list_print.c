@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:14:40 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/17 18:32:41 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/24 14:58:07 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_print_export_list(t_env_list *sorted_env)
 			if (node->value != NULL && ft_strcmp(node->value, "") != 0)
 				printf("declare -x %s=\"%s\"\n", node->name, node->value);
 			else if (node->value != NULL && node->value[0] == '\0')
-				printf("declare -x %s=\n", node->name);
+				printf("declare -x %s=\"\"\n", node->name);
 			else
 				printf("declare -x %s\n", node->name);
 		}
