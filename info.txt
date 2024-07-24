@@ -1,14 +1,7 @@
 TO DO
 []pipes with redirection (basic and multiple pipes work)
 []input check for pipe without content
-[x]ctrl-C in a prompt after you wrote some stuff should show a new line with a new prompt
-	and command + CTRL+c + ENTER should not execute command (handler?)
-[]ctrl-\ in a prompt after you wrote some stuff should quit minishell
-[x]if you run ctrl+c and no enter, ctrl+d doesnt work
-[]cat < file leaks ------------ no it doesnt -----------
-[]echo "cat lol.c | cat > lol.c" should print cat lol.c | cat > lol.c
-[]'' not giving command not found
-[]deal with functions >25lines
+
 
 OPTIONAL(?)
 []history: with one value as argument to change ammount of lines from history to print
@@ -19,11 +12,15 @@ OPTIONAL(?)
 
 IN PROGRESS
 [smatschu]for $?, at every possible exit, update exit value in mini struct
-[smatschu] norm arg_expansion
+[smatschu]norm
+	[]echo '$ and whatever withOUT arg_expansion first
+[ehedeman] new parsing
+	[]blabla"blabla" heap-buffer-overflow instead of command not found
+	[x]echo "cat lol.c | cat > lol.c" should print cat lol.c | cat > lol.c
+	[x]'' not giving command not found
+	[x] echo "|${USER}|" should output |username|
 
 PLEASE TEST (set as DONE if you think is ok or put back as TO DO)
-[ehedeman]history command (capacity is set to 5 for easy visualization, can change to 2000 later like bash)
-[ehedeman]SHLVL -----------tested, works------------
 [ehedeman]basic and multiple pipes
 
 QUESTIONS
@@ -38,4 +35,14 @@ readline will list all files and directories in the current directory.
 [x]p is running pwd, c cd, e echo and so on.
 [x]echo $PATH${NAME}$WTVR
 [x]expr $? + $?
-[x]blabla"blabla" heap-buffer-overflow instead of command not found
+[x] export FOO=test, than export FOO, should not update FOO.
+[x]SHLVL
+[x]history command (capacity is set to 5 for easy visualization, can change to 2000 later like bash)
+[x] export FOO=test, than export FOO, should not update FOO.
+[x]ctrl-C in a prompt after you wrote some stuff should show a new line with a new prompt
+	and command + CTRL+c + ENTER should not execute command (handler?)
+[x]if you run ctrl+c and no enter, ctrl+d doesnt work
+[x]cat < file leaks ------------ no it doesnt -----------
+[x]from some eval sheet: "ctrl-\ in a prompt after you wrote some stuff should quit minishell?" Seems to be working like in bash, so wtvr.
+[x] norm arg_expansion
+[x]on bash: export HISTCONTROL=ignoredups , so history in bash ignores consecutive dup cmds

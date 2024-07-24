@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:23:16 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/12 15:40:10 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:29:02 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	ft_cd_nothing(void)
 		printf("minishell: %s\n", strerror(errno));
 }
 
-static int check_args_cd(t_statement *temp)
+static int	check_args_cd(t_statement *temp)
 {
 	if (temp->argc > 2)
 	{

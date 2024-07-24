@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 13:10:38 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 16:42:31 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:58:28 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,9 @@ t_statement	*parsing(char *input)
 
 	i = 0;
 	j = 0;
-	parsed = parsing_input(input);
+	// if (word_quote_word(input)) //wenn es irgendwie mit quotes und wort in einem is dann einfach
+	// 	parsed = parsing_special(input); //die quotes entfernem und den rest so zusammen lassen
+	parsed = parsing_input(input); 
 	if (!parsed)
 		return (NULL);
 	temp = p_new_node(get_argc(&parsed[0]));
