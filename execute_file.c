@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 11:37:36 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 12:37:23 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:57:11 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,14 @@ static	char	**assign_link_pointer(t_env_list *env, char **envp)
 	return (envp);
 }
 
+//g_exec_file tells program that theres a file being executed
 int	exec_command(t_statement *temp, t_mini *mini)
 {
 	char	**args;
 	char	**envp;
 
 	mini->pid = 0;
-	g_exec_file = 1; //tells program that theres a file being executed
+	g_exec_file = 1;
 	envp = NULL;
 	envp = assign_link_pointer(mini->env, envp);
 	args = malloc(sizeof(char *) * (temp->argc + 1));
