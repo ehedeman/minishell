@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_builtin_commands.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/19 14:45:39 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:15:30 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,9 @@ int	check_builtins(t_statement *temp, t_mini *mini, int i, int fd)
 			i++;
 		}
 	}
+	else if (!ft_strncmp(temp->argv[i], "history", ft_strlen("history") + 1))
+		check_history(mini, i);
 	else
-		return (check_history(mini, i));
+		return (0);
 	return (1);
 }
