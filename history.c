@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:11:09 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/18 17:55:09 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:59:56 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	add_to_hist_arr(t_history *history, char *command)
 		last_command = history->commands[last_i];
 		if (ft_strcmp(last_command, command) == 0)
 			return ;
-	}	
+	}
 	history->total++;
 	if (history->size >= history->capacity)
 	{
