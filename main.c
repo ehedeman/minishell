@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 16:08:03 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:05:11 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	process_input(t_mini *mini)
 					ft_env_lst_clear(mini->env, free);
 					return ;
 				}
-		//		ft_print(mini, mini->com_tab);
+				printf("test mini->com_tab->argv: %s\n", mini->com_tab->argv[1]);
 				replace_env_vars(mini->com_tab->argv, mini);
 				if (check_command(mini) == -1)
 				{
