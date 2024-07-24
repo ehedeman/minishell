@@ -24,7 +24,7 @@ IN PROGRESS
 
 PLEASE TEST (set as DONE if you think is ok or put back as TO DO)
 [ehedeman]history command (capacity is set to 5 for easy visualization, can change to 2000 later like bash)
-[ehedeman]SHLVL
+[ehedeman]SHLVL -----------tested, works------------
 [ehedeman]basic and multiple pipes
 
 QUESTIONS

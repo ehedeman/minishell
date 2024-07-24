@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:19:48 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 10:47:42 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 11:39:37 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,7 @@ int	get_nbr_statements(char *input, int i)
 		if (is_onstr(QUOTES, input[i]) && input[i] == input[i + 1])
 			i++;
 		else if (is_onstr(QUOTES, input[i]))
-		{
 			quotes = !quotes;
-			i++;
-		}
 		if (input[i] != ' ' && !is_onstr(OPERATORS, input[i]))
 		{
 			count++;
@@ -77,6 +74,11 @@ int	get_token_len(char *input)
 	}
 	while (is_spaces(input[i]))
 		i++;
+	if (is_onstr(QUOTES, input[i]) == 1)
+	{
+		quotes = !quotes;
+		i++;
+	}
 	while (input[i])
 	{
 		if (is_onstr(QUOTES, input[i]) && quotes)

@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 10:19:59 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:57:01 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	handler(int sig)
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("\0", 1);
-	//	write(STDOUT_FILENO, "\n\033[1;31mthe minishell: \033[0m ", 23);
 		rl_redisplay();
 	}
 	else if (sig == SIGINT && g_exec_file)
