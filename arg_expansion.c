@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 22:23:35 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/24 14:51:56 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:55:45 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,31 @@ char	*expand_arg(char *arg, t_mini *mini)
 	return (new_arg);
 }
 
+int	start_and_end_with_single_quotes(const char *str, size_t len)
+{
+	if (str == NULL)
+		return (0);
+	if (str[0] == '\'' && str[len - 1] == '\'')
+		return (1);
+	return (0);
+}
+
 void	replace_env_vars(char **args, t_mini *mini)
 {
 	char	*new_arg;
 	int		i;
+	size_t	len;
 
 	i = 0;
 	while (args[i] != NULL)
 	{
-		new_arg = expand_arg(args[i], mini);
-		free(args[i]);
-		args[i] = new_arg;
+		len = ft_strlen(args[i]);
+		if(!start_and_end_with_single_quotes(args[i], len) && len > 1)
+		{
+			new_arg = expand_arg(args[i], mini);
+			free(args[i]);
+			args[i] = new_arg;
+		}
 		i++;
 	}
 }
