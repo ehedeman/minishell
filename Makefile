@@ -6,7 +6,7 @@
 #    By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/19 11:08:00 by smatschu         ###   ########.fr        #
+#    Updated: 2024/07/24 14:52:22 by smatschu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRC = 	main.c							\
 		export_utils.c					\
 		unset.c							\
 		arg_expansion.c					\
+		arg_expansion_utils.c			\
 		pipes.c							\
 		
 OBJS = $(SRC:.c=.o)

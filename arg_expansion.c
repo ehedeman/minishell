@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 22:23:35 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/22 23:06:36 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/24 14:51:56 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,78 +18,48 @@
 
 #include "minishell.h"
 
-void	*ft_resize_mem(void *ptr, size_t new_size)
+char	*append_char_to_new_arg(char *new_arg, char arg_char)
 {
-	void	*new_ptr;
+	size_t	len;
 
-	if (new_size == 0)
-	{
-		free(ptr);
-		return (NULL);
-	}
-	new_ptr = malloc(new_size);
-	if (!new_ptr)
-		return (NULL);
-	if (ptr)
-	{
-		ft_memcpy(new_ptr, ptr, new_size);
-		free(ptr);
-	}
-	return (new_ptr);
+	len = ft_strlen(new_arg);
+	new_arg = ft_resize_mem(new_arg, len + 2);
+	new_arg[len] = arg_char;
+	new_arg[len + 1] = '\0';
+	return (new_arg);
 }
 
-char	*get_env_value(const char *var_name, t_mini *mini)
+char	*handle_exstat(char **arg, t_mini *mini, char *new_arg, int use_braces)
 {
-	t_env_list	*current;
+	char	*exit_status;
 
-	current = mini->env;
-	while (current != NULL)
-	{
-		if (ft_strcmp(current->name, var_name) == 0)
-			return (current->value);
-		current = current->next;
-	}
-	return (NULL);
-}
-
-char	*extract_var_name(char	**arg)
-{
-	char	*start_var;
-	char	*var_name;
-	size_t	name_len;
-
-	start_var = *arg;
-	while (**arg && (ft_isalnum(**arg) || **arg == '_'))
+	exit_status = ft_itoa(mini->exit_status);
+	append_var_value(&new_arg, exit_status);
+	free(exit_status);
+	(*arg)++;
+	if (use_braces && **arg == '}')
 		(*arg)++;
-	name_len = *arg - start_var;
-	var_name = ft_calloc(name_len + 1, 1);
-	ft_strlcpy(var_name, start_var, name_len + 1);
-	var_name[name_len] = '\0';
-	return (var_name);
+	return (new_arg);
 }
 
-void	append_var_value(char **new_arg, const char *var_value)
+char	*handle_var_exp(char **arg, t_mini *mini, char *new_arg, int use_braces)
 {
-	int	new_len;
-	int	val_len;
+	char	*var_name;
+	char	*var_value;
 
-	if (var_value != NULL)
-	{
-		new_len = ft_strlen(*new_arg);
-		val_len = ft_strlen(var_value);
-		*new_arg = ft_resize_mem(*new_arg, new_len + val_len + 1);
-		ft_strlcat(*new_arg, var_value, new_len + val_len + 1);
-	}
+	var_name = extract_var_name(arg);
+	if (use_braces && **arg == '}')
+		(*arg)++;
+	var_value = get_env_value(var_name, mini);
+	append_var_value(&new_arg, var_value);
+	free(var_name);
+	return (new_arg);
 }
 
 char	*expand_arg(char *arg, t_mini *mini)
 {
 	char	*new_arg;
 	int		use_braces;
-	char	*var_name;
-	char	*var_value;
-	char	*exit_status;
-	size_t	len;
 
 	new_arg = ft_calloc(1, 1);
 	while (*arg)
@@ -101,30 +71,13 @@ char	*expand_arg(char *arg, t_mini *mini)
 			if (use_braces)
 				arg++;
 			if (*arg == '?')
-			{
-				exit_status = ft_itoa(mini->exit_status);
-				append_var_value(&new_arg, exit_status);
-				free(exit_status);
-				arg++;
-				if (use_braces && *arg == '}')
-					arg++;
-			}
+				new_arg = handle_exstat(&arg, mini, new_arg, use_braces);
 			else
-			{
-				var_name = extract_var_name(&arg);
-				if (use_braces && *arg == '}')
-					arg++;
-				var_value = get_env_value(var_name, mini);
-				append_var_value(&new_arg, var_value);
-				free(var_name);
-			}
+				new_arg = handle_var_exp(&arg, mini, new_arg, use_braces);
 		}
 		else
 		{
-			len = ft_strlen(new_arg);
-			new_arg = ft_resize_mem(new_arg, len + 2);
-			new_arg[len] = *arg;
-			new_arg[len + 1] = '\0';
+			new_arg = append_char_to_new_arg(new_arg, *arg);
 			arg++;
 		}
 	}
