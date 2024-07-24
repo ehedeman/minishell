@@ -3,21 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/19 14:51:37 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:03:12 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_exec_file;
-//if theres multiple output redirections it creates all of the files, then
-//closes them if nessecary.
-//returns only the last fd.
-// (get_fd is for creating the right type of file if nessecary. else it just
-//  opens the right file)
 
 int	check_command(t_mini *mini)
 {
@@ -41,11 +36,16 @@ int	check_command(t_mini *mini)
 void	handler(int sig)
 {
 	if (sig == SIGINT && !g_exec_file)
-		write(STDOUT_FILENO, "\nminishell: ", 12);
-	else if (sig == SIGINT && g_exec_file) //had issues with closing endless programs (usually you use ctrl c)
-		printf("\n");					   //without else if the programm displays "minishell: " twice in that case
-}										   //used global var to tell the program "hey theres smth else beign closed with ctrl c right now"
-										   //so theres no need to display the new prompt cuz minishell does that anyways
+	{
+		rl_replace_line("", 1);
+		write(STDOUT_FILENO, "\n", 1);
+	//	write(STDOUT_FILENO, "\n\033[1;31mthe minishell: \033[0m ", 23);
+	//	rl_redisplay();
+		rl_on_new_line();
+	}
+	else if (sig == SIGINT && g_exec_file)
+		printf("\n");
+}
 
 int	ft_shlvl(t_mini *mini)
 {
