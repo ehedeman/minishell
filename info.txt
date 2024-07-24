@@ -1,7 +1,7 @@
 TO DO
 []pipes with redirection (basic and multiple pipes work)
 []input check for pipe without content
-
+[]norm
 
 OPTIONAL(?)
 []history: with one value as argument to change ammount of lines from history to print
@@ -12,8 +12,11 @@ OPTIONAL(?)
 
 IN PROGRESS
 [smatschu]for $?, at every possible exit, update exit value in mini struct
-[smatschu]norm
-	[]echo '$ and whatever withOUT arg_expansion first
+[smatschu]echo '$ and whatever withOUT arg_expansion first
+	[] $PATH and "$PATH" should expand
+	[] '$PATH' should not expand
+	[] echo $ is not printing $
+	
 [ehedeman] new parsing
 	[]blabla"blabla" heap-buffer-overflow instead of command not found
 	[x]echo "cat lol.c | cat > lol.c" should print cat lol.c | cat > lol.c
