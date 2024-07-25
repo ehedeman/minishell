@@ -1,6 +1,5 @@
 TO DO
 []pipes with redirection (basic and multiple pipes work)
-[]input check for pipe without content
 []norm
 
 OPTIONAL(?)
@@ -16,12 +15,15 @@ IN PROGRESS
 	[] $PATH and "$PATH" should expand
 	[] '$PATH' should not expand
 	[] echo $ is not printing $
-	
-[ehedeman]
-[x]
+
+[ehedeman]none
 
 PLEASE TEST (set as DONE if you think is ok or put back as TO DO)
-[ehedeman]basic and multiple pipes
+[ehedeman]
+[]basic and multiple pipes
+
+[smatchu]
+[]input check for pipe without content
 
 QUESTIONS
 [x] what is this exactly?
