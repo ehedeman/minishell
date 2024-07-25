@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:44:15 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 16:42:16 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/25 10:26:57 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	unquoted_cpy(char *parsed, char *unquoted_parsed, int i, int j)
 			while (parsed[i] && is_onstr(QUOTES, parsed[i]))
 				i++;
 			if (!parsed[i])
-				return ;
+				break ;
 			unquoted_parsed[j] = parsed[i];
 			i++;
 			j++;
@@ -72,7 +72,10 @@ static int	remove_quotes_length(char *parsed)
 		while (parsed[i])
 		{
 			while (parsed[i] && is_onstr(QUOTES, parsed[i]))
+			{
+				quotes = !quotes;
 				i++;
+			}
 			if (!parsed[i])
 				return (size);
 			if (is_spaces(parsed[i]) && !quotes)

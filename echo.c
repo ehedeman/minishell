@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:28:15 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 17:52:04 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/25 10:37:44 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_echo(t_mini *mini, t_statement *temp, int fd, int i)
 	while (temp->argv[i])
 	{
 		handle_special_cases(mini, temp, fd, i);
-		if (i < temp->argc - 1)
+		if (i < temp->argc - 1 && *temp->argv[i])
 			write(fd, " ", 1);
 		i++;
 	}

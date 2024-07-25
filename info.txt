@@ -17,11 +17,8 @@ IN PROGRESS
 	[] '$PATH' should not expand
 	[] echo $ is not printing $
 	
-[ehedeman] new parsing
-	[]blabla"blabla" heap-buffer-overflow instead of command not found
-	[x]echo "cat lol.c | cat > lol.c" should print cat lol.c | cat > lol.c
-	[x]'' not giving command not found
-	[x] echo "|${USER}|" should output |username|
+[ehedeman]
+[x]
 
 PLEASE TEST (set as DONE if you think is ok or put back as TO DO)
 [ehedeman]basic and multiple pipes
@@ -52,3 +49,8 @@ readline will list all files and directories in the current directory.
 [x]from some eval sheet: "ctrl-\ in a prompt after you wrote some stuff should quit minishell?" Seems to be working like in bash, so wtvr.
 [x] norm arg_expansion
 [x]on bash: export HISTCONTROL=ignoredups , so history in bash ignores consecutive dup cmds
+[x]blabla"blabla" heap-buffer-overflow instead of command not found
+[x]echo "cat lol.c | cat > lol.c" should print cat lol.c | cat > lol.c
+[x]'' not giving command not found
+[x] echo "|${USER}|" should output |username|
+[x] new parsing

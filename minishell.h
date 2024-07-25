@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 16:18:23 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/25 10:21:03 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int			remove_quotes_main(t_statement *temp, int i);
 int			get_fd(t_statement *temp);
 void		ft_echo(t_mini *mini, t_statement *temp, int fd, int i);
 
-void		ft_print(t_mini *mini, t_statement *current);
+void		ft_print(t_mini *mini);
 int			main_error(int errnum);
 
 int			redirect_input(t_statement *command, t_statement *temp, t_mini *mini);

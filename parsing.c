@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 13:10:38 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 16:58:28 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/25 10:45:52 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	get_token_len(char *input)
 		else if (is_onstr(OPERATORS, input[i]) && !quotes)//if theres unquoted operators
 			break ;
 		length++;
-		if (is_onstr(QUOTES, input[i])) //if we have quote the word is over 100%
+		if (is_onstr(QUOTES, input[i]) && input[i + 1] == ' ') //if we have quote the word is over 100%
 			break ;
 		i++;
 	}
@@ -179,6 +179,7 @@ char **parsing_input(char *input)
 
 	nbr_args = get_nbr_parsed_args(input, 0, 0) + 1; //plus one to terminate
 	parsed = malloc(sizeof(char *) * nbr_args);
+	// parsed = ft_split(input, ' ');
 	if (!parsed)
 	{
 		free(input);
@@ -203,8 +204,6 @@ t_statement	*parsing(char *input)
 
 	i = 0;
 	j = 0;
-	// if (word_quote_word(input)) //wenn es irgendwie mit quotes und wort in einem is dann einfach
-	// 	parsed = parsing_special(input); //die quotes entfernem und den rest so zusammen lassen
 	parsed = parsing_input(input); 
 	if (!parsed)
 		return (NULL);

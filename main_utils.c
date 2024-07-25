@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 12:52:43 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/17 09:44:18 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/25 10:20:53 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main_error(int errnum)
 }
 
 //to check the input/if everything was parsed correctly
-void	ft_print(t_mini *mini, t_statement *current)
+void	ft_print(t_mini *mini)
 {
 	int i;
 	t_statement *temp;
@@ -38,7 +38,7 @@ void	ft_print(t_mini *mini, t_statement *current)
 	char	*nbr;
 
 	temp = mini->com_tab;
-	fd = get_fd(current);
+	fd = 1;
 	printf("fd = %d", fd);
 	while (temp)
 	{
