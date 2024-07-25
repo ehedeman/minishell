@@ -27,9 +27,12 @@ PLEASE TEST (set as DONE if you think is ok or put back as TO DO)
 [ehedeman]basic and multiple pipes
 
 QUESTIONS
-[] what is this exactly?
+[x] what is this exactly?
 	mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
-[] whats this flag -fno-omit-frame-pointer for?
+-> mode is the right that the file gets when created (RUSR = Read User etc.)
+[x] whats this flag -fno-omit-frame-pointer for?
+->debug flag for fsanatize, used last in so_long. think u can get more info on the leaks etc with that flag
+but not sure
 
 DONE
 [x]tab is running ls: if you press Tab twice without typing anything or 
