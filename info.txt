@@ -1,6 +1,5 @@
 TO DO
 []pipes with redirection (basic and multiple pipes work)
-[]input check for pipe without content
 []norm
 
 OPTIONAL(?)
@@ -12,20 +11,24 @@ OPTIONAL(?)
 
 IN PROGRESS
 [smatschu]for $?, at every possible exit, update exit value in mini struct
-	
-[ehedeman] new parsing
-	[]blabla"blabla" heap-buffer-overflow instead of command not found
-	[x]echo "cat lol.c | cat > lol.c" should print cat lol.c | cat > lol.c
-	[x]'' not giving command not found
-	[x] echo "|${USER}|" should output |username|
+
+
+[ehedeman]none
 
 PLEASE TEST (set as DONE if you think is ok or put back as TO DO)
-[ehedeman]basic and multiple pipes
+[ehedeman]
+[]basic and multiple pipes
+
+[smatchu]
+[]input check for pipe without content
 
 QUESTIONS
-[] what is this exactly?
+[x] what is this exactly?
 	mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
-[] whats this flag -fno-omit-frame-pointer for?
+-> mode is the right that the file gets when created (RUSR = Read User etc.)
+[x] whats this flag -fno-omit-frame-pointer for?
+->debug flag for fsanatize, used last in so_long. think u can get more info on the leaks etc with that flag
+but not sure
 
 DONE
 [x]tab is running ls: if you press Tab twice without typing anything or 
@@ -45,8 +48,3 @@ readline will list all files and directories in the current directory.
 [x]from some eval sheet: "ctrl-\ in a prompt after you wrote some stuff should quit minishell?" Seems to be working like in bash, so wtvr.
 [x] norm arg_expansion
 [x]on bash: export HISTCONTROL=ignoredups , so history in bash ignores consecutive dup cmds
-[x]echo '$ and whatever withOUT arg_expansion first:
---> I added a condition to not replace de var if the arg passe starts and ends with ', because the " are already removed, but ' not
-	[x] $PATH and "$PATH" should expand
-	[x] '$PATH' should not expand
-	[x] echo $ is not printing $

@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 17:28:40 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 16:29:08 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/25 09:51:56 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	check_for_dollar_quoted(t_statement *temp)
 		echo_found = false;
 	while (temp->argv[i])
 	{
-		if (!ft_strncmp(temp->argv[i], "'$", 2) && !echo_found)
+		if (!ft_strncmp(temp->argv[i], "\'$", 2) && !echo_found)
 			remove_quotes_main(temp, i);
 		i++;
 	}

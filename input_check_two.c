@@ -6,13 +6,13 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:16:40 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 17:25:36 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/25 11:02:45 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_incomplete_pipe(char *input, int i)
+static int	check_incomplete_pipe_end(char *input, int i)
 {
 	int pipe;
 
@@ -38,6 +38,24 @@ static int	check_incomplete_pipe(char *input, int i)
 			break ;
 		else if (pipe && !is_onstr(OPERATORS, input[i]))
 			pipe = 0;
+		i++;
+	}
+	return (0);
+}
+
+static int	check_incomplete_pipe_start(char *input, int i)
+{
+	int pipe;
+	int	character;
+
+	pipe = 0;
+	character = 0;
+	while (input[i])
+	{
+		if (!is_onstr("|", input[i]) && !is_spaces(input[i]))
+			character++;
+		else if (is_onstr("|", input[i]) && !character)
+			return (1);
 		i++;
 	}
 	return (0);
@@ -77,7 +95,12 @@ static int	check_incomplete_in_red(char *input, int i)
 
 bool input_check_two(char *input, bool valid)
 {
-	if (check_incomplete_pipe(input, 0))
+	if (check_incomplete_pipe_end(input, 0))
+	{
+		write(1, UNFINISHED_PIPE, ft_strlen(UNFINISHED_PIPE));
+		valid = false;
+	}
+	else if (check_incomplete_pipe_start(input, 0))
 	{
 		write(1, UNFINISHED_PIPE, ft_strlen(UNFINISHED_PIPE));
 		valid = false;
