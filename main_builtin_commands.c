@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 15:51:34 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:58:02 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,4 +161,5 @@ int	check_builtins(t_statement *temp, t_mini *mini, int i)
 		return (check_history(mini, i));
 	else
 		return (0); //command not found
+	return (0);
 }
