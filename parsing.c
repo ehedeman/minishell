@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 13:10:38 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 12:55:08 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/26 13:19:24 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ static int	get_nbr_parsed_args(char *input, int i, int count)
 				i += 2; //skip to symbol after operators
 			count++;
 		} //again with the operators, fixed length cuz easier
-		if (is_onstr(QUOTES, input[i])) //note quotes but no new statement
-			quotes = !quotes; 
+		if (is_onstr(QUOTES, input[i++])) //note quotes but no new statement
+			quotes = !quotes;
 		if (input[i] != ' ' && !is_onstr(OPERATORS, input[i]))
 		{
 			count++;
@@ -67,8 +67,11 @@ static int	get_nbr_parsed_args(char *input, int i, int count)
 			{
 				if (is_onstr(OPERATORS, input[i]) && !quotes) //if unquoted operator then start again
 					break ;
-				if (is_onstr(QUOTES, input[i]) && input[i] == input[i + 1]) //doublequotes r supposed to get their own argv
+				if (is_onstr(QUOTES, input[i]) && input[i] == input[i + 1]) //doublequotes r supposed to get their own args
+				{
 					count++;
+					i++;
+				}
 				else if (is_onstr(QUOTES, input[i]))
 					quotes = !quotes;
 				if (is_spaces(input[i]) && !quotes) //if we have a space w/o quotes then the next could be a operator
@@ -79,6 +82,7 @@ static int	get_nbr_parsed_args(char *input, int i, int count)
 		if (input[i])
 			i++;
 	}
+	printf("%i\n", count);
 	return (count);
 }
 
