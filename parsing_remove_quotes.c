@@ -6,84 +6,76 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:44:15 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 13:50:06 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:19:05 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
-static void	unquoted_cpy(char *parsed, char *unquoted_parsed, int i, int j)
+static void	unquoted_cpy(char *parsed, char *unquoted_parsed)
 {
 	char	quote_c;
 	bool	quotes;
+	int		save;
 
 	quotes = false;
 	quote_c = '\0';
-	while (parsed[i])
+	while (*parsed)
 	{
-		while (parsed[i] && (parsed[i] == '\'' || parsed[i] == '\"'))
+		while (*parsed && (*parsed == '\'' || *parsed == '\"'))
 		{
-			quote_c = parsed[i];
+			quote_c = *parsed;
 			quotes = !quotes;
-			i++;
+			if (check_quotes_dollar_sign(&*parsed))
+			{
+				save = copy_quotes_dollar_sign(&*unquoted_parsed, &*parsed);
+				parsed += save;
+				unquoted_parsed += save;
+			}
+			else if (*parsed)
+				parsed++;
 		}
-		if (!parsed[i])
+		if (!*parsed)
 			break ;
-		while (parsed[i])
-		{
-			if (parsed[i] == ' ' && !quotes)
-				break ;
-			else if (parsed[i] == quote_c)
-				break ;
-			while (parsed[i] && is_onstr(QUOTES, parsed[i]))
-				i++;
-			if (!parsed[i])
-				break ;
-			unquoted_parsed[j] = parsed[i];
-			i++;
-			j++;
-		}
+		parsed += unquoted_cpy_loop(parsed, unquoted_parsed, quotes, quote_c);
+		while (*unquoted_parsed != '\0')
+			unquoted_parsed++;
 		quote_c = '\0';
-		if (parsed[i])
-			i++;
+		if (*parsed)
+			parsed++;
 	}
-	unquoted_parsed[j] = '\0';
+	*unquoted_parsed = '\0';
 }
 
-static int	remove_quotes_length(char *parsed)
+static int	remove_quotes_length(char *parsed, int size, bool quotes)
 {
-	int	i;
-	int	size;
-	bool quotes;
-
-	i = 0;
-	size = 0;
-	quotes = false;
-	if (!ft_strncmp(parsed, "\'$", 2))
-		return (ft_strlen(parsed));
-	while (parsed[i])
+	while (*parsed)
 	{
-		while (parsed[i] && is_onstr(QUOTES, parsed[i]))
+		while (*parsed && is_onstr(QUOTES, *parsed))
 		{
 			quotes = !quotes;
-			i++;
+			if (check_quotes_dollar_sign(&*parsed))
+				size += 2;
+			parsed++;
 		}
-		while (parsed[i])
+		while (*parsed)
 		{
-			while (parsed[i] && is_onstr(QUOTES, parsed[i]))
+			while (*parsed && is_onstr(QUOTES, *parsed))
 			{
 				quotes = !quotes;
-				i++;
+				if (check_quotes_dollar_sign(&*parsed))
+					size += 2;
+				parsed++;
 			}
-			if (!parsed[i])
+			if (!*parsed)
 				return (size);
-			if (is_spaces(parsed[i]) && !quotes)
+			if (is_spaces(*parsed) && !quotes)
 				return (size);
 			size++;
-			i++;
+			parsed++;
 		}
-		if (!parsed[i])
+		if (!*parsed)
 			break ;
 	}
 	return (size);
@@ -93,20 +85,14 @@ char	*remove_quotes(char *parsed)
 {
 	char	*unquoted_parsed;
 
-	unquoted_parsed = malloc(sizeof(char) * (remove_quotes_length(parsed) + 1));
+	unquoted_parsed = malloc(sizeof(char) * (remove_quotes_length(parsed, 0, false) + 1));
 	if (!unquoted_parsed)
 	{
 		free(parsed);
 		parsing_error(MALLOC_ERR);
 		return (NULL);
 	}
-	if (!ft_strncmp(parsed, "\'$", 2))
-	{
-		ft_strlcpy(unquoted_parsed, parsed, ft_strlen(parsed) + 1);
-		free(parsed);
-		return (unquoted_parsed);
-	}
-	unquoted_cpy(parsed, unquoted_parsed, 0 , 0);
+	unquoted_cpy(parsed, unquoted_parsed);
 	free(parsed);
 	return (unquoted_parsed);
 }

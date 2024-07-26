@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 12:56:20 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:18:24 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,10 @@ typedef struct	s_mini
 t_statement	*parsing(char *input);
 
 char		*remove_quotes(char *parsed);
+int			unquoted_cpy_loop(char *parsed, char *unquoted_parsed,
+				bool quotes, char quote_c);
+int			copy_quotes_dollar_sign(char *unquoted_parsed, char *parsed);
+int			check_quotes_dollar_sign(char *parsed_at_i);
 
 int			is_onstr(const char *str, int c);
 int			is_spaces(char c);

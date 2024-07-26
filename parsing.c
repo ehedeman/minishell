@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 13:10:38 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 13:19:24 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/26 14:44:03 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ static int	get_nbr_parsed_args(char *input, int i, int count)
 		if (input[i])
 			i++;
 	}
-	printf("%i\n", count);
 	return (count);
 }
 

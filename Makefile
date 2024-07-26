@@ -6,42 +6,43 @@
 #    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/24 16:17:06 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/07/26 15:09:56 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = minishell
-SRC = 	main.c							\
-		main_utils.c					\
-		main_builtin_commands.c			\
-		main_special_case_dollar.c		\
-		input_check.c					\
-		input_check_two.c				\
-		parsing.c						\
-		parsing_utils.c					\
-		parsing_remove_quotes.c			\
-		p_list_utils.c					\
-		cd.c							\
-		exit.c							\
-		pwd.c							\
-		echo.c							\
-		history.c						\
-		redirect_out.c					\
-		redirect_in.c					\
-		redirect_in_until_utils.c		\
-		redirect_special_case.c			\
-		execute_file.c					\
-		execute_file_utils.c			\
-		env.c							\
-		env_list_utils.c				\
-		env_list_print.c				\
-		export.c						\
-		export_utils.c					\
-		unset.c							\
-		arg_expansion.c					\
-		arg_expansion_utils.c			\
-		pipes.c							\
+SRC = 	main.c								\
+		main_utils.c						\
+		main_builtin_commands.c				\
+		main_special_case_dollar.c			\
+		input_check.c						\
+		input_check_two.c					\
+		parsing.c							\
+		parsing_utils.c						\
+		parsing_remove_quotes.c				\
+		parsing_rem_quo_utils.c				\
+		p_list_utils.c						\
+		cd.c								\
+		exit.c								\
+		pwd.c								\
+		echo.c								\
+		history.c							\
+		redirect_out.c						\
+		redirect_in.c						\
+		redirect_in_until_utils.c			\
+		redirect_special_case.c				\
+		execute_file.c						\
+		execute_file_utils.c				\
+		env.c								\
+		env_list_utils.c					\
+		env_list_print.c					\
+		export.c							\
+		export_utils.c						\
+		unset.c								\
+		arg_expansion.c						\
+		arg_expansion_utils.c				\
+		pipes.c								\
 		
 OBJS = $(SRC:.c=.o)
 OBJS_DIR = objs/
