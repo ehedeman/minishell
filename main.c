@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/25 14:35:48 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/26 12:55:51 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,9 @@ void	process_input(t_mini *mini)
 					ft_env_lst_clear(mini->env, free);
 					return ;
 				}
-	//			printf("test mini->com_tab->argv: %s\n", mini->com_tab->argv[1]);
+				// int i = 0;
+				// while(mini->com_tab->argv[i])
+				// 	printf("test mini->com_tab->argv[i]: %s\n", mini->com_tab->argv[i++]);
 				replace_env_vars(mini->com_tab->argv, mini);
 				if (check_command(mini) == -1)
 				{

@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/25 14:37:53 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/26 12:56:20 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,8 @@ void	append_var_value(char **new_arg, const char *var_value);
 char	*extract_var_name(char	**arg);
 char	*get_env_value(const char *var_name, t_mini *mini);
 void	*ft_resize_mem(void *ptr, size_t new_size);
+int		start_and_end_with_single_quotes(const char *str, size_t len);
+
 
 //history
 void	init_history(t_history *history);	

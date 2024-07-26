@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_check_two.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:16:40 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/25 11:02:45 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:49:13 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ static int	check_incomplete_pipe_end(char *input, int i)
 
 static int	check_incomplete_pipe_start(char *input, int i)
 {
-	int pipe;
+	//int pipe;
 	int	character;
 
-	pipe = 0;
+	//pipe = 0;
 	character = 0;
 	while (input[i])
 	{
