@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:28:15 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/25 10:37:44 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:37:55 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	handle_special_cases(t_mini *mini, t_statement *temp, int fd, int i)
 		print_argument(temp->argv[i], fd);
 }
 
-void	ft_echo(t_mini *mini, t_statement *temp, int fd, int i)
+int	ft_echo(t_mini *mini, t_statement *temp, int fd, int i)
 {
 	bool	newline;
 
@@ -55,4 +55,5 @@ void	ft_echo(t_mini *mini, t_statement *temp, int fd, int i)
 	}
 	if (!newline)
 		write(fd, "\n", 1);
+	return (0);
 }
