@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 22:48:44 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/14 17:23:19 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/26 21:25:16 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,20 @@ int	ft_unset(t_env_list *env, char *target)
 	{
 		temp = env;
 		ft_unset(temp->next, target);
+	}
+	return (0);
+}
+
+int	check_unset(t_statement *temp, t_mini *mini, int i)
+{
+	if (!ft_strncmp(temp->argv[i], "unset", ft_strlen("unset") + 1))
+	{
+		while (temp->argv[i])
+		{
+			ft_unset(mini->env, temp->argv[i]);
+			i++;
+		}
+		return (1);
 	}
 	return (0);
 }

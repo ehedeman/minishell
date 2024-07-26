@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 17:08:15 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/26 21:34:04 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ int			get_argc(char **parsed);
 
 t_statement	*p_new_node(int argc);
 int			parsing_error(int errnum);
-int			ft_cd(t_statement *temp, int i);
 int			ft_pwd(void);
 int			ft_exit(t_mini *mini, char *arg);
 void		free_com_tab(t_mini *mini);
@@ -136,7 +135,6 @@ int			check_for_dollar_quoted(t_statement *temp); //checks if its echo '$PATH', 
 int			remove_quotes_main(t_statement *temp, int i);
 
 int			get_fd(t_statement *temp);
-int		ft_echo(t_mini *mini, t_statement *temp, int i);
 
 void		ft_print(t_mini *mini);
 int			main_error(int errnum);
@@ -162,6 +160,16 @@ int			free_env_args(char **envp, char **args, int arg_zero);//frees the envp and
 int			exec_com_fork(t_statement *temp, char **envp, char **args, t_mini *mini); //split half of exec_command | norm accurate
 int			exec_file_fork(t_statement *temp, char **envp, char **args, t_mini *mini);//split half of exec_file | norma accurate
 
+
+//BUILTINS
+int	check_echo(t_statement *temp, t_mini *mini, int i);
+int	check_cd(t_statement *temp, int i);
+int	check_pwd(t_statement *temp, int i);
+int	check_exit(t_statement *temp, t_mini *mini, int i);
+int	check_env(t_statement *temp, t_mini *mini, int i);
+int	check_export(t_statement *temp, t_mini *mini, int i);
+int	check_unset(t_statement *temp, t_mini *mini, int i);
+
 //env
 void		ft_copy_env2lst(t_mini *mini, char **envp);
 void		ft_env_lst_addback(t_env_list **lst, t_env_list *new);
@@ -176,6 +184,7 @@ void		ft_env_lst_clear(t_env_list *lst, void (*del)(void *));
 void		ft_print_export_list(t_env_list *sorted_env);
 t_env_list	*copy_linked_list(t_env_list *env);
 void		sort_linked_list(t_env_list *temp_env);
+char	**ft_join_env(char *env_var);
 
 //unset
 int			ft_unset(t_env_list *env, char *target_name);
@@ -191,10 +200,12 @@ int		start_and_end_with_single_quotes(const char *str, size_t len);
 
 
 //history
+int	check_history(t_statement *temp, t_mini *mini, int i);
 void	init_history(t_history *history);	
 void	ft_history(const t_history *history);
 void	add_to_hist_arr(t_history *history, char *command);
 void	free_history(t_history *history);
+
 
 //pipes
 int		command_involves_pipes(t_statement *parsed_input);

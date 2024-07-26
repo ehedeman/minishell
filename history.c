@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:11:09 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 17:59:56 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/26 21:15:36 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,19 @@ void	ft_history(const t_history *history)
 		count++;
 		start++;
 	}
+}
+
+int	check_history(t_statement *temp, t_mini *mini, int i)
+{
+	if (!ft_strncmp(temp->argv[i], "history", ft_strlen("history") + 1))
+	{
+		if (temp->argv[i + 1])
+		{
+			printf("history: too many arguments\n");
+			return (1);
+		}
+		ft_history(&(mini->history));
+		return (1);
+	}
+	return (0);
 }

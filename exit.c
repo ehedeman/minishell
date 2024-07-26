@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:12:06 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 15:06:16 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/26 21:19:29 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,8 @@ void	free_com_tab(t_mini *mini)
 
 int	exit_arg(char *arg)
 {
-	int	exit_status;
 	int	i;
 
-	exit_status = 0;
 	i = 0;
 	if (arg[i] == '-' || arg[i] == '+')
 		i++;
@@ -74,4 +72,22 @@ int	ft_exit(t_mini *mini, char *arg)
 	rl_clear_history();
 	printf("Bye then :)\n");
 	exit(exit_status);
+}
+
+int	check_exit(t_statement *temp, t_mini *mini, int i)
+{
+	if (!ft_strncmp(temp->argv[i], "exit", ft_strlen("exit") + 1))
+	{
+		if (temp->argv[i + 2])
+		{
+			printf("exit: too many arguments\n");
+			return (-1);
+		}
+		if (temp->argv[i + 1])
+			ft_exit(mini, temp->argv[i + 1]);
+		else
+			ft_exit(mini, NULL);
+		return (1);
+	}
+	return (0);
 }

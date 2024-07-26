@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:28:15 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 15:52:53 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/26 21:35:35 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,15 @@ int	ft_echo(t_mini *mini, t_statement *temp, int i)
 	}
 	if (!newline)
 		printf("\n");
+	return (0);
+}
+
+int	check_echo(t_statement *temp, t_mini *mini, int i)
+{
+	if (!ft_strncmp(temp->argv[i], "echo", ft_strlen("echo") + 1))
+	{
+		ft_echo(mini, temp, i);
+		return (1);
+	}
 	return (0);
 }
