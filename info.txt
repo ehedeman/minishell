@@ -4,6 +4,7 @@ TO DO
 	[]echo $?"$?"$? is working, but echo $? "$?" $? not, also asd "asd" asd not
 	[]echo '$USER'$? is saving '$USER'$? as a whole arg. Fix parsing or should rewrite echo again?
 []norm
+[]arg expansion needs to recognize '$ within words
 
 OPTIONAL(?)
 []history: with one value as argument to change ammount of lines from history to print
