@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 14:09:12 by smatschu         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/07/26 15:53:32 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -106,9 +107,9 @@ void	process_input(t_mini *mini)
 					ft_env_lst_clear(mini->env, free);
 					return ;
 				}
-				// int i = 0;
-				// while(mini->com_tab->argv[i])
-				// 	printf("test mini->com_tab->argv[i]: %s\n", mini->com_tab->argv[i++]);
+				int i = 0;
+				while(mini->com_tab->argv[i])
+					printf("test mini->com_tab->argv[i]: %s\n", mini->com_tab->argv[i++]);
 				replace_env_vars(mini->com_tab->argv, mini);
 				if (check_command(mini) == -1)
 				{

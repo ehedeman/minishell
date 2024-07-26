@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 15:41:11 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:51:34 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,17 @@ void	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 	{
 		fd = check_redirect(mini, temp);
 		redirect_stdout_(mini, fd);
+		fd = check_redirect(mini, temp);
+		redirect_stdout_(mini, fd);
 		if (command_involves_pipes(temp))
 		{
 			execute_pipeline(temp, mini);
 			break ;
 		}
 		check_for_dollar_quoted(temp);
-//		fd = check_redirect(mini, temp);
 		while (i < temp->argc && *temp->argv && fd != -1)
 		{
-			if (check_builtins(temp, mini, i, fd))
+			if (check_builtins(temp, mini, i))
 				break ;
 			// if (!ft_strncmp(temp->argv[i], "\'$", 2))
 			// 	remove_quotes_main(temp, i);
@@ -96,9 +97,8 @@ void	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 			i++;
 		}
 		i = 0;
-		temp = mini->temp;
-		if (fd != 1 && fd != 2)
-			close(fd);
+		temp = mini->temp;		
+		reset_stdout_(mini);
 		temp = temp->next;
 	}
 	mini->exit_status = status;
@@ -121,20 +121,20 @@ int	check_history(t_mini *mini, int i)
 	return (1);
 }
 
-int	check_builtins(t_statement *temp, t_mini *mini, int i, int fd)
+int	check_builtins(t_statement *temp, t_mini *mini, int i)
 {
 	printf("Checking builtin command: %s, arg: %s\n", temp->argv[i], temp->argv[i+1]);
 	if (!ft_strncmp(temp->argv[i], "echo", ft_strlen("echo") + 1))
 	{
 		int i = 0;
-		i = ft_echo(mini, temp, fd, i);
+		i = ft_echo(mini, temp, i);
 		printf("return of echo: %d", i);
 		return (i);
 	}
 	else if (!ft_strncmp(temp->argv[i], "cd", ft_strlen("cd") + 1))
 		return (ft_cd(temp, i));
 	else if (!ft_strncmp(temp->argv[i], "pwd", ft_strlen("pwd") + 1))
-		return (ft_pwd(fd));
+		ft_pwd();
 	else if (!ft_strncmp(temp->argv[i], "exit", ft_strlen("exit") + 1))
 	{
         if (temp->argv[i + 1])

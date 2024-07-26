@@ -1,6 +1,7 @@
 TO DO
 []pipes with redirection (basic and multiple pipes work)
 []norm
+[]arg expansion needs to recognize '$ within words
 
 OPTIONAL(?)
 []history: with one value as argument to change ammount of lines from history to print

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_special_case_redirect.c                       :+:      :+:    :+:   */
+/*   redirect_special_case.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:28:14 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 15:03:23 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:46:12 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	check_commands_rdr(t_statement *temp, t_mini *mini, int fd, int i)
 {
 	while (i < temp->argc && *temp->argv && fd != -1)
 	{
-		if (check_builtins(temp, mini, i, fd))
+		if (check_builtins(temp, mini, i))
 			break ;
 		if (!ft_strncmp(temp->argv[i], "./", 2)
 			|| !ft_strncmp(temp->argv[i], "/", 1))
