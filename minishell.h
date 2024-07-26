@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 15:18:24 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:35:53 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,8 @@ int			main_error(int errnum);
 
 int			redirect_input(t_statement *command, t_statement *temp, t_mini *mini);
 
-int	redirect_stdout_(t_mini *mini, int fd);
-int	reset_stdout_(t_mini *mini);
+int	redirect_stdout(t_mini *mini, int fd);
+int	reset_stdout(t_mini *mini);
 
 //functions for redirect_input_until()
 char		**init_input(void);

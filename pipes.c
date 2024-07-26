@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 21:15:14 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/26 08:26:38 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:35:37 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	create_pipes(t_statement *current, int pipefd[])
 }
 
 // redirect standart input to fd
-static int	redirect_stdin(int fd)
+static int	redirect_stdin_pipe(int fd)
 {
 	if (dup2(fd, STDIN_FILENO) == -1)
 		return (-1);
@@ -35,7 +35,7 @@ static int	redirect_stdin(int fd)
 }
 
 // redirect standart output to fd
-static int	redirect_stdout(int fd)
+static int	redirect_stdout_pipe(int fd)
 {
 	if (dup2(fd, STDOUT_FILENO) == -1)
 		return (-1);
@@ -60,11 +60,11 @@ int	command_involves_pipes(t_statement *parsed_input)
 void	child_process(t_statement *curr, t_mini *mini, int in_fd, int pipefd[])
 {
 	if (in_fd != STDIN_FILENO)
-		redirect_stdin(in_fd); // redirect standard input if needed
+		redirect_stdin_pipe(in_fd); // redirect standard input if needed
 	if (curr->next && command_involves_pipes(curr))
 	{
 		close(pipefd[0]); // close the read end of the pipe
-		redirect_stdout(pipefd[1]); // redirect standard output to the pipe
+		redirect_stdout_pipe(pipefd[1]); // redirect standard output to the pipe
 	}
 	exec_command(curr, mini); // execute the command
 	exit(EXIT_SUCCESS);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_file_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:04:56 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 17:55:37 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:45:55 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ int	free_env_args(char **envp, char **args, int arg_zero)
 	if (arg_zero)
 	{
 		if (arg_zero == 2)
-			printf("%s: Command not found.\n", trimmed_cmd);
+		{
+			write(2, trimmed_cmd, ft_strlen(trimmed_cmd));
+			write(2, ": Command not found.\n", 21);
+		}
 		free(args[0]);
 	}
 	free(trimmed_cmd);

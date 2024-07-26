@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 13:51:29 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:47:30 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,10 @@ int	g_exec_file;
 int	check_command(t_mini *mini)
 {
 	t_statement *temp;
-	//t_mini		*testmini;
 	int fd;
-	//int	i;
 
 	mini->temp = mini->com_tab;
 	temp = mini->temp;
-	//i = 0;
 	fd = 0;
 	if (check_command_after_file_rdr(temp))
 		temp = command_after_file_rdr(temp, mini);
@@ -106,9 +103,9 @@ void	process_input(t_mini *mini)
 					ft_env_lst_clear(mini->env, free);
 					return ;
 				}
-				int i = 0;
-				while(mini->com_tab->argv[i])
-					printf("test mini->com_tab->argv[i]: %s\n", mini->com_tab->argv[i++]);
+				// int i = 0;
+				// while(mini->com_tab->argv[i])
+				// 	printf("test mini->com_tab->argv[i]: %s\n", mini->com_tab->argv[i++]);
 				replace_env_vars(mini->com_tab->argv, mini);
 				if (check_command(mini) == -1)
 				{

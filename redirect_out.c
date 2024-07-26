@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:24:36 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/25 14:31:46 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:36:19 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	get_fd(t_statement *temp)
 	return (fd);
 }
 
-int	redirect_stdout_(t_mini *mini, int fd)
+int	redirect_stdout(t_mini *mini, int fd)
 {
 	if (fd != 1 && fd != -1)
 	{
@@ -78,7 +78,7 @@ int	redirect_stdout_(t_mini *mini, int fd)
 	return (0);
 }
 
-int reset_stdout_(t_mini *mini)
+int reset_stdout(t_mini *mini)
 {
 	if (mini->fd == 1)
 		dup2(mini->stdout_copy, 1);
