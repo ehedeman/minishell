@@ -6,9 +6,10 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 15:47:30 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/26 16:11:31 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -17,14 +18,12 @@ int	g_exec_file;
 int	check_command(t_mini *mini)
 {
 	t_statement *temp;
-	int fd;
 
 	mini->temp = mini->com_tab;
 	temp = mini->temp;
-	fd = 0;
 	if (check_command_after_file_rdr(temp))
 		temp = command_after_file_rdr(temp, mini);
-	check_commands_loop(temp, mini, fd, 0);
+	check_commands_loop(temp, mini, 0, 0);
 	// printf("\n\nLIST BEFORE RETURNING FROM CHECK_COM:\n");
 	// ft_print_env_lst(mini->env);
 	return (0);
@@ -87,7 +86,7 @@ void	process_input(t_mini *mini)
 		if (!mini->input)
 		{
 			mini->com_tab = NULL;
-			ft_exit(mini);
+			ft_exit(mini, "1");
 		}
 		if (*mini->input)
 		{
