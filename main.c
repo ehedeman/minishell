@@ -6,14 +6,14 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 16:11:31 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/26 17:16:26 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
-int	g_exec_file;
+int	g_sig;
 
 int	check_command(t_mini *mini)
 {
@@ -31,15 +31,19 @@ int	check_command(t_mini *mini)
 
 void	handler(int sig)
 {
-	if (sig == SIGINT && !g_exec_file)
+	if (sig == SIGINT && !g_sig)
 	{
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("\0", 1);
 		rl_redisplay();
 	}
-	else if (sig == SIGINT && g_exec_file)
+	else if (sig == SIGINT && g_sig)
 		printf("\n");
+	else if (sig == SIGQUIT && !g_sig)
+		rl_replace_line("\0", 1);
+	else if (sig == SIGQUIT)
+		printf("Quit (core dumped)\n");
 }
 
 int	ft_shlvl(t_mini *mini)
@@ -70,10 +74,10 @@ void	initialize_mini(t_mini *mini, char **envp)
 	ft_copy_env2lst(mini, envp);
 	init_history(&(mini->history));
 	signal(SIGINT, handler);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, handler);
 	mini->com_tab = NULL;
 	mini->input = NULL;
-	g_exec_file = 0;
+	g_sig = 0;
 	mini->exit_status = 42; //should change this for $?, init at 0
 	ft_shlvl(mini);
 }

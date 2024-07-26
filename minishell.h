@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 16:09:57 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/26 17:08:15 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 #define FAILED_FORK "minishell: system error regarding forks\n"
 #define FAILED_EXECVE "minishell: system error regarding execve\n"
 
-extern int g_exec_file;
+extern int g_sig;
 
 typedef enum e_operator {
 	NONE = 0,

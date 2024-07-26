@@ -17,10 +17,11 @@ IN PROGRESS
 
 [ehedeman]
 [x]Parsing:
+	[] echo "hello" '|' cat -e should print hello | cat -e -> operstors with siongle quotes in general
 	[x]echo '$USER'$? is saving '$USER'$? as a whole arg. Fix parsing or should rewrite echo again?
 []input redirection without executing the command immideadly -> redirect input then run the command loop, reset input at end
 	[] wc -l > info.txt < hello ;  should redirect the output of wc -l > info.txt to hello (operators might be the other way around)
-	[] >> end ; input redirecion until but without command (leaks)
+	[] << end ; input redirecion until but without command (leaks)
 
 IDEA:
 	pipes and redirections established at the beginning: a file descriptor array which gets sorted through 1 by 1 (maybe pipes and redirections seperately)
