@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 16:05:31 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/26 16:50:35 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,31 +134,21 @@ int	check_history(t_mini *mini, int i)
 
 int	check_builtins(t_statement *temp, t_mini *mini, int i)
 {
-	printf("Checking builtin command: %s, arg: %s\n", temp->argv[i], temp->argv[i+1]);
 	if (!ft_strncmp(temp->argv[i], "echo", ft_strlen("echo") + 1))
-	{
-		int i = 0;
-		i = ft_echo(mini, temp, i);
-		printf("return of echo: %d", i);
-		return (i);
-	}
+		ft_echo(mini, temp, i);
 	else if (!ft_strncmp(temp->argv[i], "cd", ft_strlen("cd") + 1))
-		return (ft_cd(temp, i));
+		ft_cd(temp, i);
 	else if (!ft_strncmp(temp->argv[i], "pwd", ft_strlen("pwd") + 1))
 		ft_pwd();
 	else if (!ft_strncmp(temp->argv[i], "exit", ft_strlen("exit") + 1))
 	{
-        if (temp->argv[i + 1])
-            ft_exit(mini, temp->argv[i + 1]);
-        else
-            ft_exit(mini, NULL);
-        return (1);
-    }
+		ft_exit(mini, 0);
+	}
 	else if (!ft_strncmp(temp->argv[i], "env", ft_strlen("env") + 1) \
 		&& !temp->argv[i + 1])
-		return (ft_print_env_lst(mini->env));
+		ft_print_env_lst(mini->env);
 	else if (!ft_strncmp(temp->argv[i], "export", ft_strlen("export") + 1))
-		return (ft_export(mini));
+		ft_export(mini);
 	else if (!ft_strncmp(temp->argv[i], "unset", ft_strlen("unset") + 1))
 	{
 		while (temp->argv[i])
@@ -166,11 +156,10 @@ int	check_builtins(t_statement *temp, t_mini *mini, int i)
 			ft_unset(mini->env, temp->argv[i]);
 			i++;
 		}
-		return (0);
 	}
 	else if (!ft_strncmp(temp->argv[i], "history", ft_strlen("history") + 1))
-		return (check_history(mini, i));
+		check_history(mini, i);
 	else
-		return (0); //command not found
-	return (0);
+		return (0);
+	return (1);
 }

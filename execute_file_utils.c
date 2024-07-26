@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:04:56 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 16:09:10 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/26 16:32:45 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	exec_com_fork(t_statement *temp, char **envp, char **args, t_mini *mini)
 	}
 	else if (mini->pid == 0)
 	{
-		printf("com_fork Executing command %s\n", args[0]);
+	//	printf("com_fork Executing command %s\n", args[0]);
 		if (execve(args[0], args, envp) == -1)
 		{
 			perror("execve exec_com_fork");
@@ -92,7 +92,7 @@ int	exec_com_fork(t_statement *temp, char **envp, char **args, t_mini *mini)
             mini->exit_status = WEXITSTATUS(status);
         else
             mini->exit_status = 1;
-		printf("com_fork File %s executed with exit status %d\n", args[0], mini->exit_status);
+	//	printf("com_fork File %s executed with exit status %d\n", args[0], mini->exit_status);
 	}
 	return (0);
 }
@@ -113,7 +113,7 @@ int	exec_file_fork(t_statement *temp, char **envp, char **args, t_mini *mini)
 	}
 	else if (mini->pid == 0)
 	{
-		printf("file_fork Executing file %s\n", args[0]);
+	//	printf("file_fork Executing file %s\n", args[0]);
 		if (execve(args[0], args, envp) == -1)
 		{
 			perror("execve exec_file_fork");
@@ -133,7 +133,7 @@ int	exec_file_fork(t_statement *temp, char **envp, char **args, t_mini *mini)
             mini->exit_status = WEXITSTATUS(status);
         else
             mini->exit_status = 1;
-		printf("file _fork File %s executed with exit status %d\n", args[0], mini->exit_status);
+	//	printf("file _fork File %s executed with exit status %d\n", args[0], mini->exit_status);
 	}
 	return (0);
 }
