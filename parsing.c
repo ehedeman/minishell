@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 13:10:38 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/25 10:45:52 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:49:46 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,10 +200,10 @@ t_statement	*parsing(char *input)
 	t_statement	*temp;
 	t_statement *new;
 	int		i;
-	int		j;
+//	int		j;
 
 	i = 0;
-	j = 0;
+//	j = 0;
 	parsed = parsing_input(input); 
 	if (!parsed)
 		return (NULL);
