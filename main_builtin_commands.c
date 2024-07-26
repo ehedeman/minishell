@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/25 10:48:46 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:36:51 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,20 @@ static int	check_execute(t_statement *temp, int i, t_mini *mini)
 
 void	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 {
+	mini->fd = -1;
 	while (temp)
 	{
+		fd = check_redirect(mini, temp);
+		redirect_stdout_(mini, fd);
 		if (command_involves_pipes(temp))
 		{
 			execute_pipeline(temp, mini);
 			break ;
 		}
 		check_for_dollar_quoted(temp);
-		fd = check_redirect(mini, temp);
 		while (i < temp->argc && *temp->argv && fd != -1)
 		{
-			if (check_builtins(temp, mini, i, fd))
+			if (check_builtins(temp, mini, i))
 				break ;
 			// if (!ft_strncmp(temp->argv[i], "\'$", 2))
 			// 	remove_quotes_main(temp, i);
@@ -90,9 +92,8 @@ void	check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i)
 			i++;
 		}
 		i = 0;
-		temp = mini->temp;
-		if (fd != 1 && fd != 2)
-			close(fd);
+		temp = mini->temp;		
+		reset_stdout_(mini);
 		temp = temp->next;
 	}
 }
@@ -114,14 +115,14 @@ int	check_history(t_mini *mini, int i)
 	return (1);
 }
 
-int	check_builtins(t_statement *temp, t_mini *mini, int i, int fd)
+int	check_builtins(t_statement *temp, t_mini *mini, int i)
 {
 	if (!ft_strncmp(temp->argv[i], "echo", ft_strlen("echo") + 1))
-		ft_echo(mini, temp, fd, i);
+		ft_echo(mini, temp, i);
 	else if (!ft_strncmp(temp->argv[i], "cd", ft_strlen("cd") + 1))
 		ft_cd(temp, i);
 	else if (!ft_strncmp(temp->argv[i], "pwd", ft_strlen("pwd") + 1))
-		ft_pwd(fd);
+		ft_pwd();
 	else if (!ft_strncmp(temp->argv[i], "exit", ft_strlen("exit") + 1))
 		ft_exit(mini);
 	else if (!ft_strncmp(temp->argv[i], "env", ft_strlen("env") + 1) \

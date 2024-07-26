@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/25 10:21:03 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:37:53 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,9 @@ typedef struct	s_mini
 	t_env_list			*env;
 	int					exit_status;
 	t_history			history;
+	int					fd;
+	int					stdout_copy;
+	int					stdin_copy;
 	pid_t pid;
 }				t_mini;
 
@@ -112,7 +115,7 @@ int			get_argc(char **parsed);
 t_statement	*p_new_node(int argc);
 int			parsing_error(int errnum);
 int			ft_cd(t_statement *temp, int i);
-int			ft_pwd(int fd);
+int			ft_pwd(void);
 void		ft_exit(t_mini *mini);
 void		free_com_tab(t_mini *mini);
 bool		input_check(char *input);
@@ -121,19 +124,22 @@ int			whitespace_check(char *input);
 
 void		check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i);
 int			check_redirect(t_mini *mini, t_statement *command);
-int			check_builtins(t_statement *temp, t_mini *mini, int i, int fd) ;
+int			check_builtins(t_statement *temp, t_mini *mini, int i) ;
 t_statement	*command_after_file_rdr(t_statement *temp, t_mini *mini);
 int			check_command_after_file_rdr(t_statement *temp);
 int			check_for_dollar_quoted(t_statement *temp); //checks if its echo '$PATH', if any other command then quotes get removed
 int			remove_quotes_main(t_statement *temp, int i);
 
 int			get_fd(t_statement *temp);
-void		ft_echo(t_mini *mini, t_statement *temp, int fd, int i);
+void		ft_echo(t_mini *mini, t_statement *temp, int i);
 
 void		ft_print(t_mini *mini);
 int			main_error(int errnum);
 
 int			redirect_input(t_statement *command, t_statement *temp, t_mini *mini);
+
+int	redirect_stdout_(t_mini *mini, int fd);
+int	reset_stdout_(t_mini *mini);
 
 //functions for redirect_input_until()
 char		**init_input(void);

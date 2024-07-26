@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:24:36 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 16:11:31 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:31:46 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,23 @@ int	get_fd(t_statement *temp)
 	if (need_free)
 		free(temp_path);
 	return (fd);
+}
+
+int	redirect_stdout_(t_mini *mini, int fd)
+{
+	if (fd != 1 && fd != -1)
+	{
+		mini->stdout_copy = dup(1);
+		close(1);
+		mini->fd = dup2(fd, 1);
+	}
+	return (0);
+}
+
+int reset_stdout_(t_mini *mini)
+{
+	if (mini->fd == 1)
+		dup2(mini->stdout_copy, 1);
+	mini->fd = -1;
+	return (0);
 }
