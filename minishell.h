@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/25 10:21:03 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/26 09:02:52 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,8 @@ void	append_var_value(char **new_arg, const char *var_value);
 char	*extract_var_name(char	**arg);
 char	*get_env_value(const char *var_name, t_mini *mini);
 void	*ft_resize_mem(void *ptr, size_t new_size);
+int		start_and_end_with_single_quotes(const char *str, size_t len);
+
 
 //history
 void	init_history(t_history *history);	
