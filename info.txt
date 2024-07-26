@@ -1,8 +1,5 @@
 TO DO
 []pipes with redirection (basic and multiple pipes work)
-[]Parsing:
-	[]echo $?"$?"$? is working, but echo $? "$?" $? not, also asd "asd" asd not
-	[]echo '$USER'$? is saving '$USER'$? as a whole arg. Fix parsing or should rewrite echo again?
 []norm
 
 OPTIONAL(?)
@@ -15,18 +12,11 @@ OPTIONAL(?)
 IN PROGRESS
 [smatschu]
 []for $?, at every possible exit, update exit value in mini struct
-[]exit function can take one value as argument
-	run bash
-	exit 123
-	echo $? will return 123
-	on minishell, exit 123
-	on bash, echo $? should display 123
 
-PLEASE TEST (set as DONE if you think is ok or put back as TO DO)
 [ehedeman]
-[]basic and multiple pipes
-
-[smatchu] input check for pipe without content
+[]Parsing:
+	[]echo $?"$?"$? is working, but echo $? "$?" $? not, also asd "asd" asd not
+	[]echo '$USER'$? is saving '$USER'$? as a whole arg. Fix parsing or should rewrite echo again?
 
 
 DONE
@@ -53,3 +43,11 @@ readline will list all files and directories in the current directory.
 [x] whats this flag -fno-omit-frame-pointer for?
 ->debug flag for fsanatize, used last in so_long. think u can get more info on the leaks etc with that flag
 but not sure
+[x]exit function can take one value as argument
+	run bash
+	exit 123
+	echo $? will return 123
+	on minishell, exit 123
+	on bash, echo $? should display 123
+[x] input check for pipe without content
+[x]basic and multiple pipes

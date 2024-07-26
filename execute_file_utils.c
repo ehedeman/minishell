@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:04:56 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 17:55:37 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:15:58 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,34 @@ int	exec_com_fork(t_statement *temp, char **envp, char **args, t_mini *mini)
 	copy_temp(temp, i, args);
 	mini->pid = fork();
 	if (mini->pid == -1)
-		exit(free_env_args(envp, args, 1));
+	{
+		perror ("fork exec_com_fork");
+		free_env_args(envp, args, 1);
+		exit (-1);
+	}
 	else if (mini->pid == 0)
 	{
+		printf("com_fork Executing command %s\n", args[0]);
 		if (execve(args[0], args, envp) == -1)
-			exit(free_env_args(envp, args, 2));
+		{
+			perror("execve exec_com_fork");
+			free_env_args(envp, args, 2);
+			if (errno == EACCES)
+				exit (126);
+			else if (errno == ENOENT)
+				exit (127);
+			else
+				exit (1);
+		}
 	}
 	else
 	{
 		waitpid(mini->pid, &status, 0);
-		mini->exit_status = WEXITSTATUS(status);
+		if (WIFEXITED(status))
+            mini->exit_status = WEXITSTATUS(status);
+        else
+            mini->exit_status = 1;
+		printf("com_fork File %s executed with exit status %d\n", args[0], mini->exit_status);
 	}
 	return (0);
 }
@@ -85,16 +103,34 @@ int	exec_file_fork(t_statement *temp, char **envp, char **args, t_mini *mini)
 	copy_temp(temp, i, args);
 	mini->pid = fork();
 	if (mini->pid == -1)
-		exit(free_env_args(envp, args, 0));
+	{
+		perror ("fork exec_file_fork");
+		free_env_args(envp, args, 1);
+		exit (-1);
+	}
 	else if (mini->pid == 0)
 	{
+		printf("file_fork Executing file %s\n", args[0]);
 		if (execve(args[0], args, envp) == -1)
-			exit(free_env_args(envp, args, 2));
+		{
+			perror("execve exec_file_fork");
+			free_env_args(envp, args, 2);
+			if (errno == EACCES)
+				exit (126);
+			else if (errno == ENOENT)
+				exit (127);
+			else
+				exit (1);
+		}
 	}
 	else
 	{
 		waitpid(mini->pid, &status, 0);
-		mini->exit_status = WEXITSTATUS(status);
+		if (WIFEXITED(status))
+            mini->exit_status = WEXITSTATUS(status);
+        else
+            mini->exit_status = 1;
+		printf("file _fork File %s executed with exit status %d\n", args[0], mini->exit_status);
 	}
 	return (0);
 }

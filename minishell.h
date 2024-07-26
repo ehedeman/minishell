@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 09:02:52 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/26 14:15:40 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ t_statement	*p_new_node(int argc);
 int			parsing_error(int errnum);
 int			ft_cd(t_statement *temp, int i);
 int			ft_pwd(int fd);
-void		ft_exit(t_mini *mini);
+int			ft_exit(t_mini *mini, char *arg);
 void		free_com_tab(t_mini *mini);
 bool		input_check(char *input);
 bool		input_check_two(char *input, bool valid);
@@ -128,7 +128,7 @@ int			check_for_dollar_quoted(t_statement *temp); //checks if its echo '$PATH', 
 int			remove_quotes_main(t_statement *temp, int i);
 
 int			get_fd(t_statement *temp);
-void		ft_echo(t_mini *mini, t_statement *temp, int fd, int i);
+int		ft_echo(t_mini *mini, t_statement *temp, int fd, int i);
 
 void		ft_print(t_mini *mini);
 int			main_error(int errnum);

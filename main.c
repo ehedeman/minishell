@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 09:06:33 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/26 14:09:12 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	process_input(t_mini *mini)
 		if (!mini->input)
 		{
 			mini->com_tab = NULL;
-			ft_exit(mini);
+			ft_exit(mini, "1");
 		}
 		if (*mini->input)
 		{
