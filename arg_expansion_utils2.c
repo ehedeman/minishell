@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 17:11:22 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/27 17:19:25 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:31:29 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,35 @@ char	*find_next_quote_or_end(char *str, const char *delim)
 	return (NULL);
 }
 
+char	*handle_dollar_cases(char **arg, t_mini *mini, char *new_arg)
+{
+	int		use_braces;
+	char	*pid_str;
+
+	use_braces = (**arg == '{');
+	if (use_braces)
+		(*arg)++;
+	if (**arg == '?')
+		new_arg = handle_exstat(arg, mini, new_arg, use_braces);
+	else if (**arg == '$')
+	{
+		pid_str = ft_itoa(getpid());
+		append_var_value(&new_arg, pid_str);
+		free(pid_str);
+		(*arg)++;
+		if (use_braces && **arg == '}')
+			(*arg)++;
+	}
+	else if (**arg == '\0')
+		new_arg = append_char_to_new_arg(new_arg, '$');
+	else
+		new_arg = handle_var_exp(arg, mini, new_arg, use_braces);
+	return (new_arg);
+}
+
 char	*expand_arg(char *arg, t_mini *mini)
 {
 	char	*new_arg;
-	int		use_braces;
 
 	new_arg = ft_calloc(1, 1);
 	while (*arg)
@@ -75,13 +100,7 @@ char	*expand_arg(char *arg, t_mini *mini)
 		if (*arg == '$')
 		{
 			arg++;
-			use_braces = (*arg == '{');
-			if (use_braces)
-				arg++;
-			if (*arg == '?')
-				new_arg = handle_exstat(&arg, mini, new_arg, use_braces);
-			else
-				new_arg = handle_var_exp(&arg, mini, new_arg, use_braces);
+			new_arg = handle_dollar_cases(&arg, mini, new_arg);
 		}
 		else
 		{
