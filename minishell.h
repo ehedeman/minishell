@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 16:53:47 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:18:25 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,6 @@ t_env_list *ft_env_lst_new(char *key, char *value);
 int			ft_print_env_lst(t_env_list *env);
 
 //export
-int			ft_export(t_mini *mini);
 t_env_list 	*ft_env_lst_new(char *key, char *value);
 int			ft_env_list_len(t_env_list *env);
 void		ft_env_lst_clear(t_env_list *lst, void (*del)(void *)); 
@@ -201,7 +200,8 @@ void	append_var_value(char **new_arg, const char *var_value);
 char	*extract_var_name(char	**arg);
 char	*get_env_value(const char *var_name, t_mini *mini);
 void	*ft_resize_mem(void *ptr, size_t new_size);
-
+char	*expand_arg(char *arg, t_mini *mini);
+char	*find_next_quote_or_end(char *str, const char *delim);
 
 //history
 int		check_history(t_statement *temp, t_mini *mini, int i);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
+#    By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/27 11:41:04 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/07/27 17:11:37 by smatschu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRC = 	main.c								\
 		unset.c								\
 		arg_expansion.c						\
 		arg_expansion_utils.c				\
+		arg_expansion_utils2.c				\
 		pipes.c								\
 		
 OBJS = $(SRC:.c=.o)
