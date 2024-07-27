@@ -6,11 +6,33 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:54:38 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/14 17:00:10 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/26 21:33:13 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**ft_join_env(char *env_var)
+{
+	int		index;
+	int		len;
+	char	**pair;
+
+	index = 0;
+	len = ft_strlen(env_var);
+	pair = malloc(sizeof(char *) * 3);
+	if (!pair)
+		return (NULL);
+	while (env_var[index] && env_var[index] != '=')
+		index++;
+	pair[0] = ft_substr(env_var, 0, index);
+	if (index < len)
+		pair[1] = ft_substr(env_var, index + 1, len - index - 1);
+	else
+		pair[1] = NULL;
+	pair[2] = NULL;
+	return (pair);
+}
 
 t_env_list	*copy_linked_list(t_env_list *env)
 {

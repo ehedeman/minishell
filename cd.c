@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:23:16 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 16:29:02 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/26 21:17:03 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,15 @@ int	ft_cd(t_statement *temp, int i)
 				printf("minishell: %s\n", strerror(errno));
 	}
 	free(current_path);
+	return (0);
+}
+
+int	check_cd(t_statement *temp, int i)
+{
+	if (!ft_strncmp(temp->argv[i], "cd", ft_strlen("cd") + 1))
+	{
+		ft_cd(temp, i);
+		return (1);
+	}
 	return (0);
 }
