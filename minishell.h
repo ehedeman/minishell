@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 21:34:04 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:38:11 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct	s_statement
 	char	**argv;
 	t_operator	operator;
 	struct s_statement *next;
+	struct s_statement *previous;
 }				t_statement;
 
 typedef struct	s_history
@@ -87,6 +88,13 @@ typedef struct s_env_list
 	struct s_env_list	*next;
 }	t_env_list;
 
+// typedef struct s_pipe
+// {
+// 	int	id;
+// 	int	pipe_fd[2];
+// 	t_statement *node;
+// }			t_pipe;
+
 typedef struct	s_mini
 {
 	char				*input;
@@ -97,61 +105,62 @@ typedef struct	s_mini
 	t_env_list			*env;
 	int					exit_status;
 	t_history			history;
-	int					fd;
+	int					fd_in;
+	int					fd_out;
 	int					stdout_copy;
 	int					stdin_copy;
 	pid_t pid;
+	int					invisible_file;//so i know if i need to remove temporary file in rm_in_until
+	// t_pipe				pipes[400];
 }				t_mini;
 
-t_statement	*parsing(char *input);
+//main functions that happen before parsing
+bool		input_check(char *input);
+bool		input_check_two(char *input, bool valid);
+int			whitespace_check(t_mini *mini);
+void		free_com_tab(t_mini *mini);
 
+//parsing
+t_statement	*parsing(char *input);
 char		*remove_quotes(char *parsed);
 int			unquoted_cpy_loop(char *parsed, char *unquoted_parsed,
 				bool quotes, char quote_c);
 int			copy_quotes_dollar_sign(char *unquoted_parsed, char *parsed);
 int			check_quotes_dollar_sign(char *parsed_at_i);
-
 int			is_onstr(const char *str, int c);
 int			is_spaces(char c);
 int			check_doubles(char *input, int i);
 t_operator	get_operator(char *operator);
 int			get_argc(char **parsed);
-
 t_statement	*p_new_node(int argc);
 int			parsing_error(int errnum);
-int			ft_pwd(void);
-int			ft_exit(t_mini *mini, char *arg);
-void		free_com_tab(t_mini *mini);
-bool		input_check(char *input);
-bool		input_check_two(char *input, bool valid);
-int			whitespace_check(char *input);
 
-void		check_commands_loop(t_statement *temp, t_mini *mini, int fd, int i);
-int			check_redirect(t_mini *mini, t_statement *command);
+
+void		check_commands_loop(t_statement *temp, t_mini *mini, int i);
+int			get_fd(t_statement *temp);
 int			check_builtins(t_statement *temp, t_mini *mini, int i) ;
 t_statement	*command_after_file_rdr(t_statement *temp, t_mini *mini);
 int			check_command_after_file_rdr(t_statement *temp);
-int			check_for_dollar_quoted(t_statement *temp); //checks if its echo '$PATH', if any other command then quotes get removed
-int			remove_quotes_main(t_statement *temp, int i);
 
-int			get_fd(t_statement *temp);
-
-void		ft_print(t_mini *mini);
+void		ft_print(t_mini *mini); //remove before eval
 int			main_error(int errnum);
+int			ft_exit(t_mini *mini, char *arg);
+int		remove_quotes_echo(t_statement *temp, int i);
 
-int			redirect_input(t_statement *command, t_statement *temp, t_mini *mini);
+//redirecting stdin and stdout
+int			redirect_stdout(t_mini *mini, int fd);
+int			reset_stdout(t_mini *mini);
+int			redirect_stdin(t_mini *mini, int fd);
+int 		reset_stdin(t_mini *mini);
 
-int	redirect_stdout(t_mini *mini, int fd);
-int	reset_stdout(t_mini *mini);
-
-//functions for redirect_input_until()
+//functions for redirect_input
+int			redirect_in(t_statement *temp, t_mini *mini);
 char		**init_input(void);
 void		free_node_input(t_statement *temp, char **input);
+void		free_input(char **input);
 t_statement *create_rm_node(void);
-int			copy_content(char **input);
-int			reset_stdin(int old_fd);
-//int			add_argument(t_statement *temp);
-int			rdr_in_until(t_statement *command, t_mini *mini, int fd, int fd_cpy);
+void		copy_content(char **input);
+void		rm_invisible_file(t_mini *mini, char **input);
 
 //execution
 int			exec_file(t_statement *temp, t_mini *mini);

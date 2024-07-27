@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 17:16:26 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:27:59 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_command(t_mini *mini)
 	temp = mini->temp;
 	if (check_command_after_file_rdr(temp))
 		temp = command_after_file_rdr(temp, mini);
-	check_commands_loop(temp, mini, 0, 0);
+	check_commands_loop(temp, mini, 0);
 	// printf("\n\nLIST BEFORE RETURNING FROM CHECK_COM:\n");
 	// ft_print_env_lst(mini->env);
 	return (0);
@@ -94,7 +94,7 @@ void	process_input(t_mini *mini)
 		}
 		if (*mini->input)
 		{
-			if (whitespace_check(mini->input))
+			if (whitespace_check(mini))
 				continue ;
 			if (input_check(mini->input))
 			{
@@ -104,6 +104,7 @@ void	process_input(t_mini *mini)
 				if (!mini->com_tab)
 				{
 					ft_env_lst_clear(mini->env, free);
+					free(mini->input);
 					return ;
 				}
 				// int i = 0;
@@ -120,10 +121,15 @@ void	process_input(t_mini *mini)
 					free_com_tab(mini);
 			}
 		}
+		if (mini->input)
+		{
+			free(mini->input);
+			mini->input = NULL;
+		}
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)	
 {
 	t_mini	mini;
 

@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 21:15:14 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/26 15:35:37 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:00:12 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ void	child_process(t_statement *curr, t_mini *mini, int in_fd, int pipefd[])
 		close(pipefd[0]); // close the read end of the pipe
 		redirect_stdout_pipe(pipefd[1]); // redirect standard output to the pipe
 	}
-	exec_command(curr, mini); // execute the command
+	if (curr->operator == 0 || curr->operator == 5)
+		exec_command(curr, mini); // execute the command
 	exit(EXIT_SUCCESS);
 }
 
@@ -109,7 +110,10 @@ void	execute_pipeline(t_statement *commands, t_mini *mini)
 		create_pipes(current, pipefd); // set up pipes if needed
 		pid = fork(); // create a new process
 		if (pid == 0)
+		{
+			printf("child\n");
 			child_process(current, mini, input_fd, pipefd);
+		}
 		else if (pid < 0)
 		{
 			perror("fork");

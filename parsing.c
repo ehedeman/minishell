@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 13:10:38 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 10:37:23 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:47:30 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ static int	make_statement_list(t_statement *temp, char **parsed, int i) //i = va
 {
 	int	j; //variable for temp-argv-pointer
 
+	temp->previous = NULL;
 	while (parsed[i])
 	{
 		j = 0;
@@ -167,6 +168,7 @@ static int	make_statement_list(t_statement *temp, char **parsed, int i) //i = va
 			break ;
 		temp->operator = get_operator(parsed[i]);
 		temp->next = p_new_node(get_argc(&parsed[i]));
+		temp->next->previous = temp;
 		if (!temp)
 		{
 			free(parsed);
@@ -196,7 +198,6 @@ char **parsing_input(char *input)
 	}
 	if (fill_array(input, parsed, nbr_args))
 		return (NULL);
-	free(input);
 	return (parsed);
 }
 
@@ -210,7 +211,7 @@ t_statement	*parsing(char *input)
 	int		i;
 
 	i = 0;
-	parsed = parsing_input(input); 
+	parsed = parsing_input(input);
 	if (!parsed)
 		return (NULL);
 	temp = p_new_node(get_argc(&parsed[0]));

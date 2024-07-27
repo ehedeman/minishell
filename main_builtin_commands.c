@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main_builtin_commands.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 21:34:28 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:03:08 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_redirect_out(t_mini *mini)
+static int	check_redirect_out(t_mini *mini)
 {
 	int	fd;
 
@@ -25,15 +25,25 @@ int	check_redirect_out(t_mini *mini)
 			fd = get_fd(mini->temp);
 			if (mini->temp->next->operator == RDR_OUT_REPLACE || \
 				mini->temp->next->operator == RDR_OUT_APPEND)
+			{
 				close(fd);
+				while ((mini->temp->next->operator == RDR_OUT_REPLACE || \
+					mini->temp->next->operator == RDR_OUT_APPEND) && mini->temp->next)
+				{
+					fd = get_fd(mini->temp);
+					if (mini->temp->next->operator == RDR_OUT_REPLACE || \
+						mini->temp->next->operator == RDR_OUT_APPEND)
+						close(fd);
+					
+				}
+				break ;
+			}
 			else
 			{
 				mini->temp = mini->temp->next;
 				return (fd);
 			}
 		}
-		else
-			break ;
 		if (!mini->temp->next)
 			break ;
 		mini->temp = mini->temp->next;
@@ -41,8 +51,9 @@ int	check_redirect_out(t_mini *mini)
 	return (fd);
 }
 
-int	check_redirect_in(t_mini *mini, t_statement *command)
+static void	check_redirect_in(t_mini *mini)
 {
+	mini->invisible_file = 0;
 	while (1)
 	{
 		if (mini->temp->operator == RDR_INPUT || \
@@ -51,9 +62,9 @@ int	check_redirect_in(t_mini *mini, t_statement *command)
 			if (mini->temp->next->operator != RDR_INPUT_UNTIL && \
 				mini->temp->next->operator != RDR_INPUT)
 			{
-				redirect_input(command, mini->temp, mini);
+				redirect_in(mini->temp, mini);
 				mini->temp = mini->temp->next;
-				return (1);
+				return ;
 			}
 		}
 		else
@@ -62,7 +73,6 @@ int	check_redirect_in(t_mini *mini, t_statement *command)
 			break ;
 		mini->temp = mini->temp->next;
 	}
-	return (0);
 }
 
 static int	check_execute(t_statement *temp, int i, t_mini *mini)
@@ -81,36 +91,45 @@ static int	check_execute(t_statement *temp, int i, t_mini *mini)
 	return (0);
 }
 
-void	check_commands_loop(t_statement *temp, t_mini *mini, int redirected, int i)
+static void	reset_std(t_mini *mini)
+{
+	reset_stdout(mini);
+	reset_stdin(mini);
+}
+
+void	check_commands_loop(t_statement *temp, t_mini *mini, int i)
 {
 	int	status;
 
 	status = 0;
-	mini->fd = -1;
+	mini->fd_out = -1;
+	mini->fd_in = -1;
 	while (temp)
 	{
 		redirect_stdout(mini, check_redirect_out(mini));
-		redirected = check_redirect_in(mini, temp);
-		if (command_involves_pipes(temp))
+		check_redirect_in(mini);
+		if (command_involves_pipes(temp) && temp->operator <= 4 && temp->operator >= 1)
 		{
 			execute_pipeline(temp, mini);
+			reset_std(mini);
 			break ;
 		}
-		check_for_dollar_quoted(temp);
-		while (i < temp->argc && *temp->argv && !redirected)
+		while (i < temp->argc && *temp->argv)
 		{
 			if (check_builtins(temp, mini, i))
 				break ;
-			// if (!ft_strncmp(temp->argv[i], "\'$", 2))
-			// 	remove_quotes_main(temp, i);
 			if (check_execute(temp, i, mini))
 				break ;
 			i++;
 		}
 		i = 0;
+		// while (temp->operator <= 4 && temp->operator >= 1 && temp->next)
+		// 	temp = temp->next;
 		temp = mini->temp;
-		reset_stdout(mini);
 		temp = temp->next;
+		reset_std(mini);
+		if (mini->invisible_file == 1)
+			rm_invisible_file(mini, NULL);
 	}
 	mini->exit_status = status;
 }

@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:12:00 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 17:24:51 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:29:39 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,6 @@ bool input_check(char *input)
 	if (valid)
 		valid = input_check_two(input, valid);
 	if (!valid)
-	{
 		add_history(input);
-		free(input);
-	}
 	return (valid);
 }

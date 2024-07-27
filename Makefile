@@ -6,7 +6,7 @@
 #    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/26 17:00:25 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/07/27 11:41:04 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,12 @@ NAME = minishell
 SRC = 	main.c								\
 		main_utils.c						\
 		main_builtin_commands.c				\
-		main_special_case_dollar.c			\
 		input_check.c						\
 		input_check_two.c					\
 		parsing.c							\
 		parsing_utils.c						\
 		parsing_remove_quotes.c				\
-		parsing_rem_quo_utils.c				\
+		parsing_remove_quotes_utils.c		\
 		p_list_utils.c						\
 		cd.c								\
 		exit.c								\
@@ -31,7 +30,9 @@ SRC = 	main.c								\
 		redirect_out.c						\
 		redirect_in.c						\
 		redirect_in_until_utils.c			\
+		redirect_in_utils.c					\
 		redirect_special_case.c				\
+		redirect_std.c						\
 		execute_file.c						\
 		execute_file_utils.c				\
 		env.c								\

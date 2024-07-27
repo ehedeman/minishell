@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:28:15 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 21:35:35 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/27 11:42:43 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	handle_special_cases(t_mini *mini, t_statement *temp, int i)
 {
 	if (!ft_strcmp(temp->argv[i], "$?"))
 		printf("%i\n", mini->exit_status);
-	else if (!ft_strncmp(temp->argv[i], "'$", 2))
+	else if (!ft_strncmp(temp->argv[i], "\'$", 2))
 	{
-		remove_quotes_main(temp, i);
+		remove_quotes_echo(temp, i);
 		print_argument(temp->argv[i]);
 	}
 	else

@@ -6,31 +6,13 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:09:40 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/16 14:31:09 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/27 14:19:17 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int	add_argument(t_statement *temp)
-// {
-// 	int	i;
-
-// 	i = temp->argc;
-// 	temp->argv[i] = malloc(sizeof(char) * (ft_strlen(".temp_file") + 1));
-// 	if (!temp->argv[i])
-// 	{
-// 		printf("minishell: system error.");
-// 		return (-1);
-// 	}
-// 	ft_strlcpy(temp->argv[i], ".temp_file", ft_strlen(".temp_file") + 1);
-// 	temp->argc += 1;
-// 	return (0);
-// }
-
-//function seems unnessecary for now, will leave in tho cuz unsure lol
-
-int	copy_content(char **input)
+void	copy_content(char **input)
 {
 	int		fd;
 	mode_t	mode;
@@ -42,7 +24,7 @@ int	copy_content(char **input)
 	if (fd < 0)
 	{
 		printf("minishell: system error.");
-		return (1);
+		return ;
 	}
 	while (input[i])
 	{
@@ -51,7 +33,6 @@ int	copy_content(char **input)
 		i++;
 	}
 	close(fd);
-	return (0);
 }
 
 t_statement	*create_rm_node(void)
@@ -82,6 +63,20 @@ t_statement	*create_rm_node(void)
 	return (temp);
 }
 
+void	free_input(char **input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		free(input[i]);
+		i++;
+	}
+	free(input[i]);
+	free(input);
+}
+
 void	free_node_input(t_statement *temp, char **input)
 {
 	int	i;
@@ -92,15 +87,12 @@ void	free_node_input(t_statement *temp, char **input)
 		free(temp->argv[i]);
 		i++;
 	}
+	free(temp->argv[i]);
 	free(temp->argv);
 	free(temp);
-	i = 0;
-	while (input[i])
-	{
-		free(input[i]);
-		i++;
-	}
-	free(input);
+	if (!input)
+		return ;
+	free_input(input);
 }
 
 char	**init_input(void)
@@ -115,33 +107,4 @@ char	**init_input(void)
 	}
 	input[0] = NULL;
 	return (input);
-}
-
-int	rdr_in_until(t_statement *command, t_mini *mini, int fd, int fd_cpy)
-{
-	pid_t	pid;
-	int		status;
-
-	pid = fork();
-	if (pid == -1)
-		return (main_error(-1));
-	else if (pid == 0)
-	{
-		fd = open(".temp_file", O_RDONLY);
-		if (fd < 0)
-			exit(printf("minishell: %s\n", strerror(errno)));
-		fd_cpy = dup2(fd, 0);
-		if (fd_cpy < 0)
-		{
-			close (fd);
-			exit(0);
-		}
-		exec_command(command, mini);
-		if (reset_stdin(fd) < 0)
-			exit(0);
-		exit(0);
-	}
-	else
-		waitpid(pid, &status, 0);
-	return (0);
 }

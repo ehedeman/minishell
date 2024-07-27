@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 12:52:43 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/25 10:20:53 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:45:23 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,29 +48,50 @@ void	ft_print(t_mini *mini)
 		write(1, "\n", 1);
 		while (temp->argv[i])
 		{
-//			printf("%s\n", temp->argv[i]);
 			write(1, temp->argv[i], ft_strlen(temp->argv[i]));
 			write(1, "\n", 1);
 			// printf("%i\n", temp->operator);
 			// printf("%i\n", temp->argc);
 			i++;
 		}
+		if (temp->previous)
+				printf("Previous: %s\n", temp->previous->argv[0]);
 		temp = temp->next;
 		free(nbr);
 	}
 }
 
-int	whitespace_check(char *input)
+int	whitespace_check(t_mini *mini)
 {
 	int	i;
 
 	i = 0;
-	while (input[i])
+	while (mini->input[i])
 	{
-		if (!is_spaces(input[i]))
+		if (!is_spaces(mini->input[i]))
 			return (0);
 		i++;
 	}
-	free(input);
+	free(mini->input);
+	mini->input = NULL;
 	return (1);
+}
+
+int	remove_quotes_echo(t_statement *temp, int i)
+{
+	char	*temp_pointer;
+	char	buff[4000];
+
+	temp_pointer = temp->argv[i];
+	temp->argv[i] = malloc(sizeof(char) * ft_strlen(temp->argv[i]) - 1);
+	if (!temp->argv[i])
+	{
+		printf("minishell: System Error.\n");
+		temp->argv[i] = temp_pointer;
+		return (-1);
+	}
+	ft_strlcpy(buff, &temp_pointer[1], ft_strlen(temp->argv[i]));
+	ft_strlcpy(temp->argv[i], buff, ft_strlen(temp->argv[i]));
+	free(temp_pointer);
+	return (0);
 }
