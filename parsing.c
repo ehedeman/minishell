@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 13:10:38 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 17:37:46 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/27 10:33:10 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static int	get_token_len(char *input)
 		length++;
 		if (is_onstr(QUOTES, input[i]) && input[i + 1] == ' ') //if we have quote the word is over 100%
 			break ;
+		else if (is_onstr(QUOTES, input[i]))
+			quotes = !quotes;
 		i++;
 	}
 	return (length);
