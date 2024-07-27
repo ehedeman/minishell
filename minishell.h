@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 15:38:11 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:53:47 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,6 @@ int			check_command_after_file_rdr(t_statement *temp);
 void		ft_print(t_mini *mini); //remove before eval
 int			main_error(int errnum);
 int			ft_exit(t_mini *mini, char *arg);
-int		remove_quotes_echo(t_statement *temp, int i);
 
 //redirecting stdin and stdout
 int			redirect_stdout(t_mini *mini, int fd);
@@ -193,10 +192,7 @@ void		ft_env_lst_clear(t_env_list *lst, void (*del)(void *));
 void		ft_print_export_list(t_env_list *sorted_env);
 t_env_list	*copy_linked_list(t_env_list *env);
 void		sort_linked_list(t_env_list *temp_env);
-char	**ft_join_env(char *env_var);
-
-//unset
-int			ft_unset(t_env_list *env, char *target_name);
+char		**ft_join_env(char *env_var);
 
 
 //expansion $
@@ -205,11 +201,10 @@ void	append_var_value(char **new_arg, const char *var_value);
 char	*extract_var_name(char	**arg);
 char	*get_env_value(const char *var_name, t_mini *mini);
 void	*ft_resize_mem(void *ptr, size_t new_size);
-int		start_and_end_with_single_quotes(const char *str, size_t len);
 
 
 //history
-int	check_history(t_statement *temp, t_mini *mini, int i);
+int		check_history(t_statement *temp, t_mini *mini, int i);
 void	init_history(t_history *history);	
 void	ft_history(const t_history *history);
 void	add_to_hist_arr(t_history *history, char *command);

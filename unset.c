@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 22:48:44 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/26 21:25:16 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:58:23 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_unset_free(t_env_list *env_var)
+static void	ft_unset_free(t_env_list *env_var)
 {
 	free(env_var->name);
 	free(env_var->value);
@@ -20,7 +20,7 @@ void	ft_unset_free(t_env_list *env_var)
 }
 
 //this will search for the target name to unset in the list and then free it
-int	ft_unset(t_env_list *env, char *target)
+static int	ft_unset(t_env_list *env, char *target)
 {
 	t_env_list	*temp;
 

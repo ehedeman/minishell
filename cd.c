@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:23:16 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 21:17:03 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:56:08 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	check_args_cd(t_statement *temp)
 	return (0);
 }
 
-int	ft_cd(t_statement *temp, int i)
+static int	ft_cd(t_statement *temp, int i)
 {
 	char	*current_path;
 	char	*new_path;

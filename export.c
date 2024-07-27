@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 19:14:29 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/26 21:33:15 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:02:17 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free_matrix(char **matrix)
+static void	ft_free_matrix(char **matrix)
 {
 	int	index;
 
@@ -25,7 +25,7 @@ void	ft_free_matrix(char **matrix)
 	free(matrix);
 }
 
-int	ft_env_list_comp(t_env_list *env, char **val)
+static int	ft_env_list_comp(t_env_list *env, char **val)
 {
 	t_env_list	*temp;
 
@@ -46,7 +46,7 @@ int	ft_env_list_comp(t_env_list *env, char **val)
 	return (1);
 }
 
-int	ft_export_add(t_mini *mini, t_env_list *temp, t_env_list *new, int i)
+static int	ft_export_add(t_mini *mini, t_env_list *tmp, t_env_list *new, int i)
 {
 	char	**val;
 
@@ -61,7 +61,7 @@ int	ft_export_add(t_mini *mini, t_env_list *temp, t_env_list *new, int i)
 			ft_free_matrix(val);
 			return (1);
 		}
-		ft_env_lst_addback(&temp, new);
+		ft_env_lst_addback(&tmp, new);
 		ft_free_matrix(val);
 	}
 	else
@@ -72,7 +72,7 @@ int	ft_export_add(t_mini *mini, t_env_list *temp, t_env_list *new, int i)
 	return (0);
 }
 
-int	ft_export(t_mini *mini)
+static int	ft_export(t_mini *mini)
 {
 	t_env_list	*temp;
 	t_env_list	*new;
