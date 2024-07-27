@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/26 17:16:26 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/27 10:42:44 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,17 @@ void	process_input(t_mini *mini)
 					ft_env_lst_clear(mini->env, free);
 					return ;
 				}
-				// int i = 0;
-				// while(mini->com_tab->argv[i])
-				// 	printf("test mini->com_tab->argv[i]: %s\n", mini->com_tab->argv[i++]);
+				// //for testing
+				// int i = -1;
+				// while(mini->com_tab->argv[++i])
+				// 	printf("test mini->com_tab->argv[%d]: %s\n",i, mini->com_tab->argv[i]);
+				
 				replace_env_vars(mini->com_tab->argv, mini);
+
+				// //testing after expansion
+				// i = -1;
+				// while(mini->com_tab->argv[++i])
+				// 	printf("after expanstion mini->com_tab->argv[%d]: %s\n", i, mini->com_tab->argv[i]);
 				if (check_command(mini) == -1)
 				{
 					free_com_tab(mini);

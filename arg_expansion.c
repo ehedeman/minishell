@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 22:23:35 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/24 20:04:20 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/27 10:44:04 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,22 +84,110 @@ char	*expand_arg(char *arg, t_mini *mini)
 	return (new_arg);
 }
 
+// void	replace_env_vars(char **args, t_mini *mini)
+// {
+	
+// 	// char	*new_arg;
+// 	// int		i;
+// 	// size_t	len;
+
+// 	// i = 0;
+// 	// while (args[i] != NULL)
+// 	// {
+// 	// 	len = ft_strlen(args[i]);
+// 	// 	if (!start_and_end_with_single_quotes(args[i], len) && len > 1)
+// 	// 	{
+// 	// 		new_arg = expand_arg(args[i], mini);
+// 	// 		free(args[i]);
+// 	// 		args[i] = new_arg;
+// 	// 	}
+// 	// 	i++;
+// 	// }
+// }
+
+char *find_next_quote_or_end(const char *str, const char *delim) {
+	while (*str) {
+		if (ft_strchr(delim, *str)) {
+			return (char *)str;
+		}
+		str++;
+	}
+	return NULL;
+}
+
 void	replace_env_vars(char **args, t_mini *mini)
 {
-	char	*new_arg;
 	int		i;
+	char	*new_arg;
 	size_t	len;
+	char	*temp;
+	char	*start;
+	char	*end;
+	char	*expanded;
+	size_t	new_arg_len;
+	size_t	segment_len;
+	size_t	expanded_len;
 
 	i = 0;
 	while (args[i] != NULL)
 	{
-		len = ft_strlen(args[i]);
-		if (!start_and_end_with_single_quotes(args[i], len) && len > 1)
+		if (ft_strcmp(args[i], "'$?'") == 0)
 		{
-			new_arg = expand_arg(args[i], mini);
-			free(args[i]);
-			args[i] = new_arg;
+			i++;
+			continue;
 		}
+		len = ft_strlen(args[i]);
+		new_arg = (char *)malloc(len + 1);
+		new_arg[0] = '\0';
+		new_arg_len = 0;
+		start = args[i];
+
+		while (*start)
+		{
+			if (*start == '\'')
+			{
+				// copy content inside single quotes without expanding and remove quotes
+				end = ft_strchr(start + 1, '\'');
+				if (end == NULL)
+					end = start + ft_strlen(start); // no closing quote, copy the rest
+				segment_len = end - start - 1;
+				ft_strlcpy(new_arg + new_arg_len, start + 1, segment_len + 1);
+				new_arg_len += segment_len;
+				start = end + 1;
+			}
+			else if (*start == '"')
+			{
+				// copy and expand until the next double quote
+				end = ft_strchr(start + 1, '"');
+				if (end == NULL)
+					end = start + ft_strlen(start);
+				temp = ft_substr(start, 1, end - start - 1);
+				expanded = expand_arg(temp, mini);
+				expanded_len = ft_strlen(expanded);
+				ft_strlcpy(new_arg + new_arg_len, expanded, expanded_len + 1);
+				new_arg_len += expanded_len;
+				free(temp);
+				free(expanded);
+				start = end + 1;
+			}
+			else
+			{
+				// copy and expand until the next quote or end of string
+				end = find_next_quote_or_end(start, "'\"");
+				if (end == NULL)
+					end = start + ft_strlen(start);
+				temp = ft_substr(start, 0, end - start);
+				expanded = expand_arg(temp, mini);
+				expanded_len = ft_strlen(expanded);
+				ft_strlcpy(new_arg + new_arg_len, expanded, expanded_len + 1);
+				new_arg_len += expanded_len;
+				free(temp);
+				free(expanded);
+				start = end;
+			}
+		}
+		free(args[i]);
+		args[i] = new_arg;
 		i++;
 	}
 }
