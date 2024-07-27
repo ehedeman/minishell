@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 13:10:38 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 10:33:10 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/27 10:37:23 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	get_nbr_parsed_args(char *input, int i, int count)
 			quotes = !quotes;
 			i++;
 		}
-		if (input[i] != ' ' && !is_onstr(OPERATORS, input[i]))
+		if (input[i] != ' ' && (!is_onstr(OPERATORS, input[i]) || quotes))
 		{
 			count++;
 			while (input[i])

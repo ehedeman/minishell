@@ -17,7 +17,7 @@ IN PROGRESS
 
 [ehedeman]
 [x]Parsing:
-	[] echo "hello" '|' cat -e should print hello | cat -e -> operstors with siongle quotes in general
+	[x] echo "hello" '|' cat -e should print hello | cat -e -> operstors with siongle quotes in general
 	[x]echo '$USER'$? is saving '$USER'$? as a whole arg. Fix parsing or should rewrite echo again?
 []input redirection without executing the command immideadly -> redirect input then run the command loop, reset input at end
 	[] wc -l > info.txt < hello ;  should redirect the output of wc -l > info.txt to hello (operators might be the other way around)
