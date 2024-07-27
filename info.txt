@@ -2,7 +2,7 @@ TO DO
 []pipes with redirection (basic and multiple pipes work)
 	[] echo hello > out | wc -w
 []norm
-[]arg expansion needs to recognize '$ within words
+
 
 OPTIONAL(?)
 []history: with one value as argument to change ammount of lines from history to print
@@ -14,10 +14,15 @@ OPTIONAL(?)
 IN PROGRESS
 [smatschu]
 []for $?, at every possible exit, update exit value in mini struct
+[]arg expansion needs to recognize '$ within words
 
 [ehedeman]
 [x]Parsing:
-	[x] echo "hello" '|' cat -e should print hello | cat -e -> operstors with siongle quotes in general
+	[] leave "" as well when $BLABLA, because
+		- $USERblabal should not print anything, but...
+		- "$USER"blabla should expand user, but I can't expand USER if i dont have the "" anymore.
+		- or would expand during parsing be possible?
+	[] echo "hello" '|' cat -e should print hello | cat -e -> operstors with siongle quotes in general
 	[x]echo '$USER'$? is saving '$USER'$? as a whole arg. Fix parsing or should rewrite echo again?
 []input redirection without executing the command immideadly -> redirect input then run the command loop, reset input at end
 	[] wc -l > info.txt < hello ;  should redirect the output of wc -l > info.txt to hello (operators might be the other way around)

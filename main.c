@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 15:27:59 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:05:38 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,17 @@ void	process_input(t_mini *mini)
 					free(mini->input);
 					return ;
 				}
-				// int i = 0;
-				// while(mini->com_tab->argv[i])
-				// 	printf("test mini->com_tab->argv[i]: %s\n", mini->com_tab->argv[i++]);
+				// //for testing
+				// int i = -1;
+				// while(mini->com_tab->argv[++i])
+				// 	printf("test mini->com_tab->argv[%d]: %s\n",i, mini->com_tab->argv[i]);
+				
 				replace_env_vars(mini->com_tab->argv, mini);
+
+				// //testing after expansion
+				// i = -1;
+				// while(mini->com_tab->argv[++i])
+				// 	printf("after expanstion mini->com_tab->argv[%d]: %s\n", i, mini->com_tab->argv[i]);
 				if (check_command(mini) == -1)
 				{
 					free_com_tab(mini);
