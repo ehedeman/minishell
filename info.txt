@@ -14,10 +14,11 @@ OPTIONAL(?)
 IN PROGRESS
 [smatschu]
 []for $?, at every possible exit, update exit value in mini struct
-[]arg expansion needs to recognize '$ within words
+[]arg expansion needs to recognize '$ within words when lowercase, uppercase no
+[]norm arg_expansion
 
 [ehedeman]
-[x]Parsing:
+[]Parsing:
 	[] leave "" as well when $BLABLA, because
 		- $USERblabal should not print anything, but...
 		- "$USER"blabla should expand user, but I can't expand USER if i dont have the "" anymore.
