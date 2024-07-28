@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/28 17:20:53 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/28 19:58:17 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	initialize_mini(t_mini *mini, char **envp)
 	mini->com_tab = NULL;
 	mini->input = NULL;
 	g_sig = 0;
-	mini->exit_status = 42; //should change this for $?, init at 0
+	mini->exit_status = 0;
 	ft_shlvl(mini);
 }
 
