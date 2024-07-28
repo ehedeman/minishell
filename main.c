@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 16:05:38 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/28 17:20:53 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,24 @@
 #include "minishell.h"
 
 int	g_sig;
+
+//we can delete this later, i was getting lost when testing in different shlvls
+char	*ft_prompt()
+{
+	char	*shlvl;
+	char	*prompt;
+	char	*temp;
+
+	shlvl = getenv("SHLVL");
+	prompt = ft_strjoin("\033[1;31m", "minishell shlvl ");
+	temp = prompt;
+	prompt = ft_strjoin(prompt, shlvl);
+	free(temp);
+	temp = prompt;
+	prompt = ft_strjoin(prompt, ": \033[0m");
+	free(temp);
+	return (prompt);
+}
 
 int	check_command(t_mini *mini)
 {
@@ -86,7 +104,13 @@ void	process_input(t_mini *mini)
 {
 	while (1)
 	{
-		mini->input = readline("\033[1;31mthe minishell: \033[0m");
+		//just for testing with different shlvls, can go back to the simple one later
+		char	*prompt;
+		prompt = ft_prompt();
+		mini->input = readline(prompt);
+		free(prompt);
+		
+		//mini->input = readline("\033[1;31mthe minishell: \033[0m");
 		if (!mini->input)
 		{
 			mini->com_tab = NULL;

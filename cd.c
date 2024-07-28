@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:23:16 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 16:56:08 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:30:04 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ static int	ft_cd(t_statement *temp, int i)
 	return (0);
 }
 
-int	check_cd(t_statement *temp, int i)
+int	check_cd(t_statement *temp, t_mini *mini, int i)
 {
 	if (!ft_strncmp(temp->argv[i], "cd", ft_strlen("cd") + 1))
 	{
-		ft_cd(temp, i);
+		mini->exit_status = ft_cd(temp, i);
 		return (1);
 	}
 	return (0);

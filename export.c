@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 19:14:29 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/27 17:02:17 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:53:57 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	check_export(t_statement *temp, t_mini *mini, int i)
 {
 	if (!ft_strncmp(temp->argv[i], "export", ft_strlen("export") + 1))
 	{
-		ft_export(mini);
+		mini->exit_status = ft_export(mini);
 		return (1);
 	}
 	return (0);

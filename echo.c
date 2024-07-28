@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:28:15 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 16:54:59 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:30:52 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	check_echo(t_statement *temp, t_mini *mini, int i)
 {
 	if (!ft_strncmp(temp->argv[i], "echo", ft_strlen("echo") + 1))
 	{
-		ft_echo(mini, temp, i);
+		mini->exit_status = ft_echo(mini, temp, i);
 		return (1);
 	}
 	return (0);

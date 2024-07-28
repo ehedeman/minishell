@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_special_case.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:28:14 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/25 14:46:12 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/28 16:22:06 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_statement	*command_after_file_rdr(t_statement *temp, t_mini *mini)
 		temp = temp->next;
 	}
 	check_commands_rdr(temp, mini, fd, 1);
+	printf("test exit status bla%d\n", mini->exit_status);	
 	temp = temp->next;
 	return (temp);
 }

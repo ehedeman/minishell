@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 17:18:25 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:53:18 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,8 +171,8 @@ int			exec_file_fork(t_statement *temp, char **envp, char **args, t_mini *mini);
 
 //BUILTINS
 int	check_echo(t_statement *temp, t_mini *mini, int i);
-int	check_cd(t_statement *temp, int i);
-int	check_pwd(t_statement *temp, int i);
+int	check_cd(t_statement *temp, t_mini *mini, int i);
+int	check_pwd(t_statement *temp,t_mini *mini, int i);
 int	check_exit(t_statement *temp, t_mini *mini, int i);
 int	check_env(t_statement *temp, t_mini *mini, int i);
 int	check_export(t_statement *temp, t_mini *mini, int i);
@@ -202,6 +202,11 @@ char	*get_env_value(const char *var_name, t_mini *mini);
 void	*ft_resize_mem(void *ptr, size_t new_size);
 char	*expand_arg(char *arg, t_mini *mini);
 char	*find_next_quote_or_end(char *str, const char *delim);
+char	*handle_dollar_sign(char *arg, t_mini *mini, char **new_arg);
+char	*append_char_to_new_arg(char *new_arg, char arg_char);
+char	*handle_exstat(char **arg, t_mini *mini, char *new_arg, int use_braces);
+char	*handle_var_exp(char **arg, t_mini *mini, char *new_arg, int use_braces);
+
 
 //history
 int		check_history(t_statement *temp, t_mini *mini, int i);

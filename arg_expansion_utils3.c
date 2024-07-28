@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arg_expansion_utils3.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 18:52:54 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/27 18:53:55 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/28 15:38:08 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

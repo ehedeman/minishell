@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 12:18:17 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 16:58:12 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:30:38 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ static int	ft_pwd(void)
 	return (0);
 }
 
-int	check_pwd(t_statement *temp, int i)
+int	check_pwd(t_statement *temp, t_mini *mini, int i)
 {
 	if (!ft_strncmp(temp->argv[i], "pwd", ft_strlen("pwd") + 1))
 	{
-		ft_pwd();
+		mini->exit_status = ft_pwd();
 		return (1);
 	}
 	return (0);

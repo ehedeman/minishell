@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 22:48:44 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/27 16:58:23 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:53:47 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	check_unset(t_statement *temp, t_mini *mini, int i)
 	{
 		while (temp->argv[i])
 		{
-			ft_unset(mini->env, temp->argv[i]);
+			mini->exit_status = ft_unset(mini->env, temp->argv[i]);
 			i++;
 		}
 		return (1);
