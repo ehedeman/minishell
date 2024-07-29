@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 16:05:38 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:10:32 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,9 +139,14 @@ void	process_input(t_mini *mini)
 int	main(int argc, char **argv, char **envp)	
 {
 	t_mini	mini;
+	int i;
 
+	i = 0;
 	(void)argv;
 	(void)argc;
+	if (argc == 2)
+		while (i++ < 6)
+			printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
 	initialize_mini(&mini, envp);
 	process_input(&mini);
 	if (mini.com_tab)
