@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arg_expansion_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:48:18 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/24 20:03:42 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:49:08 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,4 @@ void	append_var_value(char **new_arg, const char *var_value)
 		*new_arg = ft_resize_mem(*new_arg, new_len + val_len + 1);
 		ft_strlcat(*new_arg, var_value, new_len + val_len + 1);
 	}
-}
-
-int	start_and_end_with_single_quotes(const char *str, size_t len)
-{
-	if (str == NULL)
-		return (0);
-	if (str[0] == '\'' && str[len - 1] == '\'')
-		return (1);
-	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:12:06 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 13:54:14 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/28 19:52:36 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	free_com_tab(t_mini *mini)
 	mini->input = NULL;
 }
 
-int	exit_arg(char *arg)
+static int	exit_arg(char *arg, t_mini *mini)
 {
 	int	i;
 
@@ -49,6 +49,7 @@ int	exit_arg(char *arg)
 		if (!ft_isdigit(arg[i]))
 		{
 			printf("exit: %s: numeric argument required\n", arg);
+			mini->exit_status = 2;
 			return (-1);
 		}
 		i++;
@@ -63,7 +64,7 @@ int	ft_exit(t_mini *mini, char *arg)
 	exit_status = 0;
 	if (arg)
 	{
-		exit_status = exit_arg(arg);
+		exit_status = exit_arg(arg, mini);
 		if (exit_status == -1)
 			return (-1);
 		printf("exit status: %i\n", exit_status);
@@ -85,10 +86,14 @@ int	check_exit(t_statement *temp, t_mini *mini, int i)
 		if (temp->argv[i + 2])
 		{
 			printf("exit: too many arguments\n");
+			mini->exit_status = 1;
 			return (-1);
 		}
 		else if (temp->argv[i + 1])
+		{
 			ft_exit(mini, temp->argv[i + 1]);
+			return (-1);
+		}	
 	}
 	return (0);
 }

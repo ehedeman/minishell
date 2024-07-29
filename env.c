@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:46:10 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/26 21:20:45 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:54:06 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	check_env(t_statement *temp, t_mini *mini, int i)
 	if (!ft_strncmp(temp->argv[i], "env", ft_strlen("env") + 1) && \
 		!temp->argv[i + 1])
 	{
-		ft_print_env_lst(mini->env);
+		mini->exit_status = ft_print_env_lst(mini->env);
 		return (1);
 	}
 	return (0);

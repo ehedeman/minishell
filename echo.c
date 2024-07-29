@@ -3,16 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:28:15 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 11:42:43 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:30:52 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	check_newline_flag(char **argv, int *i)
+static int	remove_quotes_echo(t_statement *temp, int i)
+{
+	char	*temp_pointer;
+	char	buff[4000];
+
+	temp_pointer = temp->argv[i];
+	temp->argv[i] = malloc(sizeof(char) * ft_strlen(temp->argv[i]) - 1);
+	if (!temp->argv[i])
+	{
+		printf("minishell: System Error.\n");
+		temp->argv[i] = temp_pointer;
+		return (-1);
+	}
+	ft_strlcpy(buff, &temp_pointer[1], ft_strlen(temp->argv[i]));
+	ft_strlcpy(temp->argv[i], buff, ft_strlen(temp->argv[i]));
+	free(temp_pointer);
+	return (0);
+}
+
+static bool	check_newline_flag(char **argv, int *i)
 {
 	if (argv[*i] && !ft_strncmp(argv[*i], "-n", 2) && !argv[*i][2])
 	{
@@ -22,25 +41,20 @@ bool	check_newline_flag(char **argv, int *i)
 	return (false);
 }
 
-void	print_argument(char *arg)
-{
-	printf("%s", arg);
-}
-
-void	handle_special_cases(t_mini *mini, t_statement *temp, int i)
+static void	handle_special_cases(t_mini *mini, t_statement *temp, int i)
 {
 	if (!ft_strcmp(temp->argv[i], "$?"))
 		printf("%i\n", mini->exit_status);
 	else if (!ft_strncmp(temp->argv[i], "\'$", 2))
 	{
 		remove_quotes_echo(temp, i);
-		print_argument(temp->argv[i]);
+		printf("%s", temp->argv[i]);
 	}
 	else
-		print_argument(temp->argv[i]);
+		printf("%s", temp->argv[i]);
 }
 
-int	ft_echo(t_mini *mini, t_statement *temp, int i)
+static int	ft_echo(t_mini *mini, t_statement *temp, int i)
 {
 	bool	newline;
 
@@ -62,7 +76,7 @@ int	check_echo(t_statement *temp, t_mini *mini, int i)
 {
 	if (!ft_strncmp(temp->argv[i], "echo", ft_strlen("echo") + 1))
 	{
-		ft_echo(mini, temp, i);
+		mini->exit_status = ft_echo(mini, temp, i);
 		return (1);
 	}
 	return (0);

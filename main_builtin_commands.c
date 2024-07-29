@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_builtin_commands.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 16:03:08 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/28 19:47:15 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ static void	reset_std(t_mini *mini)
 
 void	check_commands_loop(t_statement *temp, t_mini *mini, int i)
 {
-	int	status;
+	// int	status;
 
-	status = 0;
+	// status = 0;
 	mini->fd_out = -1;
 	mini->fd_in = -1;
 	while (temp)
@@ -131,16 +131,16 @@ void	check_commands_loop(t_statement *temp, t_mini *mini, int i)
 		if (mini->invisible_file == 1)
 			rm_invisible_file(mini, NULL);
 	}
-	mini->exit_status = status;
+	//mini->exit_status = status;
 }
 
 int	check_builtins(t_statement *temp, t_mini *mini, int i)
 {
 	if (check_echo(temp, mini, i))
 		return (1);
-	if (check_cd(temp, i))
+	if (check_cd(temp, mini, i))
 		return (1);
-	if (check_pwd(temp, i))
+	if (check_pwd(temp, mini, i))
 		return (1);
 	if (check_exit(temp, mini, i))
 		return (1);

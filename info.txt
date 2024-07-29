@@ -3,6 +3,9 @@ TO DO
 	[] echo hello > out | wc -w
 []norm
 
+QUESTIONS
+[] aren't exec_com_fork and exec_file_fork the same? (execute_file_utils.c)
+
 
 OPTIONAL(?)
 []history: with one value as argument to change ammount of lines from history to print
@@ -13,17 +16,22 @@ OPTIONAL(?)
 
 IN PROGRESS
 [smatschu]
-[]for $?, at every possible exit, update exit value in mini struct
-[]arg expansion needs to recognize '$ within words
+[]echo $? should print exit value
+	[x] bash commands
+	[x] ./whatever
+	[x] exit 123 or any number higher than 255 (you can enter bash or ./minishell and exit, than echo $? to see if it gets the right value)
+	[x] command or file than does not exist (127)
+	[x] file without permission (126)
+	[] syntax errors, missing keywords or commands -> exit_status 2
+		[x] for example: exit asdasd -> exit_status 2 (exit 234 asd -> 1)
+		[] others, in parsing maybe?
+	[] script terminated by ctrl+c -> exit_status 130
+	[] ctrl D exit with 0, not 1
+[]norm arg_expansion
 
 [ehedeman]
-[x]Parsing:
-	[] leave "" as well when $BLABLA, because
-		- $USERblabal should not print anything, but...
-		- "$USER"blabla should expand user, but I can't expand USER if i dont have the "" anymore.
-		- or would expand during parsing be possible?
-	[] echo "hello" '|' cat -e should print hello | cat -e -> operstors with siongle quotes in general
-	[x]echo '$USER'$? is saving '$USER'$? as a whole arg. Fix parsing or should rewrite echo again?
+[]Parsing:
+	[] check operator and lack of spaces in general
 []input redirection without executing the command immideadly -> redirect input then run the command loop, reset input at end
 	[] wc -l > info.txt < hello ;  should redirect the output of wc -l > info.txt to hello (operators might be the other way around)
 	[] << end ; input redirecion until but without command (leaks)
@@ -64,3 +72,10 @@ but not sure
 [x] input check for pipe without content
 [x]basic and multiple pipes
 [x]echo $?"$?"$? is working, but echo $? "$?" $? not, also asd "asd" asd not
+[x]arg expansion needs to recognize '$ within words when lowercase, uppercase no?
+	seems like it's a bash version thing? or check again in school.
+	my version: GNU bash, version 5.1.16(1)-release (x86_64-pc-linux-gnu)
+[x] $USERblabal should not print anything, but...
+[x] "$USER"blabla should expand user, but I can't expand USER if i dont have the "" anymore.
+[x] echo "hello" '|' cat -e should print hello | cat -e -> operstors with siongle quotes in general
+[x]echo '$USER'$? is saving '$USER'$? as a whole arg. Fix parsing or should rewrite echo again?

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 15:38:11 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/28 19:37:34 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,6 @@ int			check_command_after_file_rdr(t_statement *temp);
 void		ft_print(t_mini *mini); //remove before eval
 int			main_error(int errnum);
 int			ft_exit(t_mini *mini, char *arg);
-int		remove_quotes_echo(t_statement *temp, int i);
 
 //redirecting stdin and stdout
 int			redirect_stdout(t_mini *mini, int fd);
@@ -172,8 +171,8 @@ int			exec_file_fork(t_statement *temp, char **envp, char **args, t_mini *mini);
 
 //BUILTINS
 int	check_echo(t_statement *temp, t_mini *mini, int i);
-int	check_cd(t_statement *temp, int i);
-int	check_pwd(t_statement *temp, int i);
+int	check_cd(t_statement *temp, t_mini *mini, int i);
+int	check_pwd(t_statement *temp,t_mini *mini, int i);
 int	check_exit(t_statement *temp, t_mini *mini, int i);
 int	check_env(t_statement *temp, t_mini *mini, int i);
 int	check_export(t_statement *temp, t_mini *mini, int i);
@@ -186,17 +185,13 @@ t_env_list *ft_env_lst_new(char *key, char *value);
 int			ft_print_env_lst(t_env_list *env);
 
 //export
-int			ft_export(t_mini *mini);
 t_env_list 	*ft_env_lst_new(char *key, char *value);
 int			ft_env_list_len(t_env_list *env);
 void		ft_env_lst_clear(t_env_list *lst, void (*del)(void *)); 
 void		ft_print_export_list(t_env_list *sorted_env);
 t_env_list	*copy_linked_list(t_env_list *env);
 void		sort_linked_list(t_env_list *temp_env);
-char	**ft_join_env(char *env_var);
-
-//unset
-int			ft_unset(t_env_list *env, char *target_name);
+char		**ft_join_env(char *env_var);
 
 
 //expansion $
@@ -205,11 +200,16 @@ void	append_var_value(char **new_arg, const char *var_value);
 char	*extract_var_name(char	**arg);
 char	*get_env_value(const char *var_name, t_mini *mini);
 void	*ft_resize_mem(void *ptr, size_t new_size);
-int		start_and_end_with_single_quotes(const char *str, size_t len);
+char	*expand_arg(char *arg, t_mini *mini);
+char	*find_next_quote_or_end(char *str, const char *delim);
+char	*handle_dollar_sign(char *arg, t_mini *mini, char **new_arg);
+char	*append_char_to_new_arg(char *new_arg, char arg_char);
+char	*handle_exstat(char **arg, t_mini *mini, char *new_arg, int use_braces);
+char	*handle_var_exp(char **arg, t_mini *mini, char *new_arg, int use_braces);
 
 
 //history
-int	check_history(t_statement *temp, t_mini *mini, int i);
+int		check_history(t_statement *temp, t_mini *mini, int i);
 void	init_history(t_history *history);	
 void	ft_history(const t_history *history);
 void	add_to_hist_arr(t_history *history, char *command);

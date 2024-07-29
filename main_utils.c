@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 12:52:43 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 15:45:23 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:53:38 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,4 @@ int	whitespace_check(t_mini *mini)
 	free(mini->input);
 	mini->input = NULL;
 	return (1);
-}
-
-int	remove_quotes_echo(t_statement *temp, int i)
-{
-	char	*temp_pointer;
-	char	buff[4000];
-
-	temp_pointer = temp->argv[i];
-	temp->argv[i] = malloc(sizeof(char) * ft_strlen(temp->argv[i]) - 1);
-	if (!temp->argv[i])
-	{
-		printf("minishell: System Error.\n");
-		temp->argv[i] = temp_pointer;
-		return (-1);
-	}
-	ft_strlcpy(buff, &temp_pointer[1], ft_strlen(temp->argv[i]));
-	ft_strlcpy(temp->argv[i], buff, ft_strlen(temp->argv[i]));
-	free(temp_pointer);
-	return (0);
 }
