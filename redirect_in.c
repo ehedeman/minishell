@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:23:25 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 14:19:08 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:31:30 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int	redirect_input_until(t_statement *temp, t_mini *mini, int fd)
 	free(input[i]);
 	input[i] = NULL;
 	copy_content(input); //creates invisible file, copies content
+	free_input(input);
 	if (fd < 0)
 		return (1);
-	free_input(input);
 	fd = open(".temp_file", O_RDWR);
 	if (temp->argv[0])
 		redirect_stdin(mini, fd);

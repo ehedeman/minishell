@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 21:15:14 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/28 16:10:55 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/29 15:54:24 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	command_involves_pipes(t_statement *parsed_input)
 	t_statement	*current;
 
 	current = parsed_input;
-	while (current != NULL)
+	while (current)
 	{
 		if (current->operator == PIPE)
 			return (1);
@@ -66,8 +66,7 @@ void	child_process(t_statement *curr, t_mini *mini, int in_fd, int pipefd[])
 		close(pipefd[0]); // close the read end of the pipe
 		redirect_stdout_pipe(pipefd[1]); // redirect standard output to the pipe
 	}
-	if (curr->operator == 0 || curr->operator == 5)
-		exec_command(curr, mini); // execute the command
+	exec_command(curr, mini, 0); // execute the command
 	exit(EXIT_SUCCESS);
 }
 
@@ -111,7 +110,7 @@ void	execute_pipeline(t_statement *commands, t_mini *mini)
 		pid = fork(); // create a new process
 		if (pid == 0)
 		{
-			printf("child\n");
+		//	printf("child\n");
 			child_process(current, mini, input_fd, pipefd);
 		}
 		else if (pid < 0)
@@ -120,6 +119,8 @@ void	execute_pipeline(t_statement *commands, t_mini *mini)
 			exit(EXIT_FAILURE);
 		}
 		parent_process(current, &input_fd, pipefd);
+		if (current->operator != PIPE)
+			break ;
 		current = current->next; // go to the next command in the list
 	}
 	if (input_fd != STDIN_FILENO)

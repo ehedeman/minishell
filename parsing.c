@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 13:10:38 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 15:47:30 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/29 12:39:14 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,12 @@ static int	get_nbr_parsed_args(char *input, int i, int count)
 			while (input[i])
 			{
 				if (is_onstr(OPERATORS, input[i]) && !quotes) //if unquoted operator then start again
+				{
+					count++;
+					if (is_onstr(OPERATORS, input[i + 1]))
+						i++;
 					break ;
+				}
 				if (is_onstr(QUOTES, input[i]) && input[i] == input[i + 1]) //doublequotes r supposed to get their own args
 				{
 					count++;
@@ -225,5 +230,6 @@ t_statement	*parsing(char *input)
 	if (make_statement_list(temp, parsed, i))
 		return (NULL);
 	free(parsed);
+	index_list(new);
 	return (new);
 }

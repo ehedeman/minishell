@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_builtin_commands.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/28 19:47:15 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:49:20 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,23 @@ static int	check_redirect_out(t_mini *mini)
 			mini->temp->operator == RDR_OUT_APPEND)
 		{
 			fd = get_fd(mini->temp);
-			if (mini->temp->next->operator == RDR_OUT_REPLACE || \
-				mini->temp->next->operator == RDR_OUT_APPEND)
+			if (mini->temp->next && (mini->temp->next->operator == RDR_OUT_REPLACE || \
+				mini->temp->next->operator == RDR_OUT_APPEND))
 			{
 				close(fd);
-				while ((mini->temp->next->operator == RDR_OUT_REPLACE || \
-					mini->temp->next->operator == RDR_OUT_APPEND) && mini->temp->next)
+				mini->temp = mini->temp->next;
+				while ((mini->temp->operator == RDR_OUT_REPLACE || \
+					mini->temp->operator == RDR_OUT_APPEND) && mini->temp)
 				{
 					fd = get_fd(mini->temp);
 					if (mini->temp->next->operator == RDR_OUT_REPLACE || \
 						mini->temp->next->operator == RDR_OUT_APPEND)
 						close(fd);
-					
+					else
+						break ;
+					mini->temp = mini->temp->next;
 				}
-				break ;
+				continue ;
 			}
 			else
 			{
@@ -50,13 +53,13 @@ static int	check_redirect_out(t_mini *mini)
 	}
 	return (fd);
 }
-
-static void	check_redirect_in(t_mini *mini)
+static void	check_redirect_in(t_mini *mini, t_statement *temp)
 {
 	mini->invisible_file = 0;
+	mini->temp = temp;
 	while (1)
 	{
-		if (mini->temp->operator == RDR_INPUT || \
+		while (mini->temp->operator == RDR_INPUT || \
 			mini->temp->operator == RDR_INPUT_UNTIL)
 		{
 			if (mini->temp->next->operator != RDR_INPUT_UNTIL && \
@@ -66,9 +69,8 @@ static void	check_redirect_in(t_mini *mini)
 				mini->temp = mini->temp->next;
 				return ;
 			}
+			mini->temp = mini->temp->next;
 		}
-		else
-			break ;
 		if (!mini->temp->next)
 			break ;
 		mini->temp = mini->temp->next;
@@ -85,7 +87,7 @@ static int	check_execute(t_statement *temp, int i, t_mini *mini)
 	}
 	else
 	{
-		exec_command(temp, mini);
+		exec_command(temp, mini, i);
 		return (1);
 	}
 	return (0);
@@ -104,29 +106,39 @@ void	check_commands_loop(t_statement *temp, t_mini *mini, int i)
 	// status = 0;
 	mini->fd_out = -1;
 	mini->fd_in = -1;
+	redirect_stdout(mini, check_redirect_out(mini));
 	while (temp)
 	{
-		redirect_stdout(mini, check_redirect_out(mini));
-		check_redirect_in(mini);
-		if (command_involves_pipes(temp) && temp->operator <= 4 && temp->operator >= 1)
+		if (temp->previous && temp->previous->operator == PIPE && (temp->operator == 1 || temp->operator == 2))
+			redirect_stdout(mini, check_redirect_out(mini));
+		check_redirect_in(mini, temp);
+		if (command_involves_pipes(temp))
 		{
 			execute_pipeline(temp, mini);
 			reset_std(mini);
 			break ;
 		}
+		if (temp->id != 0 && (temp->previous->operator <= 4 && temp->previous->operator >= 1))
+			i++;
 		while (i < temp->argc && *temp->argv)
 		{
 			if (check_builtins(temp, mini, i))
+			{
+				reset_std(mini);
 				break ;
+			}	
 			if (check_execute(temp, i, mini))
+			{
+				reset_std(mini);
 				break ;
+			}
 			i++;
 		}
 		i = 0;
-		// while (temp->operator <= 4 && temp->operator >= 1 && temp->next)
-		// 	temp = temp->next;
-		temp = mini->temp;
-		temp = temp->next;
+		if (temp->operator < 5 && temp->operator > 0)
+			temp = mini->temp;
+		else if (temp->operator == 5 || temp->operator == 0)
+			temp = temp->next;
 		reset_std(mini);
 		if (mini->invisible_file == 1)
 			rm_invisible_file(mini, NULL);

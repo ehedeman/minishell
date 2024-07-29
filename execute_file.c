@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 11:37:36 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/28 18:54:14 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/29 13:39:48 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static	char	**assign_link_pointer(t_env_list *env, char **envp)
 }
 
 //g_sig tells program that theres a file being executed
-int	exec_command(t_statement *temp, t_mini *mini)
+int	exec_command(t_statement *temp, t_mini *mini, int i)
 {
 	char	**args;
 	char	**envp;
@@ -60,7 +60,7 @@ int	exec_command(t_statement *temp, t_mini *mini)
 	envp = NULL;
 	envp = assign_link_pointer(mini->env, envp);
 	args = malloc(sizeof(char *) * (temp->argc + 1));
-	args[0] = ft_strjoin("/bin/", temp->argv[0]);
+	args[0] = ft_strjoin("/bin/", temp->argv[i]);
 	if (exec_com_fork(temp, envp, args, mini) == -1)
 		return (-1);
 	free_env_args(envp, args, 1);

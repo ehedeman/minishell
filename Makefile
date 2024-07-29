@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+         #
+#    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/28 15:40:43 by smatschu         ###   ########.fr        #
+#    Updated: 2024/07/29 15:22:32 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,6 +90,7 @@ re: fclean all
 leaks:
 	valgrind --leak-check=full \
          --show-leak-kinds=all \
+		 --track-fds=yes	\
          --track-origins=yes ./$(NAME)
 
 norm:

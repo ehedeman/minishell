@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/29 12:10:44 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/29 15:25:27 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ void	process_input(t_mini *mini)
 		prompt = ft_prompt();
 		mini->input = readline(prompt);
 		free(prompt);
-		
 		//mini->input = readline("\033[1;31mthe minishell: \033[0m");
 		if (!mini->input)
 		{
@@ -118,7 +117,7 @@ void	process_input(t_mini *mini)
 		}
 		if (*mini->input)
 		{
-			if (whitespace_check(mini))
+			if (whitespace_check(mini)) //frees input if nessecary
 				continue ;
 			if (input_check(mini->input))
 			{
@@ -135,7 +134,6 @@ void	process_input(t_mini *mini)
 				// int i = -1;
 				// while(mini->com_tab->argv[++i])
 				// 	printf("test mini->com_tab->argv[%d]: %s\n",i, mini->com_tab->argv[i]);
-				
 				replace_env_vars(mini->com_tab->argv, mini);
 
 				// //testing after expansion

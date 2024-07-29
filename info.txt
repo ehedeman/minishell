@@ -2,6 +2,9 @@ TO DO
 []pipes with redirection (basic and multiple pipes work)
 	[] echo hello > out | wc -w
 []norm
+[]replace_env_vars has invalid read size (try make leaks (from MAKEFILE), then type any command it'll show the exact line)
+[]commands called through execve make the programm loop if failed (eg when the "file not found" message pops up)
+
 
 QUESTIONS
 [] aren't exec_com_fork and exec_file_fork the same? (execute_file_utils.c)
@@ -31,10 +34,10 @@ IN PROGRESS
 
 [ehedeman]
 []Parsing:
-	[] check operator and lack of spaces in general
+	[x] check operator and lack of spaces in general
 []input redirection without executing the command immideadly -> redirect input then run the command loop, reset input at end
 	[] wc -l > info.txt < hello ;  should redirect the output of wc -l > info.txt to hello (operators might be the other way around)
-	[] << end ; input redirecion until but without command (leaks)
+	[x] << end ; input redirecion until but without command (leaks)
 
 IDEA:
 	pipes and redirections established at the beginning: a file descriptor array which gets sorted through 1 by 1 (maybe pipes and redirections seperately)

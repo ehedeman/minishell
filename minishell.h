@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/28 19:37:34 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/29 13:40:34 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef enum e_errors {
 
 typedef struct	s_statement
 {
+	int		id;
 	int		argc;
 	char	**argv;
 	t_operator	operator;
@@ -109,7 +110,7 @@ typedef struct	s_mini
 	int					fd_out;
 	int					stdout_copy;
 	int					stdin_copy;
-	pid_t pid;
+	pid_t 				pid;
 	int					invisible_file;//so i know if i need to remove temporary file in rm_in_until
 	// t_pipe				pipes[400];
 }				t_mini;
@@ -134,6 +135,7 @@ t_operator	get_operator(char *operator);
 int			get_argc(char **parsed);
 t_statement	*p_new_node(int argc);
 int			parsing_error(int errnum);
+void		index_list(t_statement *temp);
 
 
 void		check_commands_loop(t_statement *temp, t_mini *mini, int i);
@@ -163,7 +165,7 @@ void		rm_invisible_file(t_mini *mini, char **input);
 
 //execution
 int			exec_file(t_statement *temp, t_mini *mini);
-int			exec_command(t_statement *temp, t_mini *mini);
+int			exec_command(t_statement *temp, t_mini *mini, int i);
 int			free_env_args(char **envp, char **args, int arg_zero);//frees the envp and args from the functions above
 int			exec_com_fork(t_statement *temp, char **envp, char **args, t_mini *mini); //split half of exec_command | norm accurate
 int			exec_file_fork(t_statement *temp, char **envp, char **args, t_mini *mini);//split half of exec_file | norma accurate

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_file_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:04:56 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/28 19:37:24 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/29 15:06:02 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

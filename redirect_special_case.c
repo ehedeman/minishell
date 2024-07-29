@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_special_case.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:28:14 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/28 16:22:06 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/29 13:49:52 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	check_commands_rdr(t_statement *temp, t_mini *mini, int fd, int i)
 		}
 		else// if (temp->operator != SKIP)
 		{
-			exec_command(temp, mini);
+			exec_command(temp, mini, 0);
 			return (0);
 		}
 		i++;
