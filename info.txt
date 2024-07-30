@@ -7,7 +7,10 @@ TO DO
 
 
 QUESTIONS
-[] aren't exec_com_fork and exec_file_fork the same? (execute_file_utils.c)
+[x] aren't exec_com_fork and exec_file_fork the same? (execute_file_utils.c)
+->nope, one is for files only (eg. ./a.out) the other is strictly for commands (difference
+is the part where the "./" gets strjoined to the rest, but because of norm  and for simplicity
+i made it into two)
 
 
 OPTIONAL(?)
@@ -35,9 +38,6 @@ IN PROGRESS
 [ehedeman]
 []Parsing:
 	[x] check operator and lack of spaces in general
-[]input redirection without executing the command immideadly -> redirect input then run the command loop, reset input at end
-	[] wc -l > info.txt < hello ;  should redirect the output of wc -l > info.txt to hello (operators might be the other way around)
-	[x] << end ; input redirecion until but without command (leaks)
 
 IDEA:
 	pipes and redirections established at the beginning: a file descriptor array which gets sorted through 1 by 1 (maybe pipes and redirections seperately)
@@ -82,3 +82,7 @@ but not sure
 [x] "$USER"blabla should expand user, but I can't expand USER if i dont have the "" anymore.
 [x] echo "hello" '|' cat -e should print hello | cat -e -> operstors with siongle quotes in general
 [x]echo '$USER'$? is saving '$USER'$? as a whole arg. Fix parsing or should rewrite echo again?
+[x]input redirection without executing the command immideadly -> redirect input then run the command loop, reset input at end
+[x] wc -l > info.txt < hello ;  should redirect the output of wc -l > info.txt to hello (operators might be the other way around)
+[x] << end ; input redirecion until but without command (leaks)
+[x] "echo hello |" now asks to complete input

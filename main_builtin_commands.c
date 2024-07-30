@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/29 16:49:20 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/30 12:38:13 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,37 @@ static void	reset_std(t_mini *mini)
 	reset_stdin(mini);
 }
 
+int	check_incomplete_pipe(t_statement *temp)
+{
+	while (temp)
+	{
+		if (temp->id && temp->previous->operator == PIPE && !*temp->argv)
+			return (1);
+		temp = temp->next;
+	}
+	return (0);
+}
+
+int	complete_pipe(t_statement *temp)
+{
+	char *complete;
+
+	while (temp)
+	{
+		if (temp->operator == PIPE && !*temp->next->argv)
+			break ;
+		temp = temp->next;
+	}
+	complete = readline("> ");
+	if (!complete)
+		return (-1);
+	free(temp->next->argv);
+	free(temp->next);
+	temp->next = parsing(complete);
+	free(complete);
+	return (0);
+}
+
 void	check_commands_loop(t_statement *temp, t_mini *mini, int i)
 {
 	// int	status;
@@ -106,6 +137,8 @@ void	check_commands_loop(t_statement *temp, t_mini *mini, int i)
 	// status = 0;
 	mini->fd_out = -1;
 	mini->fd_in = -1;
+	if (check_incomplete_pipe(temp))
+		complete_pipe(temp);
 	redirect_stdout(mini, check_redirect_out(mini));
 	while (temp)
 	{

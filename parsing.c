@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 13:10:38 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/29 12:39:14 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/30 12:31:19 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	get_nbr_parsed_args(char *input, int i, int count)
 	{
 		if (is_onstr(OPERATORS, input[i]) && !quotes)
 		{
-			if (is_onstr(OPERATORS, input[i + 1]))
+			if (input[i] == input[i + 1])
 				i += 2; //skip to symbol after operators
 			count++;
 		} //again with the operators, fixed length cuz easier
@@ -68,6 +68,7 @@ static int	get_nbr_parsed_args(char *input, int i, int count)
 		if (input[i] != ' ' && (!is_onstr(OPERATORS, input[i]) || quotes))
 		{
 			count++;
+		//	printf("%c\n", input[i]);
 			while (input[i])
 			{
 				if (is_onstr(OPERATORS, input[i]) && !quotes) //if unquoted operator then start again
@@ -173,13 +174,13 @@ static int	make_statement_list(t_statement *temp, char **parsed, int i) //i = va
 			break ;
 		temp->operator = get_operator(parsed[i]);
 		temp->next = p_new_node(get_argc(&parsed[i]));
-		temp->next->previous = temp;
 		if (!temp)
 		{
 			free(parsed);
 			parsing_error(MALLOC_ERR);
 			return (1);
 		}
+		temp->next->previous = temp;
 		temp = temp->next;
 		free(parsed[i]);
 		i++;
