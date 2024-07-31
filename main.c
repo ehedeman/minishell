@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/30 12:14:11 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/31 12:32:37 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,26 @@
 #include "minishell.h"
 
 int	g_sig;
+
+void	print_statements(t_statement *statements)
+{
+	t_statement *temp = statements;
+	int i;
+	while (temp)
+	{
+		i = 0;
+		printf("Statement node: %d\n", temp->id);
+		printf("Operator: %d\n", temp->operator);
+		printf("Arguments\n");
+		while(i < temp->argc)
+		{
+			printf("  argv[%d]: %s\n", i, temp->argv[i]);
+			i++;	
+		}
+		temp = temp->next;
+		printf("\n");
+	}
+}
 
 //we can delete this later, i was getting lost when testing in different shlvls
 char	*ft_prompt()
@@ -130,16 +150,10 @@ void	process_input(t_mini *mini)
 					free(mini->input);
 					return ;
 				}
-				// //for testing
-				// int i = -1;
-				// while(mini->com_tab->argv[++i])
-				// 	printf("test mini->com_tab->argv[%d]: %s\n",i, mini->com_tab->argv[i]);
 				replace_env_vars(mini->com_tab->argv, mini);
-
-				// //testing after expansion
-				// i = -1;
-				// while(mini->com_tab->argv[++i])
-				// 	printf("after expanstion mini->com_tab->argv[%d]: %s\n", i, mini->com_tab->argv[i]);
+			
+				//for testing
+			//	print_statements(mini->com_tab);
 				if (check_command(mini) == -1)
 				{
 					free_com_tab(mini);

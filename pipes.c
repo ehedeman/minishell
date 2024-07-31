@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 21:15:14 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/29 15:54:24 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/31 12:32:47 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,15 +95,21 @@ void	wait_for_children(t_mini *mini)
 	}
 }
 
-void	execute_pipeline(t_statement *commands, t_mini *mini)
+void	execute_pipeline(t_statement *commands, t_mini *mini, int redirection)
 {
 	int			pipefd[2]; // this is to hold pipe file descriptors
 	int			input_fd; // fd for input
 	t_statement	*current; // pointer to the current command
 	pid_t		pid; // process ID
+	int	need_free;
 
+	need_free = 0;
 	input_fd = STDIN_FILENO; // for the first command, input is STDIN
-	current = commands;
+	current = NULL;
+	if (!redirection)
+		current = commands;
+	else if (redirection)
+		return ;
 	while (current != NULL)
 	{
 		create_pipes(current, pipefd); // set up pipes if needed
@@ -126,4 +132,6 @@ void	execute_pipeline(t_statement *commands, t_mini *mini)
 	if (input_fd != STDIN_FILENO)
 		close(input_fd); // close the last read end if it's not standard input
 	wait_for_children(mini); // wait for all child processes to finish
+	if (need_free)
+		free_node_input(current, NULL);
 }

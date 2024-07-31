@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/29 13:40:34 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/31 11:34:09 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,4 +221,8 @@ void	free_history(t_history *history);
 //pipes
 int		command_involves_pipes(t_statement *parsed_input);
 int		create_pipe(int pipefd[]);
-void	execute_pipeline(t_statement *commands, t_mini *mini);
+void	execute_pipeline(t_statement *commands, t_mini *mini, int redirection);
+
+
+//testing
+void	print_statements(t_statement *statements);

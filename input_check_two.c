@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_check_two.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:16:40 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/30 12:00:20 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/31 10:52:52 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ static int	check_double_pipe(char *input, int i)
 	pipe = 0;
 	while (input[i])
 	{
-		while (input[i] != '|' && input[i])
-			i++;
 		while (input[i] == '|' && input[i])
 		{
 			pipe++;
@@ -32,6 +30,8 @@ static int	check_double_pipe(char *input, int i)
 			return (0);
 		else if (!input[i] && pipe >= 2)
 			return (1);
+		if (input[i] != '|' && !is_spaces(input[i]))
+			pipe = 0;
 		i++;
 	}
 	return (0);
