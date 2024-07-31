@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/31 11:34:09 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/31 19:07:24 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ void	replace_env_vars(char **args, t_mini *mini);
 void	append_var_value(char **new_arg, const char *var_value);
 char	*extract_var_name(char	**arg);
 char	*get_env_value(const char *var_name, t_mini *mini);
-void	*ft_resize_mem(void *ptr, size_t new_size);
+void	*ft_resize_mem(void *ptr, size_t old_size, size_t new_size);
 char	*expand_arg(char *arg, t_mini *mini);
 char	*find_next_quote_or_end(char *str, const char *delim);
 char	*handle_dollar_sign(char *arg, t_mini *mini, char **new_arg);

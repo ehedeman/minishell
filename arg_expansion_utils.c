@@ -6,13 +6,13 @@
 /*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:48:18 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/27 16:49:08 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/31 19:13:34 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*ft_resize_mem(void *ptr, size_t new_size)
+void	*ft_resize_mem(void *ptr, size_t old_size, size_t new_size)
 {
 	void	*new_ptr;
 
@@ -26,7 +26,10 @@ void	*ft_resize_mem(void *ptr, size_t new_size)
 		return (NULL);
 	if (ptr)
 	{
-		ft_memcpy(new_ptr, ptr, new_size);
+		if(old_size < new_size)
+			ft_memcpy(new_ptr, ptr, old_size);
+		else
+			ft_memcpy(new_ptr, ptr, new_size);
 		free(ptr);
 	}
 	return (new_ptr);
@@ -71,7 +74,7 @@ void	append_var_value(char **new_arg, const char *var_value)
 	{
 		new_len = ft_strlen(*new_arg);
 		val_len = ft_strlen(var_value);
-		*new_arg = ft_resize_mem(*new_arg, new_len + val_len + 1);
+		*new_arg = ft_resize_mem(*new_arg, new_len + 1, new_len + val_len + 1);
 		ft_strlcat(*new_arg, var_value, new_len + val_len + 1);
 	}
 }
