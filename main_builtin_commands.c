@@ -3,43 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   main_builtin_commands.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/30 12:38:13 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/31 12:30:32 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_redirect_out(t_mini *mini)
+static int check_redirect_out(t_mini *mini, t_statement *temp)
 {
-	int	fd;
+	int fd;
 
 	fd = 1;
+	mini->temp = temp;
 	while (1)
 	{
-		if (mini->temp->operator == RDR_OUT_REPLACE || \
-			mini->temp->operator == RDR_OUT_APPEND)
+		if (mini->temp->operator== RDR_OUT_REPLACE ||
+			mini->temp->operator== RDR_OUT_APPEND)
 		{
 			fd = get_fd(mini->temp);
-			if (mini->temp->next && (mini->temp->next->operator == RDR_OUT_REPLACE || \
-				mini->temp->next->operator == RDR_OUT_APPEND))
+			if (mini->temp->next && (mini->temp->next->operator== RDR_OUT_REPLACE ||
+									 mini->temp->next->operator== RDR_OUT_APPEND))
 			{
 				close(fd);
 				mini->temp = mini->temp->next;
-				while ((mini->temp->operator == RDR_OUT_REPLACE || \
-					mini->temp->operator == RDR_OUT_APPEND) && mini->temp)
+				while ((mini->temp->operator== RDR_OUT_REPLACE ||
+						mini->temp->operator== RDR_OUT_APPEND) &&
+					   mini->temp)
 				{
 					fd = get_fd(mini->temp);
-					if (mini->temp->next->operator == RDR_OUT_REPLACE || \
-						mini->temp->next->operator == RDR_OUT_APPEND)
+					if (mini->temp->next->operator== RDR_OUT_REPLACE ||
+						mini->temp->next->operator== RDR_OUT_APPEND)
 						close(fd);
 					else
-						break ;
+						break;
 					mini->temp = mini->temp->next;
 				}
-				continue ;
+				continue;
 			}
 			else
 			{
@@ -48,39 +50,38 @@ static int	check_redirect_out(t_mini *mini)
 			}
 		}
 		if (!mini->temp->next)
-			break ;
+			break;
 		mini->temp = mini->temp->next;
 	}
 	return (fd);
 }
-static void	check_redirect_in(t_mini *mini, t_statement *temp)
+static void check_redirect_in(t_mini *mini, t_statement *temp)
 {
 	mini->invisible_file = 0;
 	mini->temp = temp;
 	while (1)
 	{
-		while (mini->temp->operator == RDR_INPUT || \
-			mini->temp->operator == RDR_INPUT_UNTIL)
+		while (mini->temp->operator== RDR_INPUT ||
+			   mini->temp->operator== RDR_INPUT_UNTIL)
 		{
-			if (mini->temp->next->operator != RDR_INPUT_UNTIL && \
-				mini->temp->next->operator != RDR_INPUT)
+			if (mini->temp->next->operator!= RDR_INPUT_UNTIL &&
+				mini->temp->next->operator!= RDR_INPUT)
 			{
 				redirect_in(mini->temp, mini);
 				mini->temp = mini->temp->next;
-				return ;
+				return;
 			}
 			mini->temp = mini->temp->next;
 		}
 		if (!mini->temp->next)
-			break ;
+			break;
 		mini->temp = mini->temp->next;
 	}
 }
 
-static int	check_execute(t_statement *temp, int i, t_mini *mini)
+static int check_execute(t_statement *temp, int i, t_mini *mini)
 {
-	if (!ft_strncmp(temp->argv[i], "./", 2) \
-		|| !ft_strncmp(temp->argv[i], "/", 1))
+	if (!ft_strncmp(temp->argv[i], "./", 2) || !ft_strncmp(temp->argv[i], "/", 1))
 	{
 		exec_file(temp, mini);
 		return (1);
@@ -93,31 +94,31 @@ static int	check_execute(t_statement *temp, int i, t_mini *mini)
 	return (0);
 }
 
-static void	reset_std(t_mini *mini)
+static void reset_std(t_mini *mini)
 {
 	reset_stdout(mini);
 	reset_stdin(mini);
 }
 
-int	check_incomplete_pipe(t_statement *temp)
+int check_incomplete_pipe(t_statement *temp)
 {
 	while (temp)
 	{
-		if (temp->id && temp->previous->operator == PIPE && !*temp->argv)
+		if (temp->id && temp->previous->operator== PIPE && !* temp->argv)
 			return (1);
 		temp = temp->next;
 	}
 	return (0);
 }
 
-int	complete_pipe(t_statement *temp)
+int complete_pipe(t_statement *temp)
 {
 	char *complete;
 
 	while (temp)
 	{
-		if (temp->operator == PIPE && !*temp->next->argv)
-			break ;
+		if (temp->operator== PIPE && !* temp->next->argv)
+			break;
 		temp = temp->next;
 	}
 	complete = readline("> ");
@@ -130,26 +131,39 @@ int	complete_pipe(t_statement *temp)
 	return (0);
 }
 
-void	check_commands_loop(t_statement *temp, t_mini *mini, int i)
+void check_commands_loop(t_statement *temp, t_mini *mini, int i)
 {
 	// int	status;
-
-	// status = 0;
+	// command_involves_pipes(temp) &&
+	//  status = 0;
 	mini->fd_out = -1;
 	mini->fd_in = -1;
 	if (check_incomplete_pipe(temp))
 		complete_pipe(temp);
-	redirect_stdout(mini, check_redirect_out(mini));
+	redirect_stdout(mini, check_redirect_out(mini, temp));
 	while (temp)
 	{
-		if (temp->previous && temp->previous->operator == PIPE && (temp->operator == 1 || temp->operator == 2))
-			redirect_stdout(mini, check_redirect_out(mini));
+		if (temp->previous && temp->previous->operator== PIPE && (temp->operator == 1 || temp->operator == 2))
+			redirect_stdout(mini, check_redirect_out(mini, temp));
 		check_redirect_in(mini, temp);
-		if (command_involves_pipes(temp))
+		if (temp->operator == PIPE)
 		{
-			execute_pipeline(temp, mini);
-			reset_std(mini);
-			break ;
+			if (temp->id && (temp->previous->operator == 1 || temp->previous->operator == 2))
+			{
+				execute_pipeline(temp, mini, 1);
+				reset_std(mini);
+				if (temp->next->operator == NONE)
+					temp = temp->next->next;
+				else
+					temp = temp->next;
+				continue ;
+			}
+			else
+			{
+				execute_pipeline(temp, mini, 0);
+				reset_std(mini);
+				break;
+			}
 		}
 		if (temp->id != 0 && (temp->previous->operator <= 4 && temp->previous->operator >= 1))
 			i++;
@@ -158,28 +172,28 @@ void	check_commands_loop(t_statement *temp, t_mini *mini, int i)
 			if (check_builtins(temp, mini, i))
 			{
 				reset_std(mini);
-				break ;
-			}	
+				break;
+			}
 			if (check_execute(temp, i, mini))
 			{
 				reset_std(mini);
-				break ;
+				break;
 			}
 			i++;
 		}
 		i = 0;
-		if (temp->operator < 5 && temp->operator > 0)
-			temp = mini->temp;
-		else if (temp->operator == 5 || temp->operator == 0)
-			temp = temp->next;
+		// if (temp->operator < 5 && temp->operator > 0)
+		// 	temp = mini->temp;
+		// else if (temp->operator == 5 || temp->operator == 0)
+		temp = temp->next;
 		reset_std(mini);
 		if (mini->invisible_file == 1)
 			rm_invisible_file(mini, NULL);
 	}
-	//mini->exit_status = status;
+	// mini->exit_status = status;
 }
 
-int	check_builtins(t_statement *temp, t_mini *mini, int i)
+int check_builtins(t_statement *temp, t_mini *mini, int i)
 {
 	if (check_echo(temp, mini, i))
 		return (1);
