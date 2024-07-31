@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_builtin_commands.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/31 12:30:32 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:05:19 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,22 @@ static int check_redirect_out(t_mini *mini, t_statement *temp)
 	mini->temp = temp;
 	while (1)
 	{
-		if (mini->temp->operator== RDR_OUT_REPLACE ||
-			mini->temp->operator== RDR_OUT_APPEND)
+		if (mini->temp->operator == RDR_OUT_REPLACE || \
+			mini->temp->operator == RDR_OUT_APPEND)
 		{
 			fd = get_fd(mini->temp);
-			if (mini->temp->next && (mini->temp->next->operator== RDR_OUT_REPLACE ||
-									 mini->temp->next->operator== RDR_OUT_APPEND))
+			if (mini->temp->next && (mini->temp->next->operator == RDR_OUT_REPLACE || \
+									 mini->temp->next->operator == RDR_OUT_APPEND))
 			{
 				close(fd);
 				mini->temp = mini->temp->next;
-				while ((mini->temp->operator== RDR_OUT_REPLACE ||
-						mini->temp->operator== RDR_OUT_APPEND) &&
+				while ((mini->temp->operator == RDR_OUT_REPLACE || \
+						mini->temp->operator == RDR_OUT_APPEND) &&
 					   mini->temp)
 				{
 					fd = get_fd(mini->temp);
-					if (mini->temp->next->operator== RDR_OUT_REPLACE ||
-						mini->temp->next->operator== RDR_OUT_APPEND)
+					if (mini->temp->next->operator == RDR_OUT_REPLACE || \
+						mini->temp->next->operator == RDR_OUT_APPEND)
 						close(fd);
 					else
 						break;
@@ -61,11 +61,11 @@ static void check_redirect_in(t_mini *mini, t_statement *temp)
 	mini->temp = temp;
 	while (1)
 	{
-		while (mini->temp->operator== RDR_INPUT ||
-			   mini->temp->operator== RDR_INPUT_UNTIL)
+		while (mini->temp->operator == RDR_INPUT || \
+			   mini->temp->operator == RDR_INPUT_UNTIL)
 		{
-			if (mini->temp->next->operator!= RDR_INPUT_UNTIL &&
-				mini->temp->next->operator!= RDR_INPUT)
+			if (mini->temp->next->operator != RDR_INPUT_UNTIL && \
+				mini->temp->next->operator != RDR_INPUT)
 			{
 				redirect_in(mini->temp, mini);
 				mini->temp = mini->temp->next;
@@ -104,7 +104,7 @@ int check_incomplete_pipe(t_statement *temp)
 {
 	while (temp)
 	{
-		if (temp->id && temp->previous->operator== PIPE && !* temp->argv)
+		if (temp->id && temp->previous->operator == PIPE && !*temp->argv)
 			return (1);
 		temp = temp->next;
 	}
@@ -117,8 +117,8 @@ int complete_pipe(t_statement *temp)
 
 	while (temp)
 	{
-		if (temp->operator== PIPE && !* temp->next->argv)
-			break;
+		if (temp->operator == PIPE && !*temp->next->argv)
+			break ;
 		temp = temp->next;
 	}
 	complete = readline("> ");

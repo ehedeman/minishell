@@ -47,8 +47,11 @@ DONE
 just after typing a part of a filename or directory name, 
 readline will list all files and directories in the current directory.
 [x]p is running pwd, c cd, e echo and so on.
+
 [x]echo $PATH${NAME}$WTVR
+
 [x]expr $? + $?
+
 [x] export FOO=test, than export FOO, should not update FOO.
 [x]SHLVL
 [x]history command (capacity is set to 5 for easy visualization, can change to 2000 later like bash)
@@ -72,7 +75,7 @@ but not sure
 	echo $? will return 123
 	on minishell, exit 123
 	on bash, echo $? should display 123
-[x] input check for pipe without content
+[x]input check for pipe without content
 [x]basic and multiple pipes
 [x]echo $?"$?"$? is working, but echo $? "$?" $? not, also asd "asd" asd not
 [x]arg expansion needs to recognize '$ within words when lowercase, uppercase no?
