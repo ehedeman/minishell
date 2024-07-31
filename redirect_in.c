@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:23:25 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/29 14:31:30 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/31 17:47:58 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ int	redirect_input_until(t_statement *temp, t_mini *mini, int fd)
 int	redirect_in(t_statement *temp, t_mini *mini)
 {
 	if (temp->operator == RDR_INPUT)
-		redirect_stdin(mini, redirect_input(temp));
+	{
+		if (redirect_stdin(mini, redirect_input(temp)) == -1)
+		return (-1);
+	}
 	else if (temp->operator == RDR_INPUT_UNTIL)
 	{
 		redirect_input_until(temp, mini, 0);

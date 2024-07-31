@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 21:15:14 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/31 17:05:58 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/31 18:12:44 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	create_pipes(t_statement *current, int pipefd[])
 }
 
 // redirect standart input to fd
-static int	redirect_stdin_pipe(int fd)
+int	redirect_stdin_pipe(int fd)
 {
 	if (dup2(fd, STDIN_FILENO) == -1)
 		return (-1);
@@ -35,7 +35,7 @@ static int	redirect_stdin_pipe(int fd)
 }
 
 // redirect standart output to fd
-static int	redirect_stdout_pipe(int fd)
+int	redirect_stdout_pipe(int fd)
 {
 	if (dup2(fd, STDOUT_FILENO) == -1)
 		return (-1);
@@ -61,6 +61,8 @@ void	child_process(t_statement *curr, t_mini *mini, int in_fd, int pipefd[])
 {
 	if (in_fd != STDIN_FILENO)
 		redirect_stdin_pipe(in_fd); // redirect standard input if needed
+	if (curr->previous && curr->previous->operator >= 1 && curr->previous->operator <= 2)
+		close(pipefd[0]);
 	if (curr->next && command_involves_pipes(curr))
 	{
 		close(pipefd[0]); // close the read end of the pipe
@@ -74,7 +76,7 @@ void	parent_process(t_statement *current, int *input_fd, int pipefd[])
 {
 	if (*input_fd != STDIN_FILENO)
 		close(*input_fd); // Close the input fd if it's not standard input
-	if (current->next && command_involves_pipes(current))
+	if (current->next && current->operator == PIPE)
 	{
 		close(pipefd[1]); // Close the write end of the pipe
 		*input_fd = pipefd[0]; // set the input fd to the read end of the pipe for the next command
@@ -95,54 +97,34 @@ void	wait_for_children(t_mini *mini)
 	}
 }
 
-void	execute_pipeline(t_statement *commands, t_mini *mini, int redirection, int fd)
+void	execute_pipeline(t_statement *commands, t_mini *mini)
 {
 //	int			pipefd[2]; // this is to hold pipe file descriptors
 	int			input_fd; // fd for input
 	t_statement	*current; // pointer to the current command
-	int	i;
 
-	i = 0;
 	input_fd = STDIN_FILENO; // for the first command, input is STDIN
 	current = NULL;
-	if (!redirection)
-		current = commands;
-	else if (redirection)
-	{
-		current = commands->next;
-		if (current->next)
-			return ;
-		fd = copy_content(NULL);
-		if (fd < 0)
-			return ;
-		redirect_stdin(mini, fd);
-		exec_command(current, mini, 0);
-		reset_stdin(mini);
-		rm_invisible_file(mini, NULL);
-		return ;
-	}
-	if (mini->pipefd[0][0] == -1)
-		i++;
+	current = commands;
 	while (current)
 	{
-		if (i)
-			create_pipes(current, mini->pipefd[i]); // set up pipes if needed
+		if (current->pipefd[0] == -1)
+			create_pipes(current, current->pipefd); // set up pipes if needed
 		mini->pid = fork(); // create a new process
 		if (mini->pid == 0)
 		{
 			printf("child\n");
-			child_process(current, mini, input_fd, mini->pipefd[i]);
+			child_process(current, mini, input_fd, current->pipefd);
 		}
 		else if (mini->pid < 0)
 		{
 			perror("fork");
 			exit(EXIT_FAILURE);
 		}
-		parent_process(current, &input_fd, mini->pipefd[i]);
+		parent_process(current, &input_fd, current->pipefd);
 		if (current->operator != PIPE)
 			break ;
 		current = current->next; // go to the next command in the list
-		i++;
 	}
 	if (input_fd != STDIN_FILENO)
 		close(input_fd); // close the last read end if it's not standard input

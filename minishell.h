@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/31 15:34:20 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/31 18:13:09 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct	s_statement
 	t_operator	operator;
 	struct s_statement *next;
 	struct s_statement *previous;
+	int	pipefd[2];
 }				t_statement;
 
 typedef struct	s_history
@@ -112,7 +113,7 @@ typedef struct	s_mini
 	int					stdin_copy;
 	pid_t 				pid;
 	int					invisible_file;//so i know if i need to remove temporary file in rm_in_until
-	int					pipefd[100][2];
+	//int					pipefd[100][2];
 	// t_pipe				pipes[400];
 }				t_mini;
 
@@ -223,9 +224,10 @@ void	free_history(t_history *history);
 //pipes
 int		command_involves_pipes(t_statement *parsed_input);
 int		create_pipe(int pipefd[]);
-void	execute_pipeline(t_statement *commands, t_mini *mini, int redirection, int fd);
+void	execute_pipeline(t_statement *commands, t_mini *mini);
 void	create_pipes(t_statement *current, int pipefd[]);
-
+int	redirect_stdout_pipe(int fd);
+int	redirect_stdin_pipe(int fd);
 
 //testing
 void	print_statements(t_statement *statements);

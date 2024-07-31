@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 11:19:24 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/31 15:34:04 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/31 18:26:58 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	redirect_stdin(t_mini *mini, int fd)
 			write(1, strerror(errno), ft_strlen(strerror(errno)));
 		return (1);
 	}
-	return (0);
+	return (-1);
 }
 
 int reset_stdin(t_mini *mini)
