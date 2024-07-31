@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/31 11:34:09 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/31 15:34:20 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct	s_mini
 	int					stdin_copy;
 	pid_t 				pid;
 	int					invisible_file;//so i know if i need to remove temporary file in rm_in_until
+	int					pipefd[100][2];
 	// t_pipe				pipes[400];
 }				t_mini;
 
@@ -153,6 +154,7 @@ int			redirect_stdout(t_mini *mini, int fd);
 int			reset_stdout(t_mini *mini);
 int			redirect_stdin(t_mini *mini, int fd);
 int 		reset_stdin(t_mini *mini);
+void 		reset_std(t_mini *mini);
 
 //functions for redirect_input
 int			redirect_in(t_statement *temp, t_mini *mini);
@@ -160,7 +162,7 @@ char		**init_input(void);
 void		free_node_input(t_statement *temp, char **input);
 void		free_input(char **input);
 t_statement *create_rm_node(void);
-void		copy_content(char **input);
+int			copy_content(char **input);
 void		rm_invisible_file(t_mini *mini, char **input);
 
 //execution
@@ -221,7 +223,8 @@ void	free_history(t_history *history);
 //pipes
 int		command_involves_pipes(t_statement *parsed_input);
 int		create_pipe(int pipefd[]);
-void	execute_pipeline(t_statement *commands, t_mini *mini, int redirection);
+void	execute_pipeline(t_statement *commands, t_mini *mini, int redirection, int fd);
+void	create_pipes(t_statement *current, int pipefd[]);
 
 
 //testing

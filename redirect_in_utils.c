@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 11:31:59 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/29 13:40:42 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:15:05 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,3 +20,4 @@ void	rm_invisible_file(t_mini *mini, char **input)
 	exec_command(rm_node, mini, 0);
 	free_node_input(rm_node, input);
 }
+

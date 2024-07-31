@@ -6,11 +6,17 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 11:19:24 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/29 14:42:05 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/31 15:34:04 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void reset_std(t_mini *mini)
+{
+	reset_stdout(mini);
+	reset_stdin(mini);
+}
 
 int	redirect_stdin(t_mini *mini, int fd)
 {

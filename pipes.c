@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 21:15:14 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/31 12:32:47 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/31 17:05:58 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,43 +95,56 @@ void	wait_for_children(t_mini *mini)
 	}
 }
 
-void	execute_pipeline(t_statement *commands, t_mini *mini, int redirection)
+void	execute_pipeline(t_statement *commands, t_mini *mini, int redirection, int fd)
 {
-	int			pipefd[2]; // this is to hold pipe file descriptors
+//	int			pipefd[2]; // this is to hold pipe file descriptors
 	int			input_fd; // fd for input
 	t_statement	*current; // pointer to the current command
-	pid_t		pid; // process ID
-	int	need_free;
+	int	i;
 
-	need_free = 0;
+	i = 0;
 	input_fd = STDIN_FILENO; // for the first command, input is STDIN
 	current = NULL;
 	if (!redirection)
 		current = commands;
 	else if (redirection)
-		return ;
-	while (current != NULL)
 	{
-		create_pipes(current, pipefd); // set up pipes if needed
-		pid = fork(); // create a new process
-		if (pid == 0)
+		current = commands->next;
+		if (current->next)
+			return ;
+		fd = copy_content(NULL);
+		if (fd < 0)
+			return ;
+		redirect_stdin(mini, fd);
+		exec_command(current, mini, 0);
+		reset_stdin(mini);
+		rm_invisible_file(mini, NULL);
+		return ;
+	}
+	if (mini->pipefd[0][0] == -1)
+		i++;
+	while (current)
+	{
+		if (i)
+			create_pipes(current, mini->pipefd[i]); // set up pipes if needed
+		mini->pid = fork(); // create a new process
+		if (mini->pid == 0)
 		{
-		//	printf("child\n");
-			child_process(current, mini, input_fd, pipefd);
+			printf("child\n");
+			child_process(current, mini, input_fd, mini->pipefd[i]);
 		}
-		else if (pid < 0)
+		else if (mini->pid < 0)
 		{
 			perror("fork");
 			exit(EXIT_FAILURE);
 		}
-		parent_process(current, &input_fd, pipefd);
+		parent_process(current, &input_fd, mini->pipefd[i]);
 		if (current->operator != PIPE)
 			break ;
 		current = current->next; // go to the next command in the list
+		i++;
 	}
 	if (input_fd != STDIN_FILENO)
 		close(input_fd); // close the last read end if it's not standard input
 	wait_for_children(mini); // wait for all child processes to finish
-	if (need_free)
-		free_node_input(current, NULL);
 }

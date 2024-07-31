@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/31 13:05:19 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/31 17:05:46 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,6 @@ static int check_execute(t_statement *temp, int i, t_mini *mini)
 	return (0);
 }
 
-static void reset_std(t_mini *mini)
-{
-	reset_stdout(mini);
-	reset_stdin(mini);
-}
-
 int check_incomplete_pipe(t_statement *temp)
 {
 	while (temp)
@@ -131,6 +125,17 @@ int complete_pipe(t_statement *temp)
 	return (0);
 }
 
+void	establish_pipe_as_stdout(t_mini *mini, t_statement *temp)
+{
+	if (temp->operator <= 4 && temp->operator >= 3)
+	{
+		create_pipes(temp, mini->pipefd[0]);
+		redirect_stdout(mini, mini->pipefd[0][1]);
+	}
+	else
+		mini->pipefd[0][0] = -1;
+}
+
 void check_commands_loop(t_statement *temp, t_mini *mini, int i)
 {
 	// int	status;
@@ -140,17 +145,21 @@ void check_commands_loop(t_statement *temp, t_mini *mini, int i)
 	mini->fd_in = -1;
 	if (check_incomplete_pipe(temp))
 		complete_pipe(temp);
+	if (command_involves_pipes(temp))
+		establish_pipe_as_stdout(mini, temp);
 	redirect_stdout(mini, check_redirect_out(mini, temp));
+	check_redirect_in(mini, temp);
 	while (temp)
 	{
-		if (temp->previous && temp->previous->operator== PIPE && (temp->operator == 1 || temp->operator == 2))
+		if (temp->previous && temp->previous->operator == PIPE && (temp->operator == 1 || temp->operator == 2))
 			redirect_stdout(mini, check_redirect_out(mini, temp));
-		check_redirect_in(mini, temp);
+		if (temp->previous && temp->previous->operator == PIPE && (temp->operator == 3 || temp->operator == 4))
+			check_redirect_in(mini, temp);
 		if (temp->operator == PIPE)
 		{
-			if (temp->id && (temp->previous->operator == 1 || temp->previous->operator == 2))
+			if (temp->id && (temp->previous->operator >= 1 && temp->previous->operator <= 2))
 			{
-				execute_pipeline(temp, mini, 1);
+				execute_pipeline(temp, mini, 1, 0);
 				reset_std(mini);
 				if (temp->next->operator == NONE)
 					temp = temp->next->next;
@@ -160,7 +169,7 @@ void check_commands_loop(t_statement *temp, t_mini *mini, int i)
 			}
 			else
 			{
-				execute_pipeline(temp, mini, 0);
+				execute_pipeline(temp, mini, 0, 0);
 				reset_std(mini);
 				break;
 			}
@@ -182,9 +191,6 @@ void check_commands_loop(t_statement *temp, t_mini *mini, int i)
 			i++;
 		}
 		i = 0;
-		// if (temp->operator < 5 && temp->operator > 0)
-		// 	temp = mini->temp;
-		// else if (temp->operator == 5 || temp->operator == 0)
 		temp = temp->next;
 		reset_std(mini);
 		if (mini->invisible_file == 1)

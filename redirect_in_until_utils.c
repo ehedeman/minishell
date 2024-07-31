@@ -6,13 +6,13 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:09:40 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 14:19:17 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:18:04 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	copy_content(char **input)
+int	copy_content(char **input)
 {
 	int		fd;
 	mode_t	mode;
@@ -24,8 +24,10 @@ void	copy_content(char **input)
 	if (fd < 0)
 	{
 		printf("minishell: system error.");
-		return ;
+		return (-1);
 	}
+	if (!input)
+		return (fd);
 	while (input[i])
 	{
 		write(fd, input[i], ft_strlen(input[i]));
@@ -33,6 +35,7 @@ void	copy_content(char **input)
 		i++;
 	}
 	close(fd);
+	return (0);
 }
 
 t_statement	*create_rm_node(void)
