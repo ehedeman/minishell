@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/31 15:52:17 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/01 11:13:50 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,9 @@ void	process_input(t_mini *mini)
 		if (!mini->input)
 		{
 			mini->com_tab = NULL;
-			ft_exit(mini, "1");
+			if(!g_sig)
+				ft_exit(mini, "0");
+			ft_exit(mini, "255");
 		}
 		if (*mini->input)
 		{

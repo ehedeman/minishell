@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arg_expansion_utils2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 17:11:22 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/28 15:40:39 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/31 19:12:16 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*append_char_to_new_arg(char *new_arg, char arg_char)
 	size_t	len;
 
 	len = ft_strlen(new_arg);
-	new_arg = ft_resize_mem(new_arg, len + 2);
+	new_arg = ft_resize_mem(new_arg, len + 1, len + 2);
 	new_arg[len] = arg_char;
 	new_arg[len + 1] = '\0';
 	return (new_arg);

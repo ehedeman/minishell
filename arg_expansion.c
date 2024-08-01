@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 22:23:35 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/27 18:53:59 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/07/31 19:12:01 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*handle_single_quote(char *start, char **new_arg, size_t *new_arg_len, size
 	if (*new_arg_len + segment_len + 1 > *new_arg_capacity)
 	{
 		*new_arg_capacity = *new_arg_len + segment_len + 1;
-		*new_arg = ft_resize_mem(*new_arg, *new_arg_capacity);
+		*new_arg = ft_resize_mem(*new_arg, *new_arg_len, *new_arg_capacity);
 	}
 	ft_strlcpy(*new_arg + *new_arg_len, start + 1, segment_len + 1);
 	*new_arg_len += segment_len;
@@ -47,7 +47,7 @@ char	*handle_double_quote(char *start, t_mini *mini, char **new_arg, size_t *new
 	if (*new_arg_len + expanded_len + 1 > *new_arg_capacity)
 	{
 		*new_arg_capacity = *new_arg_len + expanded_len + 1;
-		*new_arg = ft_resize_mem(*new_arg, *new_arg_capacity);
+		*new_arg = ft_resize_mem(*new_arg, *new_arg_len, *new_arg_capacity);
 	}
 	ft_strlcpy(*new_arg + *new_arg_len, expanded, expanded_len + 1);
 	*new_arg_len += expanded_len;
@@ -72,7 +72,7 @@ char	*handle_plain_text(char *start, t_mini *mini, char **new_arg, size_t *new_a
 	if (*new_arg_len + expanded_len + 1 > *new_arg_capacity)
 	{
 		*new_arg_capacity = *new_arg_len + expanded_len + 1;
-		*new_arg = ft_resize_mem(*new_arg, *new_arg_capacity);
+		*new_arg = ft_resize_mem(*new_arg, *new_arg_len, *new_arg_capacity);
 	}
 	ft_strlcpy(*new_arg + *new_arg_len, expanded, expanded_len + 1);
 	*new_arg_len += expanded_len;

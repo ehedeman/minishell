@@ -2,7 +2,6 @@ TO DO
 []pipes with redirection (basic and multiple pipes work)
 	[] echo hello > out | wc -w
 []norm
-[]replace_env_vars has invalid read size (try make leaks (from MAKEFILE), then type any command it'll show the exact line)
 []commands called through execve make the programm loop if failed (eg when the "file not found" message pops up)
 
 
@@ -11,7 +10,6 @@ QUESTIONS
 ->nope, one is for files only (eg. ./a.out) the other is strictly for commands (difference
 is the part where the "./" gets strjoined to the rest, but because of norm  and for simplicity
 i made it into two)
-
 
 OPTIONAL(?)
 []history: with one value as argument to change ammount of lines from history to print
@@ -30,9 +28,9 @@ IN PROGRESS
 	[x] file without permission (126)
 	[] syntax errors, missing keywords or commands -> exit_status 2
 		[x] for example: exit asdasd -> exit_status 2 (exit 234 asd -> 1)
-		[] others, in parsing maybe?
+		[] others, in parsing maybe? -> have to change main_error and wherever it is being called to take mini and use mini->exit_status
 	[] script terminated by ctrl+c -> exit_status 130
-	[] ctrl D exit with 0, not 1
+	[x] ctrl D exit with 0, not 1
 []norm arg_expansion
 
 [ehedeman]
@@ -89,3 +87,4 @@ but not sure
 [x] wc -l > info.txt < hello ;  should redirect the output of wc -l > info.txt to hello (operators might be the other way around)
 [x] << end ; input redirecion until but without command (leaks)
 [x] "echo hello |" now asks to complete input
+[x]replace_env_vars has invalid read size (try make leaks (from MAKEFILE), then type any command it'll show the exact line)
