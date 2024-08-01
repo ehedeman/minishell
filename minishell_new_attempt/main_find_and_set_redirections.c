@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:56:39 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/01 15:12:44 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:40:15 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	find_and_set_last_redirect_in(t_statement *current, t_mini *mini)
 	{
 		if (current->operator == 3)
 		{
-			fd = redirect_input(current, mini) //open file
+			fd = redirect_input(current); //open file
 			if (fd == -1) //nessecary cuz if file doesnt exist then all stops
 				return (1);
 		}
@@ -63,14 +63,14 @@ void	find_and_set_last_redirect_in_until(t_statement *current, t_mini *mini)
 		if (current->operator == 4)
 		{
 			count++;
-			end_word = temp->argv[0];
+			end_word = current->argv[0];
 		}
 		else if (current->operator != 4)
 			break ;
 		current = current->next;
 	}
 	if (count > 1)
-		redirect_input_until(current, end_word, mini, 1) //sets the stdin to empty file (test wc -l << end << blah)
+		redirect_input_until(current, end_word, mini, 1); //sets the stdin to empty file (test wc -l << end << blah)
 	else if (count == 1)
 		redirect_input_until(current, end_word, mini, 0);//sets stdin to the temp file with content
 	mini->current = current;

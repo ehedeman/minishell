@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:04:06 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/01 15:04:31 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:38:53 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	establish_all_pipes(t_statement *first)
 	current = first;
 	while (current)
 	{
-		if (operator == PIPE)
+		if (current->operator == PIPE)
 			create_pipes(current, current->pipefd);
 		else
 		{

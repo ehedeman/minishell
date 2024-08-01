@@ -1,41 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_check_commands.c                              :+:      :+:    :+:   */
+/*   main_check_command_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:32:38 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/01 14:14:53 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:43:22 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	find_command(t_statement *current, t_mini *mini)
-{
-	int	i;
-
-	i = 0;
-	if (current->id != 0 && (current->previous->operator <= 4
-		&& current->previous->operator >= 1))
-		i++;
-	while (i < current->argc && *current->argv)
-	{
-	if (check_builtins(current, mini, i))
-	{
-		reset_std(mini);
-		return (1);
-	}
-	if (check_execute(current, i, mini))
-	{
-		reset_std(mini);
-		return (1);
-	}
-	i++;
-	}
-	return (0);
-}
 
 int check_builtins(t_statement *current, t_mini *mini, int i)
 {
@@ -58,7 +33,7 @@ int check_builtins(t_statement *current, t_mini *mini, int i)
 	return (0);
 }
 
-int check_execute(t_statement *current, int i, t_mini *mini)
+static int check_execute(t_statement *current, int i, t_mini *mini)
 {
 	if (!ft_strncmp(current->argv[i], "./", 2) || !ft_strncmp(current->argv[i], "/", 1))
 	{
@@ -69,6 +44,31 @@ int check_execute(t_statement *current, int i, t_mini *mini)
 	{
 		exec_command(current, mini, i);
 		return (1);
+	}
+	return (0);
+}
+
+int	find_command(t_statement *current, t_mini *mini)
+{
+	int	i;
+
+	i = 0;
+	if (current->id != 0 && (current->previous->operator <= 4
+		&& current->previous->operator >= 1))
+		i++;
+	while (i < current->argc && *current->argv)
+	{
+	if (check_builtins(current, mini, i))
+	{
+		reset_std(mini);
+		return (1);
+	}
+	if (check_execute(current, i, mini))
+	{
+		reset_std(mini);
+		return (1);
+	}
+	i++;
 	}
 	return (0);
 }

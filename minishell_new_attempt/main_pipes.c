@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:07:02 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/01 15:08:13 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:39:01 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	do_all_connected_pipes(t_statement *current, t_mini *mini)
 {
+	mini++;
 	while (current)
 	{
 		current = current->next;

@@ -6,28 +6,28 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:28:14 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/29 13:49:52 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:43:16 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_commands_rdr(t_statement *temp, t_mini *mini, int fd, int i)
+static int	check_commands_rdr(t_statement *current, t_mini *mini, int fd, int i)
 {
-	while (i < temp->argc && *temp->argv && fd != -1)
+	while (i < current->argc && *current->argv && fd != -1)
 	{
-		if (check_builtins(temp, mini, i))
+		if (check_builtins(current, mini, i))
 			break ;
-		if (!ft_strncmp(temp->argv[i], "./", 2)
-			|| !ft_strncmp(temp->argv[i], "/", 1))
+		if (!ft_strncmp(current->argv[i], "./", 2)
+			|| !ft_strncmp(current->argv[i], "/", 1))
 		{
-			if (exec_file(temp, mini) == -1)
+			if (exec_file(current, mini) == -1)
 				return (-1);
 			break ;
 		}
-		else// if (temp->operator != SKIP)
+		else// if (current->operator != SKIP)
 		{
-			exec_command(temp, mini, 0);
+			exec_command(current, mini, 0);
 			return (0);
 		}
 		i++;
@@ -36,38 +36,38 @@ static int	check_commands_rdr(t_statement *temp, t_mini *mini, int fd, int i)
 	return (0);
 }
 
-t_statement	*command_after_file_rdr(t_statement *temp, t_mini *mini)
+t_statement	*command_after_file_rdr(t_statement *current, t_mini *mini)
 {
 	int	fd;
 
-	while ((temp->operator == RDR_OUT_REPLACE
-			|| temp->operator == RDR_OUT_APPEND) && temp)
+	while ((current->operator == RDR_OUT_REPLACE
+			|| current->operator == RDR_OUT_APPEND) && current)
 	{
-		fd = get_fd(temp);
-		if (temp->next->operator == RDR_OUT_REPLACE
-			|| temp->next->operator == RDR_OUT_APPEND)
+		fd = get_fd(current);
+		if (current->next->operator == RDR_OUT_REPLACE
+			|| current->next->operator == RDR_OUT_APPEND)
 			close(fd);
 		else
 		{
-			temp = temp->next;
+			current = current->next;
 			break ;
 		}
-		temp = temp->next;
+		current = current->next;
 	}
-	check_commands_rdr(temp, mini, fd, 1);
+	check_commands_rdr(current, mini, fd, 1);
 	printf("test exit status bla%d\n", mini->exit_status);	
-	temp = temp->next;
-	return (temp);
+	current = current->next;
+	return (current);
 }
 
-int	check_command_after_file_rdr(t_statement *temp)
+int	check_command_after_file_rdr(t_statement *current)
 {
-	if (!*temp->argv)
+	if (!*current->argv)
 	{
-		while ((temp->operator == RDR_OUT_REPLACE
-			|| temp->operator == RDR_OUT_APPEND) && temp->next->next)
-			temp = temp->next;
-		if (temp->next->argc > 1)
+		while ((current->operator == RDR_OUT_REPLACE
+			|| current->operator == RDR_OUT_APPEND) && current->next->next)
+			current = current->next;
+		if (current->next->argc > 1)
 			return (1);
 	}
 	return (0);

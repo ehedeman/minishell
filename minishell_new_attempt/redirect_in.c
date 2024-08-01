@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:23:25 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/01 15:12:49 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:40:38 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	rm_invisible_file(t_mini *mini, char **input)
 	free_node_input(rm_node, input);
 }
 
-int	redirect_input(t_statement *current, t_mini *mini)
+int	redirect_input(t_statement *current)
 {
 	int		fd;
 
@@ -57,10 +57,12 @@ static int	get_input(char **input, char *end_word)
 	return (i);
 }
 
-int	redirect_input_until(t_statement *current, char *end_word, t_mini *mini, int mode)
+int	redirect_input_until(t_statement *current, char *end_word,\
+		t_mini *mini, int mode)
 {
 	char		**input;
 	int			i;
+	int			fd;
 	
 	input = init_input(); //malloc of input
 	if (!input)

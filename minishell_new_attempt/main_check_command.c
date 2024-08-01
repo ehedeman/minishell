@@ -6,28 +6,13 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/01 15:12:13 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:37:47 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_command(t_mini *mini)
-{
-	mini->current = mini->com_tab;
-	mini->fd_out = -1;
-	mini->fd_in = -1;
-	mini->output = NULL
-	if (check_command_after_file_rdr(mini->current))
-		mini->current = command_after_file_rdr(mini->current, mini);
-	set_temp_output_as_stdout(mini);
-	check_commands(mini, mini->current);
-	// printf("\n\nLIST BEFORE RETURNING FROM CHECK_COM:\n");
-	// ft_print_env_lst(mini->env);
-	return (0);
-}
-
-t_statement	*check_operators(t_mini *mini, t_statement *current)
+static t_statement	*check_operators(t_mini *mini, t_statement *current)
 {
 	if (current->operator == 1 || current->operator == 2)
 	{
@@ -60,7 +45,7 @@ t_statement	*check_operators(t_mini *mini, t_statement *current)
 	return (current);
 }
 
-void check_commands(t_mini *mini, t_statement *first)
+static void check_commands(t_mini *mini, t_statement *first)
 {
 	t_statement *current;
 
@@ -69,7 +54,7 @@ void check_commands(t_mini *mini, t_statement *first)
 	if (check_incomplete_pipe(first)) //if theres a incomplete PIPE then complete pipe before anything else
 		complete_pipe(first);
 	if (command_involves_pipes(first))
-		establish_all_pipes(mini, first);
+		establish_all_pipes(first);
 	while (current)
 	{
 		current = check_operators(mini, current);
@@ -82,4 +67,17 @@ void check_commands(t_mini *mini, t_statement *first)
 	close_all_pipes(first); // also just in case
 }
 
-
+int	check_command(t_mini *mini)
+{
+	mini->current = mini->com_tab;
+	mini->fd_out = -1;
+	mini->fd_in = -1;
+	mini->temp_output = 0;
+	if (check_command_after_file_rdr(mini->current))
+		mini->current = command_after_file_rdr(mini->current, mini);
+	set_temp_output_as_stdout(mini);
+	check_commands(mini, mini->current);
+	// printf("\n\nLIST BEFORE RETURNING FROM CHECK_COM:\n");
+	// ft_print_env_lst(mini->env);
+	return (0);
+}

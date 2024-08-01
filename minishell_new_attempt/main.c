@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/01 15:16:57 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:35:17 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,6 @@ char	*ft_prompt()
 	prompt = ft_strjoin(prompt, ": \033[0m");
 	free(current);
 	return (prompt);
-}
-
-int	check_command(t_mini *mini)
-{
-	t_statement *current;
-
-	mini->current = mini->com_tab;
-	current = mini->current;
-	if (check_command_after_file_rdr(current))
-		current = command_after_file_rdr(current, mini);
-	check_commands_loop(current, mini, 0);
-	// printf("\n\nLIST BEFORE RETURNING FROM CHECK_COM:\n");
-	// ft_print_env_lst(mini->env);
-	return (0);
 }
 
 void	handler(int sig)
