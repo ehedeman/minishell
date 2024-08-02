@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 22:23:35 by smatschu          #+#    #+#             */
-/*   Updated: 2024/08/02 10:21:54 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/02 10:59:47 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ char	*handle_single_quote(char *start, t_arg_info *arg_info)
 	if (arg_info->new_arg_len + segment_len + 1 > arg_info->new_arg_capacity)
 	{
 		arg_info->new_arg_capacity = arg_info->new_arg_len + segment_len + 1;
-		arg_info->new_arg = ft_resize_mem(arg_info->new_arg, \
-		arg_info->new_arg_len, arg_info->new_arg_capacity);
+		arg_info->new_arg = ft_resize_mem(arg_info->new_arg,
+				arg_info->new_arg_len, arg_info->new_arg_capacity);
 	}
-	ft_strlcpy(arg_info->new_arg + arg_info->new_arg_len, start + 1, \
-	segment_len + 1);
+	ft_strlcpy(arg_info->new_arg + arg_info->new_arg_len, start + 1,
+		segment_len + 1);
 	arg_info->new_arg_len += segment_len;
 	return (end + 1);
 }
@@ -49,11 +49,11 @@ char	*handle_double_quote(char *start, t_mini *mini, t_arg_info *arg_info)
 	if (arg_info->new_arg_len + expanded_len + 1 > arg_info->new_arg_capacity)
 	{
 		arg_info->new_arg_capacity = arg_info->new_arg_len + expanded_len + 1;
-		arg_info->new_arg = ft_resize_mem(arg_info->new_arg, \
-		arg_info->new_arg_len, arg_info->new_arg_capacity);
+		arg_info->new_arg = ft_resize_mem(arg_info->new_arg,
+				arg_info->new_arg_len, arg_info->new_arg_capacity);
 	}
-	ft_strlcpy(arg_info->new_arg + arg_info->new_arg_len, expanded, \
-	expanded_len + 1);
+	ft_strlcpy(arg_info->new_arg + arg_info->new_arg_len, expanded,
+		expanded_len + 1);
 	arg_info->new_arg_len += expanded_len;
 	free(temp);
 	free(expanded);
@@ -76,11 +76,11 @@ char	*handle_plain_text(char *start, t_mini *mini, t_arg_info *arg_info)
 	if (arg_info->new_arg_len + expanded_len + 1 > arg_info->new_arg_capacity)
 	{
 		arg_info->new_arg_capacity = arg_info->new_arg_len + expanded_len + 1;
-		arg_info->new_arg = ft_resize_mem(arg_info->new_arg, \
-		arg_info->new_arg_len, arg_info->new_arg_capacity);
+		arg_info->new_arg = ft_resize_mem(arg_info->new_arg,
+				arg_info->new_arg_len, arg_info->new_arg_capacity);
 	}
-	ft_strlcpy(arg_info->new_arg + arg_info->new_arg_len, expanded, \
-	expanded_len + 1);
+	ft_strlcpy(arg_info->new_arg + arg_info->new_arg_len, expanded,
+		expanded_len + 1);
 	arg_info->new_arg_len += expanded_len;
 	free(temp);
 	free(expanded);
