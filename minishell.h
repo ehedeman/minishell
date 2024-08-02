@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/01 11:13:14 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/02 10:17:56 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,13 @@ typedef struct s_env_list
 	struct s_env_list	*next;
 }	t_env_list;
 
-// typedef struct s_pipe
-// {
-// 	int	id;
-// 	int	pipe_fd[2];
-// 	t_statement *node;
-// }			t_pipe;
+//for arg expansion
+typedef struct s_arg_info
+{
+	char	*new_arg;
+	size_t	new_arg_len;
+	size_t	new_arg_capacity;
+} t_arg_info;
 
 typedef struct	s_mini
 {
@@ -113,8 +114,6 @@ typedef struct	s_mini
 	int					stdin_copy;
 	pid_t 				pid;
 	int					invisible_file;//so i know if i need to remove temporary file in rm_in_until
-	//int					pipefd[100][2];
-	// t_pipe				pipes[400];
 }				t_mini;
 
 //main functions that happen before parsing
