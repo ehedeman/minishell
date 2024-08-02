@@ -6,7 +6,7 @@
 #    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/07/31 16:40:05 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/08/02 10:42:36 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,15 @@
 NAME = minishell
 SRC = 	main.c								\
 		main_utils.c						\
-		main_builtin_commands.c				\
+		main_check_command.c				\
+		main_check_command_utils.c			\
+		main_find_and_set_redirections.c	\
+		main_incomplete_pipe.c				\
+		main_operators.c					\
+		main_print_output_file.c			\
+		main_pipe_utils.c					\
+		main_pipes.c						\
+		main_set_output_file.c				\
 		input_check.c						\
 		input_check_two.c					\
 		parsing.c							\
@@ -30,7 +38,6 @@ SRC = 	main.c								\
 		redirect_out.c						\
 		redirect_in.c						\
 		redirect_in_until_utils.c			\
-		redirect_in_utils.c					\
 		redirect_special_case.c				\
 		redirect_std.c						\
 		execute_file.c						\
