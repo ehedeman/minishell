@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:56:39 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/02 13:40:40 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/02 16:05:18 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ int	find_and_set_last_redirect_in(t_statement *current, t_mini *mini)
 		current = current->next;
 	}
 	redirect_stdin(mini, fd, 0); //sets stdin to file of last
-	mini->current = current;
+	if (current->operator == NONE)
+		mini->current = current->next;
+	else
+		mini->current = current;
 	return (0);
 }
 
@@ -68,6 +71,9 @@ void	find_and_set_last_redirect_in_until(t_statement *current, t_mini *mini)
 	if (current->next)
 		end_word = current->next->argv[0];;
 	current = redirect_input_until(current, end_word, mini);
-	mini->current = current->next;
+	if (current->operator == NONE)
+		mini->current = current->next;
+	else
+		mini->current = current;
 }
 //needs to be redone

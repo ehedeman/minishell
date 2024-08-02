@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:23:25 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/02 13:38:56 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/02 16:08:52 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	rm_invisible_file(t_mini *mini, char **input)
 	rm_node = create_rm_node(); // creates node with rm and invisible file name
 	exec_command(rm_node, mini, 0);
 	free_node_input(rm_node, input);
+	mini->invisible_file = 0;
 }
 
 int	redirect_input(t_statement *current)
@@ -30,8 +31,7 @@ int	redirect_input(t_statement *current)
 		fd = open(current->next->argv[0], O_RDONLY);
 	if (fd < 0)
 	{
-		write(2, strerror(errno), ft_strlen(strerror(errno)));
-		write(2, "\n", 1);
+		perror(current->next->argv[0]);
 		return (-1);
 	}
 	return (fd);

@@ -6,15 +6,15 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:28:14 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/01 15:43:16 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/02 15:58:14 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_commands_rdr(t_statement *current, t_mini *mini, int fd, int i)
+static int	check_commands_rdr(t_statement *current, t_mini *mini, int i)
 {
-	while (i < current->argc && *current->argv && fd != -1)
+	while (i < current->argc && *current->argv)
 	{
 		if (check_builtins(current, mini, i))
 			break ;
@@ -32,7 +32,6 @@ static int	check_commands_rdr(t_statement *current, t_mini *mini, int fd, int i)
 		}
 		i++;
 	}
-	close(fd);
 	return (0);
 }
 
@@ -54,8 +53,9 @@ t_statement	*command_after_file_rdr(t_statement *current, t_mini *mini)
 		}
 		current = current->next;
 	}
-	check_commands_rdr(current, mini, fd, 1);
-	printf("test exit status bla%d\n", mini->exit_status);	
+	redirect_stdout(mini, fd, 0);
+	check_commands_rdr(current, mini, 1);
+	reset_stdout(mini);
 	current = current->next;
 	return (current);
 }
