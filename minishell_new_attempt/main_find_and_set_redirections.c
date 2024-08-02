@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:56:39 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/01 15:40:15 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/02 13:40:40 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,17 @@ void	find_and_set_last_redirect_out(t_statement *current, t_mini *mini)
 	while (current)
 	{
 		if (current->operator == 1 || current->operator == 2)
+		{
 			fd = get_fd(current);
+			if (current->next && (current->next->operator == 1
+				|| current->next->operator == 2))
+				close(fd);
+		}
 		else if (current->operator != 1 && current->operator != 2)
 			break ;
 		current = current->next;
 	}
-	redirect_stdout(mini, fd);
+	redirect_stdout(mini, fd, 0);
 	mini->current = current;
 }
 
@@ -41,12 +46,14 @@ int	find_and_set_last_redirect_in(t_statement *current, t_mini *mini)
 			fd = redirect_input(current); //open file
 			if (fd == -1) //nessecary cuz if file doesnt exist then all stops
 				return (1);
+			if (current->next && current->next->operator == 3)
+				close(fd);
 		}
 		if (current->operator != 3)
 			break ;
 		current = current->next;
 	}
-	redirect_stdin(mini, fd); //sets stdin to file of last
+	redirect_stdin(mini, fd, 0); //sets stdin to file of last
 	mini->current = current;
 	return (0);
 }
@@ -58,20 +65,9 @@ void	find_and_set_last_redirect_in_until(t_statement *current, t_mini *mini)
 
 	count = 0;
 	end_word = NULL;
-	while (current)
-	{
-		if (current->operator == 4)
-		{
-			count++;
-			end_word = current->argv[0];
-		}
-		else if (current->operator != 4)
-			break ;
-		current = current->next;
-	}
-	if (count > 1)
-		redirect_input_until(current, end_word, mini, 1); //sets the stdin to empty file (test wc -l << end << blah)
-	else if (count == 1)
-		redirect_input_until(current, end_word, mini, 0);//sets stdin to the temp file with content
-	mini->current = current;
+	if (current->next)
+		end_word = current->next->argv[0];;
+	current = redirect_input_until(current, end_word, mini);
+	mini->current = current->next;
 }
+//needs to be redone

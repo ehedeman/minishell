@@ -6,13 +6,13 @@
 /*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 22:23:35 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/31 19:12:01 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/02 10:59:47 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*handle_single_quote(char *start, char **new_arg, size_t *new_arg_len, size_t *new_arg_capacity)
+char	*handle_single_quote(char *start, t_arg_info *arg_info)
 {
 	char	*end;
 	size_t	segment_len;
@@ -21,17 +21,19 @@ char	*handle_single_quote(char *start, char **new_arg, size_t *new_arg_len, size
 	if (end == NULL)
 		end = start + ft_strlen(start);
 	segment_len = end - start - 1;
-	if (*new_arg_len + segment_len + 1 > *new_arg_capacity)
+	if (arg_info->new_arg_len + segment_len + 1 > arg_info->new_arg_capacity)
 	{
-		*new_arg_capacity = *new_arg_len + segment_len + 1;
-		*new_arg = ft_resize_mem(*new_arg, *new_arg_len, *new_arg_capacity);
+		arg_info->new_arg_capacity = arg_info->new_arg_len + segment_len + 1;
+		arg_info->new_arg = ft_resize_mem(arg_info->new_arg,
+				arg_info->new_arg_len, arg_info->new_arg_capacity);
 	}
-	ft_strlcpy(*new_arg + *new_arg_len, start + 1, segment_len + 1);
-	*new_arg_len += segment_len;
+	ft_strlcpy(arg_info->new_arg + arg_info->new_arg_len, start + 1,
+		segment_len + 1);
+	arg_info->new_arg_len += segment_len;
 	return (end + 1);
 }
 
-char	*handle_double_quote(char *start, t_mini *mini, char **new_arg, size_t *new_arg_len, size_t *new_arg_capacity)
+char	*handle_double_quote(char *start, t_mini *mini, t_arg_info *arg_info)
 {
 	char	*end;
 	char	*temp;
@@ -44,19 +46,21 @@ char	*handle_double_quote(char *start, t_mini *mini, char **new_arg, size_t *new
 	temp = ft_substr(start, 1, end - start - 1);
 	expanded = expand_arg(temp, mini);
 	expanded_len = ft_strlen(expanded);
-	if (*new_arg_len + expanded_len + 1 > *new_arg_capacity)
+	if (arg_info->new_arg_len + expanded_len + 1 > arg_info->new_arg_capacity)
 	{
-		*new_arg_capacity = *new_arg_len + expanded_len + 1;
-		*new_arg = ft_resize_mem(*new_arg, *new_arg_len, *new_arg_capacity);
+		arg_info->new_arg_capacity = arg_info->new_arg_len + expanded_len + 1;
+		arg_info->new_arg = ft_resize_mem(arg_info->new_arg,
+				arg_info->new_arg_len, arg_info->new_arg_capacity);
 	}
-	ft_strlcpy(*new_arg + *new_arg_len, expanded, expanded_len + 1);
-	*new_arg_len += expanded_len;
+	ft_strlcpy(arg_info->new_arg + arg_info->new_arg_len, expanded,
+		expanded_len + 1);
+	arg_info->new_arg_len += expanded_len;
 	free(temp);
 	free(expanded);
 	return (end + 1);
 }
 
-char	*handle_plain_text(char *start, t_mini *mini, char **new_arg, size_t *new_arg_len, size_t *new_arg_capacity)
+char	*handle_plain_text(char *start, t_mini *mini, t_arg_info *arg_info)
 {
 	char	*end;
 	char	*temp;
@@ -69,13 +73,15 @@ char	*handle_plain_text(char *start, t_mini *mini, char **new_arg, size_t *new_a
 	temp = ft_substr(start, 0, end - start);
 	expanded = expand_arg(temp, mini);
 	expanded_len = ft_strlen(expanded);
-	if (*new_arg_len + expanded_len + 1 > *new_arg_capacity)
+	if (arg_info->new_arg_len + expanded_len + 1 > arg_info->new_arg_capacity)
 	{
-		*new_arg_capacity = *new_arg_len + expanded_len + 1;
-		*new_arg = ft_resize_mem(*new_arg, *new_arg_len, *new_arg_capacity);
+		arg_info->new_arg_capacity = arg_info->new_arg_len + expanded_len + 1;
+		arg_info->new_arg = ft_resize_mem(arg_info->new_arg,
+				arg_info->new_arg_len, arg_info->new_arg_capacity);
 	}
-	ft_strlcpy(*new_arg + *new_arg_len, expanded, expanded_len + 1);
-	*new_arg_len += expanded_len;
+	ft_strlcpy(arg_info->new_arg + arg_info->new_arg_len, expanded,
+		expanded_len + 1);
+	arg_info->new_arg_len += expanded_len;
 	free(temp);
 	free(expanded);
 	return (end);
@@ -83,29 +89,27 @@ char	*handle_plain_text(char *start, t_mini *mini, char **new_arg, size_t *new_a
 
 char	*process_arg(char *arg, t_mini *mini)
 {
-	size_t	len;
-	size_t	new_arg_capacity;
-	char	*new_arg;
-	size_t	new_arg_len;
-	char	*start;
+	size_t		len;
+	t_arg_info	arg_info;
+	char		*start;
 
 	len = ft_strlen(arg);
-	new_arg_capacity = len + 1;
-	new_arg = (char *)malloc(new_arg_capacity);
-	new_arg[0] = '\0';
-	new_arg_len = 0;
+	arg_info.new_arg_capacity = len + 1;
+	arg_info.new_arg = (char *)malloc(arg_info.new_arg_capacity);
+	arg_info.new_arg[0] = '\0';
+	arg_info.new_arg_len = 0;
 	start = arg;
 	while (*start)
 	{
 		if (*start == '\'')
-			start = handle_single_quote(start, &new_arg, &new_arg_len, &new_arg_capacity);
+			start = handle_single_quote(start, &arg_info);
 		else if (*start == '"')
-			start = handle_double_quote(start, mini, &new_arg, &new_arg_len, &new_arg_capacity);
+			start = handle_double_quote(start, mini, &arg_info);
 		else
-			start = handle_plain_text(start, mini, &new_arg, &new_arg_len, &new_arg_capacity);
+			start = handle_plain_text(start, mini, &arg_info);
 	}
 	free(arg);
-	return (new_arg);
+	return (arg_info.new_arg);
 }
 
 void	replace_env_vars(char **args, t_mini *mini)

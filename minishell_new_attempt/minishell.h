@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/01 15:44:05 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/02 14:00:25 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,13 @@ typedef struct s_env_list
 	struct s_env_list	*next;
 }	t_env_list;
 
-// typedef struct s_pipe
-// {
-// 	int	id;
-// 	int	pipe_fd[2];
-// 	t_statement *node;
-// }			t_pipe;
+//for arg expansion
+typedef struct s_arg_info
+{
+	char	*new_arg;
+	size_t	new_arg_len;
+	size_t	new_arg_capacity;
+} t_arg_info;
 
 typedef struct	s_mini
 {
@@ -114,8 +115,6 @@ typedef struct	s_mini
 	int					stdin_copy;
 	pid_t 				pid;
 	int					invisible_file;//so i know if i need to remove temporary file in rm_in_until
-	//int					pipefd[100][2];
-	// t_pipe				pipes[400];
 }				t_mini;
 
 //main functions that happen before parsing
@@ -153,11 +152,11 @@ int			ft_exit(t_mini *mini, char *arg);
 void		free_com_tab(t_mini *mini);
 
 //main_check_command.c
-int			check_command(t_mini *mini);
+int			execution(t_mini *mini);
 
 //main_check_command_utils.c
 int			find_command(t_statement *current, t_mini *mini);
-int 	check_builtins(t_statement *current, t_mini *mini, int i); //not static cuz needed by command_after_file_rdr
+int 		check_builtins(t_statement *current, t_mini *mini, int i); //not static cuz needed by command_after_file_rdr
 
 //main_find_and_set_redirections.c
 void		find_and_set_last_redirect_out(t_statement *current, t_mini *mini);
@@ -168,6 +167,13 @@ void		find_and_set_last_redirect_in_until(t_statement *current, t_mini *mini);
 int			check_incomplete_pipe(t_statement *temp);
 int			complete_pipe(t_statement *temp);
 
+//main_operators.c
+int			redirection_out(t_statement *current, t_mini *mini);
+int			redirection_in_until(t_statement *current, t_mini *mini);
+int			redirection_in(t_statement *current, t_mini *mini);
+int			pipes(t_statement *current, t_mini *mini);
+int			none(t_statement *current, t_mini *mini);
+
 //main_pipes.c
 void		do_all_connected_pipes(t_statement *current, t_mini *mini);
 
@@ -176,8 +182,10 @@ void		establish_all_pipes(t_statement *first);
 void		close_all_pipes(t_statement *first);
 
 // main_set_output_file.c
-int			set_temp_output_as_stdout(t_mini *mini);
+
+int			set_temp_output_as_stdout(t_mini *mini, int mode);
 int			set_temp_output_as_stdin(t_mini *mini);
+int			print_output_file(t_mini *mini);
 
 int			get_fd(t_statement *temp);
 
@@ -186,17 +194,17 @@ t_statement	*command_after_file_rdr(t_statement *temp, t_mini *mini);
 int			check_command_after_file_rdr(t_statement *temp);
 
 //redirect_std.c
-int			redirect_stdout(t_mini *mini, int fd);
+int			redirect_stdout(t_mini *mini, int fd, int mode);
 int			reset_stdout(t_mini *mini);
-int			redirect_stdin(t_mini *mini, int fd);
+int			redirect_stdin(t_mini *mini, int fd, int mode);
 int 		reset_stdin(t_mini *mini);
 void 		reset_std(t_mini *mini);
 
 //redirect_in.c
 int			redirect_input(t_statement *current);
 void		rm_invisible_file(t_mini *mini, char **input);
-int			redirect_input_until(t_statement *current, char *end_word,\
-				t_mini *mini, int mode);
+t_statement			*redirect_input_until(t_statement *current, char *end_word,\
+				t_mini *mini);
 
 //redirect_in_until_utils.c
 char		**init_input(void);
@@ -267,8 +275,6 @@ int		command_involves_pipes(t_statement *parsed_input);
 int		create_pipe(int pipefd[]);
 void	execute_pipeline(t_statement *commands, t_mini *mini);
 void	create_pipes(t_statement *current, int pipefd[]);
-// int	redirect_stdout_pipe(int pipefd[], int old_fd);
-// int	redirect_stdin_pipe(int pipefd[], int *old_fd);
 int	redirect_stdout_pipe(int fd);
 int	redirect_stdin_pipe(int fd);
 //testing

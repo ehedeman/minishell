@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/01 15:35:17 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/02 09:25:21 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	process_input(t_mini *mini)
 			
 				//for testing
 			//	print_statements(mini->com_tab);
-				if (check_command(mini) == -1)
+				if (execution(mini) == -1)
 				{
 					free_com_tab(mini);
 					ft_env_lst_clear(mini->env, free);

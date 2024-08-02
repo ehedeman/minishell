@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 14:48:18 by smatschu          #+#    #+#             */
-/*   Updated: 2024/07/31 19:13:34 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/02 09:54:39 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	*ft_resize_mem(void *ptr, size_t old_size, size_t new_size)
 		return (NULL);
 	if (ptr)
 	{
-		if(old_size < new_size)
+		if (old_size < new_size)
 			ft_memcpy(new_ptr, ptr, old_size);
 		else
 			ft_memcpy(new_ptr, ptr, new_size);

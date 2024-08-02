@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:23:25 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/01 15:40:38 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/02 13:38:56 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,51 +37,69 @@ int	redirect_input(t_statement *current)
 	return (fd);
 }
 
-static int	get_input(char **input, char *end_word)
+static void	clear_input(char **input, int i)
 {
-	int	i;
-
-	i = 0;
-	while (i < 1000)
+	int j;
+	
+	j = 0;
+	while (j <= i)
 	{
-		input[i] = readline("> ");
-		if (!input[i])
+		free(input[j]);
+		j++;
+	}
+}
+static t_statement	*get_input(char **input, char *end_word, t_statement *current, int *i)
+{
+
+	current = current->next;
+	while (*i < 1000)
+	{
+		input[*i] = readline("> ");
+		if (!input[*i])
 		{
 			free_input(input);
-			return (-1);
+			return (NULL);
 		}
-		if (!strcmp(input[i], end_word))
-			break ;
-		i++;
+		if (!ft_strcmp(input[*i], end_word))
+		{
+			if (current->next && current->operator == 4)
+			{
+				clear_input(input, *i);
+				*i = 0;
+				current = current->next;
+				end_word = current->argv[0];
+				continue ;
+			}
+			else
+				break ;
+		}
+		*i += 1;
 	}
-	return (i);
+	return (current);
 }
 
-int	redirect_input_until(t_statement *current, char *end_word,\
-		t_mini *mini, int mode)
+t_statement	*redirect_input_until(t_statement *current, char *end_word,\
+		t_mini *mini)
 {
 	char		**input;
 	int			i;
 	int			fd;
-	
+
+	i = 0;
 	input = init_input(); //malloc of input
 	if (!input)
-		return (-1);
-	i = get_input(input, end_word); //readline part in there
-	if (i == -1)
-		return (-1);
+		return (NULL);
+	current = get_input(input, end_word, current, &i); //readline part in there
+	if (!current)
+		return (NULL);
 	free(input[i]); //free end word part of input
 	input[i] = NULL;
 	copy_content(input); //creates invisible file, copies content
 	free_input(input); //no longer needed
-	if (mode)
-		fd = copy_content(NULL); //empties the file cuz if theres more than one its always 0 (e.g wc -l)
-	else
-		fd = open(".temp_file", O_RDWR); //just opens the file regularly to read from it
+	fd = open(".temp_file", O_RDWR); //just opens the file regularly to read from it
 	if (fd < 0)
-			return (1);
-	if (current->argv[0])
-		redirect_stdin(mini, fd); //automatically sets file as stdin as it should
+		return (NULL);
+	redirect_stdin(mini, fd, 0); //automatically sets file as stdin as it should
 	mini->invisible_file = 1;
-	return (0);
+	return (current);
 }

@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/01 15:37:47 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/02 13:42:09 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,30 @@ static t_statement	*check_operators(t_mini *mini, t_statement *current)
 {
 	if (current->operator == 1 || current->operator == 2)
 	{
-		find_and_set_last_redirect_out(current, mini); //do all output redirections
-		find_command(current, mini);
-		set_temp_output_as_stdout(mini); //reset stdout to output file
+		redirection_out(current, mini);
 		current = mini->current; //set current to last rdr of output
-	}
-	if (current->operator == 3)
-	{
-		find_and_set_last_redirect_in_until(current, mini); //look for last
-		find_command(current, mini); // do command
-		reset_stdin(mini); //reset stdin so the input can be used normally if nessecary
-		current = mini->current;
 	}
 	if (current->operator == 4)
 	{
-		if (find_and_set_last_redirect_in(current, mini)) //look for last, if invalid file then break
+		redirection_in_until(current, mini);
+		current = mini->current;
+		if (!current)
 			return (NULL);
-		find_command(current, mini); // do command
-		reset_stdin(mini); //reset stdin so the input can be used normally if nessecary
+	}
+	if (current->operator == 3)
+	{
+		redirection_in(current, mini);
 		current = mini->current;
 	}
 	if (current->operator == 5)
 	{
-		set_temp_output_as_stdin(mini); //output file is the output for everything so its input for pipes
-		do_all_connected_pipes(current, mini); // do all pipes
+		pipes(current, mini);
 		current = mini->current;
+	}
+	if (current->operator == NONE)
+	{
+		none(current, mini);
+		current = current->next;
 	}
 	return (current);
 }
@@ -58,24 +57,26 @@ static void check_commands(t_mini *mini, t_statement *first)
 	while (current)
 	{
 		current = check_operators(mini, current);
-		reset_std(mini); //just in case
 		if (mini->invisible_file == 1)
 			rm_invisible_file(mini, NULL); //from rdr_input_until
-		if (current) //just in case
-			current = current->next;
+		if (!current)
+		{
+			reset_stdout(mini);
+			print_output_file(mini);
+			break ;
+		}
 	}
 	close_all_pipes(first); // also just in case
 }
 
-int	check_command(t_mini *mini)
+int	execution(t_mini *mini)
 {
 	mini->current = mini->com_tab;
 	mini->fd_out = -1;
 	mini->fd_in = -1;
 	mini->temp_output = 0;
-	if (check_command_after_file_rdr(mini->current))
+	if (check_command_after_file_rdr(mini->current))//is for inverted inpout (> hello echo hello)
 		mini->current = command_after_file_rdr(mini->current, mini);
-	set_temp_output_as_stdout(mini);
 	check_commands(mini, mini->current);
 	// printf("\n\nLIST BEFORE RETURNING FROM CHECK_COM:\n");
 	// ft_print_env_lst(mini->env);
