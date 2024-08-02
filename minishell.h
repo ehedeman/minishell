@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/02 14:00:25 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/02 10:17:56 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,10 @@ typedef struct	s_mini
 	int 				operator;
 	char				*pwd_save;
 	t_statement			*com_tab;
-	t_statement 		*current;
+	t_statement 		*temp;
 	t_env_list			*env;
 	int					exit_status;
 	t_history			history;
-	int					temp_output;
 	int					fd_in;
 	int					fd_out;
 	int					stdout_copy;
@@ -118,13 +117,12 @@ typedef struct	s_mini
 }				t_mini;
 
 //main functions that happen before parsing
-//input_check.c
 bool		input_check(char *input);
-
-//input_check_two.c
 bool		input_check_two(char *input, bool valid);
+int			whitespace_check(t_mini *mini);
+void		free_com_tab(t_mini *mini);
 
-//parsing (in parsing files)
+//parsing
 t_statement	*parsing(char *input);
 char		*remove_quotes(char *parsed);
 int			unquoted_cpy_loop(char *parsed, char *unquoted_parsed,
@@ -136,88 +134,40 @@ int			is_spaces(char c);
 int			check_doubles(char *input, int i);
 t_operator	get_operator(char *operator);
 int			get_argc(char **parsed);
+t_statement	*p_new_node(int argc);
 int			parsing_error(int errnum);
 void		index_list(t_statement *temp);
 
-//p_list_utils.c
-t_statement	*p_new_node(int argc);
 
-//main_utils.c
-void		ft_print(t_mini *mini); //remove before eval
-int			main_error(int errnum);
-int		whitespace_check(t_mini *mini);
-
-//exit.c
-int			ft_exit(t_mini *mini, char *arg);
-void		free_com_tab(t_mini *mini);
-
-//main_check_command.c
-int			execution(t_mini *mini);
-
-//main_check_command_utils.c
-int			find_command(t_statement *current, t_mini *mini);
-int 		check_builtins(t_statement *current, t_mini *mini, int i); //not static cuz needed by command_after_file_rdr
-
-//main_find_and_set_redirections.c
-void		find_and_set_last_redirect_out(t_statement *current, t_mini *mini);
-int			find_and_set_last_redirect_in(t_statement *current, t_mini *mini);
-void		find_and_set_last_redirect_in_until(t_statement *current, t_mini *mini);
-
-//main_incomplete_pipe.c
-int			check_incomplete_pipe(t_statement *temp);
-int			complete_pipe(t_statement *temp);
-
-//main_operators.c
-int			redirection_out(t_statement *current, t_mini *mini);
-int			redirection_in_until(t_statement *current, t_mini *mini);
-int			redirection_in(t_statement *current, t_mini *mini);
-int			pipes(t_statement *current, t_mini *mini);
-int			none(t_statement *current, t_mini *mini);
-
-//main_pipes.c
-void		do_all_connected_pipes(t_statement *current, t_mini *mini);
-
-//main_pipe_utils.c
-void		establish_all_pipes(t_statement *first);
-void		close_all_pipes(t_statement *first);
-
-// main_set_output_file.c
-
-int			set_temp_output_as_stdout(t_mini *mini, int mode);
-int			set_temp_output_as_stdin(t_mini *mini);
-int			print_output_file(t_mini *mini);
-
+void		check_commands_loop(t_statement *temp, t_mini *mini, int i);
 int			get_fd(t_statement *temp);
-
-//redirect_special_case.c
+int			check_builtins(t_statement *temp, t_mini *mini, int i) ;
 t_statement	*command_after_file_rdr(t_statement *temp, t_mini *mini);
 int			check_command_after_file_rdr(t_statement *temp);
 
-//redirect_std.c
-int			redirect_stdout(t_mini *mini, int fd, int mode);
+void		ft_print(t_mini *mini); //remove before eval
+int			main_error(int errnum);
+int			ft_exit(t_mini *mini, char *arg);
+
+//redirecting stdin and stdout
+int			redirect_stdout(t_mini *mini, int fd);
 int			reset_stdout(t_mini *mini);
-int			redirect_stdin(t_mini *mini, int fd, int mode);
+int			redirect_stdin(t_mini *mini, int fd);
 int 		reset_stdin(t_mini *mini);
 void 		reset_std(t_mini *mini);
 
-//redirect_in.c
-int			redirect_input(t_statement *current);
-void		rm_invisible_file(t_mini *mini, char **input);
-t_statement			*redirect_input_until(t_statement *current, char *end_word,\
-				t_mini *mini);
-
-//redirect_in_until_utils.c
+//functions for redirect_input
+int			redirect_in(t_statement *temp, t_mini *mini);
 char		**init_input(void);
 void		free_node_input(t_statement *temp, char **input);
 void		free_input(char **input);
 t_statement *create_rm_node(void);
 int			copy_content(char **input);
+void		rm_invisible_file(t_mini *mini, char **input);
 
-//execute_file.c
+//execution
 int			exec_file(t_statement *temp, t_mini *mini);
 int			exec_command(t_statement *temp, t_mini *mini, int i);
-
-//execute_file_utils.c
 int			free_env_args(char **envp, char **args, int arg_zero);//frees the envp and args from the functions above
 int			exec_com_fork(t_statement *temp, char **envp, char **args, t_mini *mini); //split half of exec_command | norm accurate
 int			exec_file_fork(t_statement *temp, char **envp, char **args, t_mini *mini);//split half of exec_file | norma accurate
@@ -277,5 +227,6 @@ void	execute_pipeline(t_statement *commands, t_mini *mini);
 void	create_pipes(t_statement *current, int pipefd[]);
 int	redirect_stdout_pipe(int fd);
 int	redirect_stdin_pipe(int fd);
+
 //testing
 void	print_statements(t_statement *statements);
