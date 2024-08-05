@@ -6,36 +6,11 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:12:06 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/02 10:57:09 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:19:15 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_com_tab(t_mini *mini)
-{
-	t_statement	*temp;
-	t_statement	*next;
-	int			i;
-
-	i = 0;
-	temp = mini->com_tab;
-	while (temp)
-	{
-		next = temp->next;
-		i = 0;
-		while (temp->argv[i])
-		{
-			free(temp->argv[i]);
-			i++;
-		}
-		free(temp->argv);
-		free(temp);
-		temp = next;
-	}
-	free(mini->input);
-	mini->input = NULL;
-}
 
 static int	exit_arg(char *arg, t_mini *mini)
 {
@@ -61,6 +36,7 @@ int	ft_exit(t_mini *mini, char *arg)
 {
 	int	exit_status;
 
+	remove_output_file(mini);
 	exit_status = 0;
 	if (arg)
 	{

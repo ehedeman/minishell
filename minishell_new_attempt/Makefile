@@ -6,7 +6,7 @@
 #    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/08/05 14:09:21 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/08/05 16:13:28 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC = 	main.c								\
 		main_print_output_file.c			\
 		main_pipes.c						\
 		main_set_output_file.c				\
+		main_remove_output_file.c			\
 		input_check.c						\
 		input_check_two.c					\
 		parsing.c							\
@@ -29,6 +30,7 @@ SRC = 	main.c								\
 		parsing_remove_quotes.c				\
 		parsing_remove_quotes_utils.c		\
 		p_list_utils.c						\
+		fifty_shades_of_free.c				\
 		cd.c								\
 		exit.c								\
 		pwd.c								\

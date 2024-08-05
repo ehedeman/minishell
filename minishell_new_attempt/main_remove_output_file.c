@@ -1,44 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect_in_until_utils.c                          :+:      :+:    :+:   */
+/*   main_remove_output_file.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 12:09:40 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/05 16:07:28 by ehedeman         ###   ########.fr       */
+/*   Created: 2024/08/05 16:13:31 by ehedeman          #+#    #+#             */
+/*   Updated: 2024/08/05 16:17:00 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	copy_content(char **input)
-{
-	int		fd;
-	mode_t	mode;
-	int		i;
-
-	i = 0;
-	mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
-	fd = open(".temp_file", O_RDWR | O_CREAT | O_TRUNC, mode);
-	if (fd < 0)
-	{
-		printf("minishell: system error.");
-		return (-1);
-	}
-	if (!input)
-		return (fd);
-	while (input[i])
-	{
-		write(fd, input[i], ft_strlen(input[i]));
-		write(fd, "\n", 1);
-		i++;
-	}
-	close(fd);
-	return (0);
-}
-
-t_statement	*create_rm_node(void)
+static t_statement	*create_remove_node(void)
 {
 	t_statement	*temp;
 
@@ -55,27 +29,22 @@ t_statement	*create_rm_node(void)
 		return (NULL);
 	}
 	ft_strlcpy(temp->argv[0], "rm", 3);
-	temp->argv[1] = malloc(sizeof(char) * (ft_strlen(".temp_file") + 1));
+	temp->argv[1] = malloc(sizeof(char) * (ft_strlen(".output_the_first_cuz_what_the_fuck") + 1));
 	if (!temp->argv[1])
 	{
 		printf("minishell: system error.");
 		return (NULL);
 	}
-	ft_strlcpy(temp->argv[1], ".temp_file", ft_strlen(".temp_file") + 1);
+	ft_strlcpy(temp->argv[1], ".output_the_first_cuz_what_the_fuck", ft_strlen(".output_the_first_cuz_what_the_fuck") + 1);
 	temp->argv[2] = NULL;
 	return (temp);
 }
 
-char	**init_input(void)
+void	remove_output_file(t_mini *mini)
 {
-	char	**input;
+	t_statement *rm_node;
 
-	input = malloc(sizeof(char *) * 1000);
-	if (!input)
-	{
-		printf("minishell: system error.");
-		return (NULL);
-	}
-	input[0] = NULL;
-	return (input);
+	rm_node = create_remove_node(); // creates node with rm and invisible file name
+	exec_command(rm_node, mini, 0);
+	free_node_input(rm_node, NULL);
 }

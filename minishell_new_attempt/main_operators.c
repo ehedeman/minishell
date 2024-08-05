@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:38:24 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/05 13:35:00 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:13:57 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	redirection_out(t_statement *current, t_mini *mini)
 	}
 	find_and_set_last_redirect_out(current, mini); //do all output redirections
 	print_output_file(mini);//print to the right file
+	reset_stdout(mini); //reset
+	set_temp_output_as_stdout(mini, 0); // to clear output file
 	reset_stdout(mini); //reset
 	return (0);
 }

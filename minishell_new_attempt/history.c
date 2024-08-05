@@ -6,28 +6,11 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:11:09 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/29 12:21:58 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:11:55 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_history(t_history *history)
-{
-	int	i;
-
-	i = 0;
-	if (history->commands)
-	{
-		while (i < history->capacity)
-		{
-			free(history->commands[i]);
-			i++;
-		}
-		free(history->commands);
-		history->commands = NULL;
-	}
-}
 
 //capacity in bash is 2000, try echo $HISTFILESIZE
 void	init_history(t_history *history)
@@ -46,6 +29,23 @@ void	init_history(t_history *history)
 	{
 		history->commands[i] = NULL;
 		i++;
+	}
+}
+
+void	free_history(t_history *history)
+{
+	int	i;
+
+	i = 0;
+	if (history->commands)
+	{
+		while (i < history->capacity)
+		{
+			free(history->commands[i]);
+			i++;
+		}
+		free(history->commands);
+		history->commands = NULL;
 	}
 }
 
