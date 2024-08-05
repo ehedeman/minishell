@@ -1,22 +1,33 @@
 TO DO
-[]pipes with redirection (basic and multiple pipes work)
-	[] echo hello > out | wc -w
-[]norm
-[]commands called through execve make the programm loop if failed (eg when the "file not found" message pops up)
+[] pipes with redirection (basic and multiple pipes work)
+[] norm
+[] commands called through execve make the programm loop if failed (eg when the "file not found" message pops up)
+[] running ./minishell or bash inside minishell is not working anymore (or maybe is my laptop, test in school)
 
+--------------------------------------------------------------------------------------------------------------------------------
+TESTS
 
-QUESTIONS
-[x] aren't exec_com_fork and exec_file_fork the same? (execute_file_utils.c)
-->nope, one is for files only (eg. ./a.out) the other is strictly for commands (difference
-is the part where the "./" gets strjoined to the rest, but because of norm  and for simplicity
-i made it into two)
+Redirection
+[] ls > file1 (well, in bash it creates the file first if not existent, than runs ls -la, so the file name is also on the list inside the file)
+[] <file1 cat
+[] <file ls
+[] >file ls -la
+[] ls >file1.txt -l (i think this would be another level of parsing tbh)
+[ok] cat <file1 >file2
+[ok] cat <<EOF >file
+[ok] echo a '>>'file>file2
 
-OPTIONAL(?)
-[]history: with one value as argument to change ammount of lines from history to print
-[]history: -c to clear the history
-[]bonus only?
-	echo "'$USER'" should print 'USER_VALUE'
-	echo '"$USER"' should print "$USER"
+Redirection with pipes
+[] echo hello > out | wc -w
+[] ls -la > file1 | ls -la > file2
+[] >file ls -la | >file1 ls -la
+[] < file1 cat | wc -c > file2
+[] echo a >file | cat <file
+[] >file>file1>file2 ls -l | cat <file2
+[] ls >|wc
+[] >>file echo '$USER' | cat <file
+
+--------------------------------------------------------------------------------------------------------------------------------
 
 IN PROGRESS
 [smatschu]
@@ -31,7 +42,7 @@ IN PROGRESS
 		[] others, in parsing maybe? -> have to change main_error and wherever it is being called to take mini and use mini->exit_status
 	[] script terminated by ctrl+c -> exit_status 130
 	[x] ctrl D exit with 0, not 1
-[]norm arg_expansion
+
 
 [ehedeman]
 []Parsing:
@@ -40,16 +51,23 @@ IN PROGRESS
 IDEA:
 	pipes and redirections established at the beginning: a file descriptor array which gets sorted through 1 by 1 (maybe pipes and redirections seperately)
 
+
+--------------------------------------------------------------------------------------------------------------------------------
+OPTIONAL(?)
+[not requested on subject, so no]history: with one value as argument to change ammount of lines from history to print
+[not requested on subject, so no]history: -c to clear the history
+[]bonus only?
+	echo "'$USER'" should print 'USER_VALUE'
+	echo '"$USER"' should print "$USER"
+
+--------------------------------------------------------------------------------------------------------------------------------
 DONE
 [x]tab is running ls: if you press Tab twice without typing anything or 
 just after typing a part of a filename or directory name, 
 readline will list all files and directories in the current directory.
 [x]p is running pwd, c cd, e echo and so on.
-
 [x]echo $PATH${NAME}$WTVR
-
 [x]expr $? + $?
-
 [x] export FOO=test, than export FOO, should not update FOO.
 [x]SHLVL
 [x]history command (capacity is set to 5 for easy visualization, can change to 2000 later like bash)
@@ -88,3 +106,8 @@ but not sure
 [x] << end ; input redirecion until but without command (leaks)
 [x] "echo hello |" now asks to complete input
 [x]replace_env_vars has invalid read size (try make leaks (from MAKEFILE), then type any command it'll show the exact line)
+[x] aren't exec_com_fork and exec_file_fork the same? (execute_file_utils.c)
+->nope, one is for files only (eg. ./a.out) the other is strictly for commands (difference
+is the part where the "./" gets strjoined to the rest, but because of norm  and for simplicity
+i made it into two)
+[x]norm arg_expansion
