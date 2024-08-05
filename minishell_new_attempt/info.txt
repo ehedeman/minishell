@@ -5,6 +5,10 @@ TO DO
 [] running ./minishell or bash inside minishell is not working anymore (or maybe is my laptop, test in school),
 	for example, if you run bash, all the commands are not being printed to stdout, but to the .output_blabla file
 	can't run ./minishell, it is also being run on the .output file
+[] cd -> /bin/cat: .output_the_first_cuz_what_the_fuck: No such file or directory
+[] idk where TEST-1 is comming from, but sth definately made the exit_status not be updated correctly anymore in case of file or command not found.
+
+
 
 --------------------------------------------------------------------------------------------------------------------------------
 TESTS
