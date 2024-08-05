@@ -6,7 +6,7 @@
 #    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/08/05 13:07:52 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/08/05 14:09:21 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ SRC = 	main.c								\
 		main_incomplete_pipe.c				\
 		main_operators.c					\
 		main_print_output_file.c			\
-		main_pipes_exec_command.c			\
 		main_pipes.c						\
 		main_set_output_file.c				\
 		input_check.c						\
@@ -52,7 +51,6 @@ SRC = 	main.c								\
 		arg_expansion_utils.c				\
 		arg_expansion_utils2.c				\
 		arg_expansion_utils3.c				\
-		pipes.c								\
 		
 OBJS = $(SRC:.c=.o)
 OBJS_DIR = objs/

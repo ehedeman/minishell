@@ -6,28 +6,13 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:07:02 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/05 14:02:47 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/05 14:10:19 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_all_connected_pipes(t_statement *current, t_mini *mini)
-{
-	set_temp_output_as_stdout(mini, 0);//execute the command that has PIPE operator
-	exec_command(current, mini, 0);
-	reset_stdout(mini);
-	while (current)
-	{	
-		if (current->operator == 5)
-			current = execute_pipeline(current, mini);
-		else
-			current = current->next;
-	}
-	mini->current = current;
-}
-
-void	wait_for_children(t_mini *mini, pid_t pid)
+static void	wait_for_children(t_mini *mini, pid_t pid)
 {
 	int	status;
 
@@ -38,9 +23,9 @@ void	wait_for_children(t_mini *mini, pid_t pid)
 		mini->exit_status = 1;
 }
 
-void	child_process(t_statement *current, t_mini *mini, int pipe_fd[])
+static void	child_process(t_statement *current, t_mini *mini, int pipe_fd[])
 {
-	redirect_stdout(mini, pipe_fd[1], 0);
+	redirect_stdout(mini, pipe_fd[1], 0);	//rlly unsure about this cuz i dont really get which end of the pipe's for what
 	print_output_file(mini);
 	reset_stdout(mini);
 	//first the output-file gets printed into the write(?) end of the pipe
@@ -54,7 +39,7 @@ void	child_process(t_statement *current, t_mini *mini, int pipe_fd[])
 }
 
 //trying to do it without node specific pipe's currently
-t_statement	*execute_pipeline(t_statement *current, t_mini *mini)
+static t_statement	*execute_pipeline(t_statement *current, t_mini *mini)
 {
 	int		pipe_fd[2];
 	pid_t	pid;
@@ -78,4 +63,19 @@ t_statement	*execute_pipeline(t_statement *current, t_mini *mini)
 		wait_for_children(mini, pid);
 	reset_std(mini);
 	return (current);
+}
+
+void	do_all_connected_pipes(t_statement *current, t_mini *mini)
+{
+	set_temp_output_as_stdout(mini, 0);//execute the command that has PIPE operator
+	exec_command(current, mini, 0);
+	reset_stdout(mini);
+	while (current)
+	{	
+		if (current->operator == 5)
+			current = execute_pipeline(current, mini);
+		else
+			current = current->next;
+	}
+	mini->current = current;
 }

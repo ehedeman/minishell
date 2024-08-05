@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/05 12:43:46 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/05 14:10:30 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,11 +176,6 @@ int			none(t_statement *current, t_mini *mini);
 
 //main_pipes.c
 void		do_all_connected_pipes(t_statement *current, t_mini *mini);
-int			exec_command_pipe(t_statement *temp, t_mini *mini);
-
-//main_pipe_utils.c
-void		establish_all_pipes(t_statement *first);
-void		close_all_pipes(t_statement *first);
 
 // main_set_output_file.c
 
@@ -270,14 +265,5 @@ void	ft_history(const t_history *history);
 void	add_to_hist_arr(t_history *history, char *command);
 void	free_history(t_history *history);
 
-
-//pipes
-int		command_involves_pipes(t_statement *parsed_input);
-int		create_pipe(int pipefd[]);
-// void	execute_pipeline(t_statement *commands, t_mini *mini);
-t_statement	*execute_pipeline(t_statement *current, t_mini *mini);
-void	create_pipes(t_statement *current, int pipefd[]);
-int	redirect_stdout_pipe(int fd);
-int	redirect_stdin_pipe(int fd);
 //testing
 void	print_statements(t_statement *statements);
