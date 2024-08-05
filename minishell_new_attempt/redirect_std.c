@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 11:19:24 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/02 11:15:56 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:35:01 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	redirect_stdin(t_mini *mini, int fd, int mode)
 			mini->fd_in = dup2(fd, 0);
 			close(fd);
 			if (mini->fd_in < 0)
-				write(1, strerror(errno), ft_strlen(strerror(errno)));
+				write(2, strerror(errno), ft_strlen(strerror(errno)));
 		}
 		else
 		{
@@ -38,7 +38,7 @@ int	redirect_stdin(t_mini *mini, int fd, int mode)
 			mini->fd_in = dup2(fd, 0);
 			close(fd);
 			if (mini->fd_in < 0)
-				write(1, strerror(errno), ft_strlen(strerror(errno)));
+				write(2, strerror(errno), ft_strlen(strerror(errno)));
 		}
 		return (1);
 	}
@@ -68,7 +68,7 @@ int	redirect_stdout(t_mini *mini, int fd, int mode)
 			mini->fd_out = dup2(fd, 1);
 			close(fd);
 			if (mini->fd_out < 0)
-				write(1, strerror(errno), ft_strlen(strerror(errno)));
+				write(2, strerror(errno), ft_strlen(strerror(errno)));
 		}
 		else
 		{
@@ -76,7 +76,7 @@ int	redirect_stdout(t_mini *mini, int fd, int mode)
 			mini->fd_out = dup2(fd, 1);
 			close(fd);
 			if (mini->fd_out < 0)
-				write(1, strerror(errno), ft_strlen(strerror(errno)));
+				write(2, strerror(errno), ft_strlen(strerror(errno)));
 		}
 	}
 	return (0);

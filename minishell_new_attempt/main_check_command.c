@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/02 16:05:46 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/05 13:36:35 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static t_statement	*check_operators(t_mini *mini, t_statement *current)
 	{
 		pipes(current, mini);
 		current = mini->current;
+		if (!current)
+			return (NULL);
 	}
 	if (current->operator == NONE)
 	{
@@ -57,8 +59,6 @@ static void check_commands(t_mini *mini, t_statement *first)
 	mini->invisible_file = 0;
 	if (check_incomplete_pipe(first)) //if theres a incomplete PIPE then complete pipe before anything else
 		complete_pipe(first);
-	if (command_involves_pipes(first))
-		establish_all_pipes(first);
 	while (current)
 	{
 		current = check_operators(mini, current);
@@ -71,7 +71,6 @@ static void check_commands(t_mini *mini, t_statement *first)
 			break ;
 		}
 	}
-	close_all_pipes(first); // also just in case
 }
 
 int	execution(t_mini *mini)
