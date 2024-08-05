@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_print_output_file.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:20:16 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/02 12:25:41 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/04 19:30:31 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ static void	child(char **args, char **envp)
 
 int	print_output_file(t_mini *mini)
 {
-	int	i;
+//	int	i;
 	int	status;
 	char **args;
 	char **envp;
 
-	i = 0;
+//	i = 0;
 	envp = NULL;
 	args = malloc(sizeof(char *) * (2 + 1));
 	args[0] = ft_strjoin("/bin/", "cat");
