@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 14:59:54 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:27:19 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,13 @@
 extern int	g_sig;
 
 //i was desperate, fuck the norm
+typedef struct s_exec
+{
+	char			**envp;
+	char			**args;
+	struct s_statement *current;
+}				t_exec;
+
 typedef struct s_remove_quotes
 {
 	int		size;
@@ -125,7 +132,8 @@ typedef struct s_mini
 	int					stdin_copy;
 	pid_t				pid;
 	int					invisible_file;//so i know if i need to remove temporary file in rm_in_until
-}				t_mini;
+	char				*additional_args; //for the wc > file -l || in testing
+	}				t_mini;
 
 //main functions that happen before parsing
 //input_check.c
@@ -212,7 +220,7 @@ void		remove_output_file(t_mini *mini);
 int			get_fd(t_statement *temp);
 
 //redirect_special_case.c
-t_statement	*command_after_file_rdr(t_statement *temp, t_mini *mini);
+void		command_after_file_rdr(t_statement *temp, t_mini *mini);
 int			check_command_after_file_rdr(t_statement *temp);
 
 //redirect_std.c
@@ -234,12 +242,12 @@ t_statement	*create_rm_node(void);
 int			copy_content(char **input);
 
 //execute_file.c
-int			exec_file(t_statement *temp, t_mini *mini);
+int			exec_file(t_statement *temp, t_mini *mini, int i); //i is needed for the special case thing
 int			exec_command(t_statement *temp, t_mini *mini, int i);
 
 //execute_file_utils.c
-int			exec_com_fork(t_statement *temp, char **envp, char **args, t_mini *mini); //split half of exec_command | norm accurate
-int			exec_file_fork(t_statement *temp, char **envp, char **args, t_mini *mini);//split half of exec_file | norma accurate
+int			exec_com_fork(t_exec *exec, t_mini *mini, int i); //split half of exec_command | norm accurate
+int			exec_file_fork(t_exec *exec, t_mini *mini, int i);//split half of exec_file | norma accurate
 
 //fifty_shades_of_free.c
 int			free_env_args(char **envp, char **args, int mode); //frees the envp and args from the functions above

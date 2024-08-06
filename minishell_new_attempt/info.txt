@@ -14,9 +14,9 @@ TO DO
 TESTS
 Redirection
 [] ls > file1 (well, in bash it creates the file first if not existent, than runs ls -la, so the file name is also on the list inside the file)
-[] <file1 cat
-[] <file ls
-[] >file ls -la
+[x] <file1 cat //not sure what it was supposed to do but i implemented the > file command kind of command-structure to work
+[x] <file ls
+[x] >file ls -la
 [] ls >file1.txt -l (i think this would be another level of parsing tbh)
 [ok] cat <file1 >file2
 [ok] cat <<EOF >file

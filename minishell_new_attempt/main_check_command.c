@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 12:52:22 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:21:28 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_statement	*check_redirection(t_mini *mini, t_statement *current)
 	if (current->operator == 3)
 	{
 		if (redirection_in(current, mini))
-			return (current);
+			return (NULL);
 		current = mini->current;
 		if (!current)
 			return (current);
@@ -88,7 +88,12 @@ int	execution(t_mini *mini)
 	mini->fd_in = -1;
 	mini->temp_output = 0;
 	if (check_command_after_file_rdr(mini->current)) //is for inverted inpout (> hello echo hello)
-		mini->current = command_after_file_rdr(mini->current, mini);
+		command_after_file_rdr(mini->current, mini);
+	if (!mini->current)
+	{
+		print_output_file(mini);
+		return (0);
+	}
 	check_commands(mini, mini->current);
 	return (0);
 }

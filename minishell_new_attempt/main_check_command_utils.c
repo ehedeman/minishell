@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:32:38 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 12:49:11 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:08:00 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	check_execute(t_statement *current, int i, t_mini *mini)
 		|| !ft_strncmp(current->argv[i], "/", 1))
 	{
 		reset_std(mini);
-		exec_file(current, mini);
+		exec_file(current, mini, i);
 		return (1);
 	}
 	else

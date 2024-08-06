@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:20:16 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 15:14:15 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:47:53 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	child(char **args, char **envp)
 {
 	if (execve(args[0], args, envp) == -1)
 	{
+		write(2, "TEST\n", 5);
 		free_args(args);
 		if (errno == EACCES)
 			exit (126);

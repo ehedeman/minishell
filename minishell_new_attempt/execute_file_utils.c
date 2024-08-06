@@ -6,13 +6,13 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:04:56 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 14:48:23 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:10:49 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	copy_temp(t_statement *temp, int i, char **args)
+static void	copy_temp(t_statement *temp, int i, int j, char **args)
 {
 	while (i <= temp->argc)
 	{
@@ -21,8 +21,9 @@ static void	copy_temp(t_statement *temp, int i, char **args)
 			args[i] = NULL;
 			break ;
 		}
-		args[i] = temp->argv[i];
+		args[i] = temp->argv[j];
 		i++;
+		j++;
 	}
 }
 
@@ -48,20 +49,20 @@ static void	exec_child(char **args, char **envp, int file_or_command)
 	}
 }
 
-int	exec_com_fork(t_statement *temp, char **envp, char **args, t_mini *mini)
+int	exec_com_fork(t_exec *exec, t_mini *mini, int i)
 {
 	int		status;
 
-	copy_temp(temp, 1, args); // 1 because args[0] was set in exec_command
+	copy_temp(exec->current, 1, i + 1, exec->args); // 1 because args[0] was set in exec_command
 	mini->pid = fork();
 	if (mini->pid == -1)
 	{
 		perror ("fork");
-		free_env_args(envp, args, 1);
+		free_env_args(exec->envp, exec->args, 1);
 		exit (-1);
 	}
 	else if (mini->pid == 0)
-		exec_child(args, envp, 2);
+		exec_child(exec->args, exec->envp, 2);
 	else
 	{
 		waitpid(mini->pid, &status, WUNTRACED);
@@ -73,20 +74,20 @@ int	exec_com_fork(t_statement *temp, char **envp, char **args, t_mini *mini)
 	return (0);
 }
 
-int	exec_file_fork(t_statement *temp, char **envp, char **args, t_mini *mini)
+int	exec_file_fork(t_exec *exec, t_mini *mini, int i)
 {
 	int		status;
 
-	copy_temp(temp, 0, args); // 0 because args[0] was not set in exec_file
+	copy_temp(exec->current, 0, i, exec->args); // 0 because args[0] was not set in exec_file
 	mini->pid = fork();
 	if (mini->pid == -1)
 	{
 		perror ("fork");
-		free_env_args(envp, args, 1);
+		free_env_args(exec->envp, exec->args, 1);
 		exit (-1);
 	}
 	else if (mini->pid == 0)
-		exec_child(args, envp, 3);
+		exec_child(exec->args, exec->envp, 3);
 	else
 	{
 		waitpid(mini->pid, &status, 0);

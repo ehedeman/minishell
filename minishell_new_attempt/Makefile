@@ -6,7 +6,7 @@
 #    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/08/06 14:59:10 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/08/06 15:35:07 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ SRC = 	main.c								\
 		redirect_out.c						\
 		redirect_in.c						\
 		redirect_in_until_utils.c			\
-		redirect_special_case.c				\
+		redirect_check_command_after_file.c	\
+		redirect_command_after_file.c		\
 		redirect_std.c						\
 		execute_file.c						\
 		execute_file_utils.c				\
