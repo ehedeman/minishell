@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:23:25 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/05 16:16:38 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:02:54 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	rm_invisible_file(t_mini *mini, char **input)
 {
-	t_statement *rm_node;
+	t_statement	*rm_node;
 
 	rm_node = create_rm_node(); // creates node with rm and invisible file name
 	exec_command(rm_node, mini, 0);
@@ -24,7 +24,7 @@ void	rm_invisible_file(t_mini *mini, char **input)
 
 int	redirect_input(t_statement *current)
 {
-	int		fd;
+	int	fd;
 
 	fd = 0;
 	if (current->next)
@@ -39,7 +39,7 @@ int	redirect_input(t_statement *current)
 
 static void	clear_input(char **input, int i)
 {
-	int j;
+	int	j;
 	
 	j = 0;
 	while (j <= i)
@@ -48,9 +48,9 @@ static void	clear_input(char **input, int i)
 		j++;
 	}
 }
+
 static t_statement	*get_input(char **input, char *end_word, t_statement *current, int *i)
 {
-
 	current = current->next;
 	while (*i < 1000)
 	{
@@ -78,7 +78,7 @@ static t_statement	*get_input(char **input, char *end_word, t_statement *current
 	return (current);
 }
 
-t_statement	*redirect_input_until(t_statement *current, char *end_word,\
+t_statement	*redirect_input_until(t_statement *current, char *end_word, \
 		t_mini *mini)
 {
 	char		**input;

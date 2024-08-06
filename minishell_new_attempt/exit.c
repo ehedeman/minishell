@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:12:06 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 12:19:15 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:01:42 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	check_exit(t_statement *temp, t_mini *mini, int i)
 	if (!ft_strncmp(temp->argv[i], "exit", ft_strlen("exit") + 1))
 	{
 		reset_stdout(mini);
-		if(!temp->argv[i + 1])
+		if (!temp->argv[i + 1])
 			ft_exit(mini, "0");
 		if (temp->argv[i + 2])
 		{
@@ -70,7 +70,7 @@ int	check_exit(t_statement *temp, t_mini *mini, int i)
 		{
 			ft_exit(mini, temp->argv[i + 1]);
 			return (-1);
-		}	
+		}
 	}
 	return (0);
 }

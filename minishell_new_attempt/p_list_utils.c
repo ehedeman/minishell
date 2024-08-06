@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:38:26 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/30 12:30:53 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:00:47 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_statement	*p_new_node(int argc)
 	new_node->id = -1;
 	new_node->operator = NONE;
 	new_node->next = NULL;
-	return(new_node);
+	return (new_node);
 }
 
 void	index_list(t_statement *temp)

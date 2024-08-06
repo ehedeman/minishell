@@ -6,12 +6,11 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:24:36 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 11:19:47 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:05:29 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static int	is_path(char *path)
 {
@@ -24,14 +23,13 @@ static int	is_path(char *path)
 
 static int	set_fd(char *filename, int red_type)
 {
-	int	fd;
-	mode_t mode;
+	int		fd;
+	mode_t	mode;
 
 	mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 	fd = 0;
-
 	if (red_type == 1)
-		fd = open(filename,  O_RDWR | O_CREAT  | O_APPEND, mode);
+		fd = open(filename, O_RDWR | O_CREAT | O_APPEND, mode);
 	else if (red_type == 2)
 		fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, mode);
 	if (fd < 0)
@@ -41,9 +39,9 @@ static int	set_fd(char *filename, int red_type)
 
 int	get_fd(t_statement *temp)
 {
-	char *temp_path;
-	int	need_free;
-	int	fd;
+	char	*temp_path;
+	int		need_free;
+	int		fd;
 
 	need_free = 0;
 	temp_path = NULL;

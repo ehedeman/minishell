@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:07:02 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 12:59:18 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:43:12 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ static t_statement	*execute_pipeline(t_statement *current, t_mini *mini)
 
 	current = current->next; //command on left side of pipe was done 
 								//earlier so skip to get to right side of pipe operator
-	if (pipe(current->pipefd) == -1)
+	if (pipe(current->pipe_fd) == -1)
 	{
 		perror("Error: pipe could not be created");
 		exit(EXIT_FAILURE);									//do we realy need exit here?
 	}
 	pid = fork();
 	if (pid == 0)
-		child_process(current, mini, current->pipefd);//self explanatory i think
+		child_process(current, mini, current->pipe_fd);//self explanatory i think
 	else if (pid < 0)
 	{
 		perror("fork");
@@ -65,8 +65,8 @@ static t_statement	*execute_pipeline(t_statement *current, t_mini *mini)
 	}
 	else
 	{
-		close(current->pipefd[0]);
-		close(current->pipefd[1]);
+		close(current->pipe_fd[0]);
+		close(current->pipe_fd[1]);
 		wait_for_children(mini, pid);
 	}
 	reset_std(mini);//just in case that it hasnt been reset yet idk

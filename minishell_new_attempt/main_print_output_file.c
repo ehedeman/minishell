@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:20:16 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 13:28:44 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:14:15 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	child(char **args, char **envp)
 
 static char	**allocate_args(void)
 {
-	char **args;
+	char	**args;
 
 	args = malloc(sizeof(char *) * (2 + 1));
 	if (!args)
@@ -53,9 +53,19 @@ static char	**allocate_args(void)
 	return (args);
 }
 
-int	print_output_file(t_mini *mini)
+static void	parent(t_mini *mini)
 {
 	int		status;
+
+	waitpid(mini->pid, &status, WUNTRACED);
+	if (WIFEXITED(status))
+		mini->exit_status = WEXITSTATUS(status);
+	else
+		mini->exit_status = 1;
+}
+
+int	print_output_file(t_mini *mini)
+{
 	char	**args;
 	char	**envp;
 
@@ -73,13 +83,7 @@ int	print_output_file(t_mini *mini)
 	else if (mini->pid == 0)
 		child(args, envp);
 	else
-	{
-		waitpid(mini->pid, &status, WUNTRACED);
-		if (WIFEXITED(status))
-			mini->exit_status = WEXITSTATUS(status);
-		else
-			mini->exit_status = 1;
-	}
+		parent(mini);
 	free_args(args);
 	return (0);
 }

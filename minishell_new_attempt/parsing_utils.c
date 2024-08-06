@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:45:16 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/24 16:28:35 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:05:59 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int	check_doubles(char *input, int i)
 {
 	if (is_onstr(QUOTES, input[i]) && input[i] == input[i + 1])
 		return (2);
-	// else if (is_onstr(QUOTES, input[i]))
-	// 	return (1);
 	else if (is_onstr(OPERATORS, input[i]) && input[i] == input[i + 1])
 		return (2);
 	else if (is_onstr(OPERATORS, input[i]))
@@ -58,7 +56,7 @@ int	is_spaces(char c)
 int	is_onstr(const char *str, int c)
 {
 	int	i;
-	
+
 	if (!str)
 		return (-1);
 	if (!c)
@@ -77,7 +75,7 @@ int	get_argc(char **parsed)
 {
 	int	i;
 	int	count;
-	
+
 	i = 0;
 	count = 0;
 	if (is_onstr(OPERATORS, parsed[i][0]))
@@ -85,9 +83,9 @@ int	get_argc(char **parsed)
 	while (parsed[i])
 	{
 		if (is_onstr(OPERATORS, parsed[i][0]))
-			break;
+			break ;
 		count++;
 		i++;
 	}
-	return(count);
+	return (count);
 }

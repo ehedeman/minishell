@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_std.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 11:19:24 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/05 20:16:39 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/06 14:48:53 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void reset_std(t_mini *mini)
+void	reset_std(t_mini *mini)
 {
 	reset_stdout(mini);
 	reset_stdin(mini);
@@ -45,7 +45,7 @@ int	redirect_stdin(t_mini *mini, int fd, int mode)
 	return (-1);
 }
 
-int reset_stdin(t_mini *mini)
+int	reset_stdin(t_mini *mini)
 {
 	if (mini->fd_in == 0)
 	{
@@ -82,7 +82,7 @@ int	redirect_stdout(t_mini *mini, int fd, int mode)
 	return (0);
 }
 
-int reset_stdout(t_mini *mini)
+int	reset_stdout(t_mini *mini)
 {
 	if (mini->fd_out == 1)
 	{

@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 13:10:38 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 13:35:33 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:07:38 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_statement	*parsing(char *input)
 	{
 		free(parsed);
 		parsing_error(MALLOC_ERR);
-		return (NULL); 
+		return (NULL);
 	}
 	new = temp;
 	if (make_statement_list(temp, parsed, i))

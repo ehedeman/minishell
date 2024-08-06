@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:12:00 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 15:29:39 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 14:58:26 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 static int	check_unclosed_quotes(char *input)
 {
-//	int	quotes_i;
-	int	i;
+	int		i;
 	bool	quotes;
 
-//	quotes_i = -1;
 	i = 0;
 	quotes = false;
 	while (input[i])
@@ -26,7 +24,6 @@ static int	check_unclosed_quotes(char *input)
 		if (input[i] == '\'' || input[i] == '\"')
 		{
 			quotes = !quotes;
-//			quotes_i = i;
 		}
 		i++;
 	}
@@ -37,9 +34,9 @@ static int	check_unclosed_quotes(char *input)
 
 static int	check_missmatched_quotes(char *input)
 {
-	char quote_type;
-	int i;
-	bool quotes;
+	char	quote_type;
+	int		i;
+	bool	quotes;
 
 	i = 0;
 	while (input[i] && !is_onstr(QUOTES, input[i]))
@@ -49,41 +46,22 @@ static int	check_missmatched_quotes(char *input)
 	quote_type = input[i];
 	quotes = true;
 	i++;
-	while (input[i])
-	{
-		if (is_onstr(QUOTES, input[i]) && quotes)
-		{
-			if (quote_type != input[i])
-				return (1);
-			quotes = !quotes;
-			quote_type = 0;
-		}
-		else if (is_onstr(QUOTES, input[i]) && !quotes)
-		{
-			quotes = !quotes;
-			quote_type = input[i];
-		}
-		i++;
-	}
+	if (check_missmatched_quotes_1(input, &quote_type, &i, &quotes))
+		return (1);
 	return (0);
 }
 
 static int	check_incomplete_out_red(char *input, int i)
 {
-	int redirect;
+	int	redirect;
 
 	redirect = 0;
 	while (input[i])
 	{
 		while (input[i] != '>' && input[i])
 			i++;
-		while (input[i] == '>' && input[i])
-		{
-			redirect++;
-			i++;
-			if (redirect > 2)
-				return (1);
-		}
+		if (check_incomplete_out_red_1(input, &i, &redirect))
+			return (1);
 		while (is_spaces(input[i]) && input[i])
 			i++;
 		if (is_onstr(OPERATORS, input[i]) && redirect)
@@ -99,9 +77,9 @@ static int	check_incomplete_out_red(char *input, int i)
 	return (0);
 }
 
-bool input_check(char *input)
+bool	input_check(char *input)
 {
-	bool    valid;
+	bool	valid;
 
 	valid = true;
 	if (check_unclosed_quotes(input))
@@ -116,7 +94,7 @@ bool input_check(char *input)
 	}
 	else if (check_incomplete_out_red(input, 0))
 	{
-		write(1, UNFINISHED_OUT_RED, ft_strlen(UNFINISHED_OUT_RED));
+		write(1, UNFINI_OUT_RED, ft_strlen(UNFINI_OUT_RED));
 		valid = false;
 	}
 	if (valid)

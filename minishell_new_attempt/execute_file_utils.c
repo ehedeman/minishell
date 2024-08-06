@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:04:56 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 12:20:20 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 14:48:23 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	copy_temp(t_statement *temp, int i, char **args)
 		i++;
 	}
 }
+
 static void	exec_child(char **args, char **envp, int file_or_command)
 {
 	if (execve(args[0], args, envp) == -1)

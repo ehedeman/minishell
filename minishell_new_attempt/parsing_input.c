@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 13:06:34 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 13:31:43 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 14:47:32 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,11 @@ static int	copy_input_to_parsed(char *input, char **parsed, int i, int j)
 	return (i);
 }
 
-static int	fill_array(char *input, char **parsed, int nbr_args) //loop from parsing input
+static int	fill_array(char *input, char **parsed, int nbr_args, int i) //loop from parsing input // i = variable for input-pointers
 {
-	int	i; //variable for input-pointers
 	int	j; //variable for word-pointers
 	int	length; //variable for getting the word length needed for parsed[j]
 
-	i = 0;
 	j = 0;
 	while (input[i] && j < nbr_args) // if j = nbr_args then it needs to be NULL | to avoid segfault
 	{
@@ -83,7 +81,7 @@ char	**parsing_input(char *input)
 		parsing_error(MALLOC_ERR);
 		return (NULL);
 	}
-	if (fill_array(input, parsed, nbr_args))
+	if (fill_array(input, parsed, nbr_args, 0))
 		return (NULL);
 	return (parsed);
 }

@@ -6,13 +6,13 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 13:09:03 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 13:33:37 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:07:05 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	make_statement_list_1(t_statement *current, char **parsed,\
+static int	make_statement_list_1(t_statement *current, char **parsed, \
 	int *i, int *j)
 {
 	while (parsed[*i] && !is_onstr(OPERATORS, parsed[*i][0]))
@@ -26,11 +26,10 @@ static int	make_statement_list_1(t_statement *current, char **parsed,\
 	return (0);
 }
 
-int	make_statement_list(t_statement *current, char **parsed, int i) //i = variable for word pointers
+int	make_statement_list(t_statement *current, char **parsed, int i) //i = variable for word pointers //j = variable for current-argv-pointer
 {
 	int	j;
 
-	//j = variable for current-argv-pointer
 	current->previous = NULL;
 	while (parsed[i])
 	{
