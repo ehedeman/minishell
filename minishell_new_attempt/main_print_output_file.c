@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:20:16 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 13:02:29 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:28:44 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,22 @@ static void	child(char **args, char **envp)
 		exit(EXIT_SUCCESS);
 }
 
-static int	allocate_args(char **args)
+static char	**allocate_args(void)
 {
+	char **args;
+
 	args = malloc(sizeof(char *) * (2 + 1));
 	if (!args)
-		return (-1);
+		return (NULL);
 	args[0] = ft_strjoin("/bin/", "cat");
 	if (!args[0])
-		return (-1);
+		return (NULL);
 	args[1] = malloc(sizeof(char) * ft_strlen(".output") + 1);
 	if (!args[1])
-		return (-1);
+		return (NULL);
 	ft_strlcpy(args[1], ".output", ft_strlen(".output") + 1);
 	args[2] = NULL;
+	return (args);
 }
 
 int	print_output_file(t_mini *mini)
@@ -57,6 +60,9 @@ int	print_output_file(t_mini *mini)
 	char	**envp;
 
 	envp = NULL;
+	args = allocate_args();
+	if (!args)
+		return (-1);
 	mini->pid = fork();
 	if (mini->pid == -1)
 	{

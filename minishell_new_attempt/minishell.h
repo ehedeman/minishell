@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 12:51:24 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:30:30 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,13 @@ bool		input_check(char *input);
 //input_check_two.c
 bool		input_check_two(char *input, bool valid);
 
-//parsing (in parsing files)
+//parsing (in parsing files, mostly named after functions inside)
 t_statement	*parsing(char *input);
+char	**parsing_input(char *input);
+int	get_nbr_parsed_args(char *input, int i, int count);
+int	get_token_len(char *input);
+int	make_statement_list(t_statement *current, char **parsed, int i);
+
 char		*remove_quotes(char *parsed);
 int			unquoted_cpy_loop(char *parsed, char *unquoted_parsed,
 				bool quotes, char quote_c);
@@ -136,8 +141,8 @@ int			is_spaces(char c);
 int			check_doubles(char *input, int i);
 t_operator	get_operator(char *operator);
 int			get_argc(char **parsed);
-int			parsing_error(int errnum);
 void		index_list(t_statement *temp);
+int			parsing_error(int errnum);
 
 //p_list_utils.c
 t_statement	*p_new_node(int argc);

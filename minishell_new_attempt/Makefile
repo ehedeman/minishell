@@ -6,7 +6,7 @@
 #    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/08/05 16:13:28 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/08/06 13:27:01 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,10 @@ SRC = 	main.c								\
 		input_check.c						\
 		input_check_two.c					\
 		parsing.c							\
+		parsing_get_nbr_parsed_args.c		\
+		parsing_get_token_length.c			\
+		parsing_input.c						\
+		parsing_make_statement_list.c		\
 		parsing_utils.c						\
 		parsing_remove_quotes.c				\
 		parsing_remove_quotes_utils.c		\
