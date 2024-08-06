@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:12:06 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/05 16:19:15 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:19:15 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_exit(t_mini *mini, char *arg)
 {
 	int	exit_status;
 
-	remove_output_file(mini);
+	//remove_output_file(mini);
 	exit_status = 0;
 	if (arg)
 	{

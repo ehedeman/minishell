@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/05 16:17:39 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:51:24 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,9 @@ t_statement	*p_new_node(int argc);
 void		ft_print(t_mini *mini); //remove before eval
 int			main_error(int errnum);
 int			whitespace_check(t_mini *mini);
+void		initialize_mini(t_mini *mini, char **envp);
+void		handler(int sig);
+int			ft_shlvl(t_mini *mini);
 
 //exit.c
 int			ft_exit(t_mini *mini, char *arg);

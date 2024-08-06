@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:38:24 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/05 15:13:57 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:54:07 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int	redirection_out(t_statement *current, t_mini *mini)
 {
-	if (current->id == 0 || (current->previous && (current->previous->operator != 3
-		&& current->previous->operator != 4)))
+	if (current->id == 0 || (current->previous
+			&& (current->previous->operator != 3
+				&& current->previous->operator != 4)))
 	{
 		set_temp_output_as_stdout(mini, 0); //reset stdout to output file
 		find_command(current, mini);

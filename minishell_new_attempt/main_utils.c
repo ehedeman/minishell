@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 12:52:43 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/27 16:53:38 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:44:46 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,38 +29,6 @@ int	main_error(int errnum)
 	return (-1);
 }
 
-//to check the input/if everything was parsed correctly
-void	ft_print(t_mini *mini)
-{
-	int i;
-	t_statement *temp;
-	int fd;
-	char	*nbr;
-
-	temp = mini->com_tab;
-	fd = 1;
-	printf("fd = %d", fd);
-	while (temp)
-	{
-		i = 0;
-		nbr = ft_itoa(temp->operator);
-		write(1, nbr, ft_strlen(nbr));
-		write(1, "\n", 1);
-		while (temp->argv[i])
-		{
-			write(1, temp->argv[i], ft_strlen(temp->argv[i]));
-			write(1, "\n", 1);
-			// printf("%i\n", temp->operator);
-			// printf("%i\n", temp->argc);
-			i++;
-		}
-		if (temp->previous)
-				printf("Previous: %s\n", temp->previous->argv[0]);
-		temp = temp->next;
-		free(nbr);
-	}
-}
-
 int	whitespace_check(t_mini *mini)
 {
 	int	i;
@@ -76,3 +44,91 @@ int	whitespace_check(t_mini *mini)
 	mini->input = NULL;
 	return (1);
 }
+
+void	initialize_mini(t_mini *mini, char **envp)
+{
+	ft_copy_env2lst(mini, envp);
+	init_history(&(mini->history));
+	signal(SIGINT, handler);
+	signal(SIGQUIT, handler);
+	mini->com_tab = NULL;
+	mini->input = NULL;
+	g_sig = 0;
+	mini->exit_status = 0;
+	mini->fd_out = -1;
+	mini->fd_in = -1;
+	mini->temp_output = 0;
+	ft_shlvl(mini);
+}
+
+void	handler(int sig)
+{
+	if (sig == SIGINT && !g_sig)
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("\0", 1);
+		rl_redisplay();
+	}
+	else if (sig == SIGINT && g_sig)
+		printf("\n");
+	else if (sig == SIGQUIT && !g_sig)
+		rl_replace_line("\0", 1);
+	else if (sig == SIGQUIT)
+		printf("Quit (core dumped)\n");
+}
+
+int	ft_shlvl(t_mini *mini)
+{
+	t_env_list	*current;
+	int			num;
+
+	current = mini->env;
+	while (current)
+	{
+		if (current == NULL)
+			return (1);
+		if (ft_strncmp(current->name, "SHLVL", 5) == 0)
+		{
+			num = ft_atoi(current->value);
+			free(current->value);
+			num++;
+			current->value = ft_itoa(num);
+			break ;
+		}
+		current = current->next;
+	}
+	return (0);
+}
+
+//to check the input/if everything was parsed correctly
+// void	ft_print(t_mini *mini)
+// {
+// 	int i;
+// 	t_statement *temp;
+// 	int fd;
+// 	char	*nbr;
+
+// 	temp = mini->com_tab;
+// 	fd = 1;
+// 	printf("fd = %d", fd);
+// 	while (temp)
+// 	{
+// 		i = 0;
+// 		nbr = ft_itoa(temp->operator);
+// 		write(1, nbr, ft_strlen(nbr));
+// 		write(1, "\n", 1);
+// 		while (temp->argv[i])
+// 		{
+// 			write(1, temp->argv[i], ft_strlen(temp->argv[i]));
+// 			write(1, "\n", 1);
+// 			// printf("%i\n", temp->operator);
+// 			// printf("%i\n", temp->argc);
+// 			i++;
+// 		}
+// 		if (temp->previous)
+// 				printf("Previous: %s\n", temp->previous->argv[0]);
+// 		temp = temp->next;
+// 		free(nbr);
+// 	}
+// }

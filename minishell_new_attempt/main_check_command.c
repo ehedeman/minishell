@@ -6,34 +6,42 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/05 13:36:35 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:52:22 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_statement	*check_operators(t_mini *mini, t_statement *current)
+static t_statement	*check_redirection(t_mini *mini, t_statement *current)
 {
 	if (current->operator == 1 || current->operator == 2)
 	{
 		redirection_out(current, mini);
 		current = mini->current; //set current to last rdr of output
 	}
+	if (current->operator == 3)
+	{
+		if (redirection_in(current, mini))
+			return (current);
+		current = mini->current;
+		if (!current)
+			return (current);
+	}
 	if (current->operator == 4)
 	{
 		redirection_in_until(current, mini);
 		current = mini->current;
 		if (!current)
-			return (NULL);
+			return (current);
 	}
-	if (current->operator == 3)
-	{
-		if (redirection_in(current, mini))
-			return (NULL);
-		current = mini->current;
-		if (!current)
-			return (NULL);
-	}
+	return (current);
+}
+
+static t_statement	*check_operators(t_mini *mini, t_statement *current)
+{
+	current = check_redirection(mini, current);
+	if (!current)
+		return (NULL);
 	if (current->operator == 5)
 	{
 		pipes(current, mini);
@@ -49,9 +57,9 @@ static t_statement	*check_operators(t_mini *mini, t_statement *current)
 	return (current);
 }
 
-static void check_commands(t_mini *mini, t_statement *first)
+static void	check_commands(t_mini *mini, t_statement *first)
 {
-	t_statement *current;
+	t_statement	*current;
 
 	current = first;
 	if (!current)
@@ -79,10 +87,8 @@ int	execution(t_mini *mini)
 	mini->fd_out = -1;
 	mini->fd_in = -1;
 	mini->temp_output = 0;
-	if (check_command_after_file_rdr(mini->current))//is for inverted inpout (> hello echo hello)
+	if (check_command_after_file_rdr(mini->current)) //is for inverted inpout (> hello echo hello)
 		mini->current = command_after_file_rdr(mini->current, mini);
 	check_commands(mini, mini->current);
-	// printf("\n\nLIST BEFORE RETURNING FROM CHECK_COM:\n");
-	// ft_print_env_lst(mini->env);
 	return (0);
 }

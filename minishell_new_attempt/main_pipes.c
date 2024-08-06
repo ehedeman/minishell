@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:07:02 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/05 21:07:50 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:59:18 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	wait_for_children(t_mini *mini, pid_t pid)
 
 static void	child_process(t_statement *current, t_mini *mini, int pipe_fd[])
 {
-	//printf("%s %s\n", current->argv[0], current->argv[1]);
 	redirect_stdout(mini, pipe_fd[1], 0);	//rlly unsure about this cuz i dont really get which end of the pipe's for what
 	print_output_file(mini);
 	reset_stdout(mini);
@@ -39,7 +38,6 @@ static void	child_process(t_statement *current, t_mini *mini, int pipe_fd[])
 	// then it puts output before looping but thats just because the output gets printed after all operator-related
 	// functions.)
 	exec_command(current, mini, 0);			//do command
-
 	reset_stdin(mini);						//reset all
 	reset_stdout(mini);
 	exit(EXIT_SUCCESS);						//yay done (in theory)
@@ -48,7 +46,6 @@ static void	child_process(t_statement *current, t_mini *mini, int pipe_fd[])
 //trying to do it without node specific pipe's currently
 static t_statement	*execute_pipeline(t_statement *current, t_mini *mini)
 {
-	//int		pipe_fd[2]; //should use the pipe_fd in the current struct, no?
 	pid_t	pid;
 
 	current = current->next; //command on left side of pipe was done 
@@ -67,7 +64,7 @@ static t_statement	*execute_pipeline(t_statement *current, t_mini *mini)
 		exit(EXIT_FAILURE); //again, do we need exit here if the child process exits in child_process()?
 	}
 	else
-	{	
+	{
 		close(current->pipefd[0]);
 		close(current->pipefd[1]);
 		wait_for_children(mini, pid);
@@ -82,7 +79,7 @@ static t_statement	*execute_pipeline(t_statement *current, t_mini *mini)
 void	do_all_connected_pipes(t_statement *current, t_mini *mini)
 {
 	if (!current->id || (current->previous->operator > 4 //if we come from redirection then the current node is the file so we dont need to execute
-		|| current->previous->operator < 1))
+			|| current->previous->operator < 1))
 	{
 		set_temp_output_as_stdout(mini, 0);//execute the command that has PIPE operator
 		exec_command(current, mini, 0);

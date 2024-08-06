@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main_print_output_file.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:20:16 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/04 19:30:31 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:02:29 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void free_args(char **args)
+static void	free_args(char **args)
 {
 	free(args[0]);
 	free(args[1]);
@@ -35,20 +35,28 @@ static void	child(char **args, char **envp)
 		exit(EXIT_SUCCESS);
 }
 
+static int	allocate_args(char **args)
+{
+	args = malloc(sizeof(char *) * (2 + 1));
+	if (!args)
+		return (-1);
+	args[0] = ft_strjoin("/bin/", "cat");
+	if (!args[0])
+		return (-1);
+	args[1] = malloc(sizeof(char) * ft_strlen(".output") + 1);
+	if (!args[1])
+		return (-1);
+	ft_strlcpy(args[1], ".output", ft_strlen(".output") + 1);
+	args[2] = NULL;
+}
+
 int	print_output_file(t_mini *mini)
 {
-//	int	i;
-	int	status;
-	char **args;
-	char **envp;
+	int		status;
+	char	**args;
+	char	**envp;
 
-//	i = 0;
 	envp = NULL;
-	args = malloc(sizeof(char *) * (2 + 1));
-	args[0] = ft_strjoin("/bin/", "cat");
-	args[1] = malloc(sizeof(char) * ft_strlen(".output_the_first_cuz_what_the_fuck") + 1);
-	ft_strlcpy(args[1], ".output_the_first_cuz_what_the_fuck", ft_strlen(".output_the_first_cuz_what_the_fuck") + 1);
-	args[2] = NULL;
 	mini->pid = fork();
 	if (mini->pid == -1)
 	{
@@ -67,5 +75,5 @@ int	print_output_file(t_mini *mini)
 			mini->exit_status = 1;
 	}
 	free_args(args);
-	return(0);
+	return (0);
 }

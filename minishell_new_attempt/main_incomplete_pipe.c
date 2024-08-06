@@ -6,13 +6,13 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:31:52 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/01 13:32:15 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:53:24 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int check_incomplete_pipe(t_statement *temp)
+int	check_incomplete_pipe(t_statement *temp)
 {
 	while (temp)
 	{
@@ -23,9 +23,9 @@ int check_incomplete_pipe(t_statement *temp)
 	return (0);
 }
 
-int complete_pipe(t_statement *temp)
+int	complete_pipe(t_statement *temp)
 {
-	char *complete;
+	char	*complete;
 
 	while (temp)
 	{

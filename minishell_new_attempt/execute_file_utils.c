@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:04:56 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/05 16:01:40 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:20:20 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static void	exec_child(char **args, char **envp, int file_or_command)
 {
 	if (execve(args[0], args, envp) == -1)
 	{
-		write(1, "TEST-1\n", 7);
-		sleep(3);
+	//	write(1, "TEST-1\n", 7);
+	//	sleep(3);
 		free_env_args(envp, args, file_or_command);
 		if (errno == EACCES)
 			exit (126);
@@ -41,8 +41,8 @@ static void	exec_child(char **args, char **envp, int file_or_command)
 	}
 	else
 	{
-		write(1, "TEST-2\n", 7); // for testing: output fd = 1 should be the output file, sleep(3) makes
-		sleep(3);	// sure it doesnt get overwritten immideadly (same with the one above)
+	//	write(1, "TEST-2\n", 7); // for testing: output fd = 1 should be the output file, sleep(3) makes
+	//	sleep(3);	// sure it doesnt get overwritten immideadly (same with the one above)
 		exit(EXIT_SUCCESS); // last state was that sleep didnt do anything at all, therefor it never exited execve
 	}
 }
