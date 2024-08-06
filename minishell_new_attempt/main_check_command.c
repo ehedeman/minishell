@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 16:21:28 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:32:21 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,21 @@
 
 static t_statement	*check_redirection(t_mini *mini, t_statement *current)
 {
-	if (current->operator == 1 || current->operator == 2)
+	if (current && (current->operator == 1 || current->operator == 2))
 	{
 		redirection_out(current, mini);
 		current = mini->current; //set current to last rdr of output
 	}
-	if (current->operator == 3)
+	if (current && current->operator == 3)
 	{
 		if (redirection_in(current, mini))
 			return (NULL);
 		current = mini->current;
-		if (!current)
-			return (current);
 	}
-	if (current->operator == 4)
+	if (current && current->operator == 4)
 	{
 		redirection_in_until(current, mini);
 		current = mini->current;
-		if (!current)
-			return (current);
 	}
 	return (current);
 }
@@ -42,14 +38,12 @@ static t_statement	*check_operators(t_mini *mini, t_statement *current)
 	current = check_redirection(mini, current);
 	if (!current)
 		return (NULL);
-	if (current->operator == 5)
+	if (current && current->operator == 5)
 	{
 		pipes(current, mini);
 		current = mini->current;
-		if (!current)
-			return (NULL);
 	}
-	if (current->operator == NONE)
+	if (current && current->operator == NONE)
 	{
 		none(current, mini);
 		current = current->next;
@@ -70,6 +64,11 @@ static void	check_commands(t_mini *mini, t_statement *first)
 	while (current)
 	{
 		current = check_operators(mini, current);
+		if (mini->additional_args)
+		{
+			free(mini->additional_args);
+			mini->additional_args = NULL;
+		}
 		if (mini->invisible_file == 1)
 			rm_invisible_file(mini, NULL); //from rdr_input_until
 		if (!current)

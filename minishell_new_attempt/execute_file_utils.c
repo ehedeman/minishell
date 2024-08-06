@@ -6,33 +6,56 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:04:56 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 16:10:49 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:28:33 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	copy_temp(t_statement *temp, int i, int j, char **args)
+int	ft_find_array_size(char **array, int i)
 {
-	while (i <= temp->argc)
+	int	size;
+
+	size = 0;
+	while (array[i])
 	{
-		if (i == temp->argc)
+		size++;
+		i++;
+	}
+	return (size);
+}
+
+static void	copy_temp(t_exec *exec, int i, int j, t_mini *mini)
+{
+	while (i <= exec->current->argc)
+	{
+		if (i == exec->current->argc && !mini->additional_args)
 		{
-			args[i] = NULL;
+			exec->args[i] = NULL;
 			break ;
 		}
-		args[i] = temp->argv[j];
+		else if (i == exec->current->argc && mini->additional_args)
+			break ;
+		exec->args[i] = exec->current->argv[j];
 		i++;
 		j++;
 	}
+	if (!mini->additional_args)
+		return ;
+	j = 0;
+	while (mini->additional_args[j])
+	{
+		exec->args[i] = mini->additional_args[j];
+		i++;
+		j++;
+	}
+	exec->args[i] = NULL;
 }
 
 static void	exec_child(char **args, char **envp, int file_or_command)
 {
 	if (execve(args[0], args, envp) == -1)
 	{
-	//	write(1, "TEST-1\n", 7);
-	//	sleep(3);
 		free_env_args(envp, args, file_or_command);
 		if (errno == EACCES)
 			exit (126);
@@ -42,18 +65,14 @@ static void	exec_child(char **args, char **envp, int file_or_command)
 			exit (1);
 	}
 	else
-	{
-	//	write(1, "TEST-2\n", 7); // for testing: output fd = 1 should be the output file, sleep(3) makes
-	//	sleep(3);	// sure it doesnt get overwritten immideadly (same with the one above)
-		exit(EXIT_SUCCESS); // last state was that sleep didnt do anything at all, therefor it never exited execve
-	}
+		exit(EXIT_SUCCESS);
 }
 
 int	exec_com_fork(t_exec *exec, t_mini *mini, int i)
 {
 	int		status;
 
-	copy_temp(exec->current, 1, i + 1, exec->args); // 1 because args[0] was set in exec_command
+	copy_temp(exec, 1, i + 1, mini); // 1 because args[0] was set in exec_command
 	mini->pid = fork();
 	if (mini->pid == -1)
 	{
@@ -78,7 +97,7 @@ int	exec_file_fork(t_exec *exec, t_mini *mini, int i)
 {
 	int		status;
 
-	copy_temp(exec->current, 0, i, exec->args); // 0 because args[0] was not set in exec_file
+	copy_temp(exec, 0, i, mini); // 0 because args[0] was not set in exec_file
 	mini->pid = fork();
 	if (mini->pid == -1)
 	{

@@ -6,13 +6,13 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 11:37:36 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 16:11:01 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:36:13 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	int	find_size(t_env_list *lst)
+static int	find_size(t_env_list *lst)
 {
 	int	i;
 
@@ -25,7 +25,7 @@ static	int	find_size(t_env_list *lst)
 	return (i);
 }
 
-static	char	**assign_link_pointer(t_env_list *env, char **envp)
+static char	**assign_link_pointer(t_env_list *env, char **envp)
 {
 	int		size;
 	char	*temp;
@@ -49,9 +49,9 @@ static	char	**assign_link_pointer(t_env_list *env, char **envp)
 	return (envp);
 }
 
-static	t_exec *allocate_exec(void)
+static t_exec	*allocate_exec(void)
 {
-	t_exec *new;
+	t_exec	*new;
 
 	new = malloc(sizeof(t_exec) * 1);
 	if (!new)
@@ -73,7 +73,11 @@ int	exec_command(t_statement *temp, t_mini *mini, int i) //i = 1 or 0 depending 
 	mini->pid = 0;
 	g_sig = 1;
 	exec->envp = assign_link_pointer(mini->env, exec->envp);
-	exec->args = malloc(sizeof(char *) * (temp->argc + 1));
+	if (!mini->additional_args)
+		exec->args = malloc(sizeof(char *) * (temp->argc + 1));
+	else if (mini->additional_args)
+		exec->args = malloc(sizeof(char *) * (temp->argc + \
+			ft_find_array_size(mini->additional_args, 0) + 1));
 	exec->current = temp;
 	exec->args[0] = ft_strjoin("/bin/", temp->argv[i]);
 	if (exec_com_fork(exec, mini, i) == -1)
@@ -95,7 +99,11 @@ int	exec_file(t_statement *temp, t_mini *mini, int i)
 	g_sig = 1;
 	exec->envp = assign_link_pointer(mini->env, exec->envp);
 	exec->current = temp;
-	exec->args = malloc(sizeof(char *) * (temp->argc + 1));
+	if (!mini->additional_args)
+		exec->args = malloc(sizeof(char *) * (temp->argc + 1));
+	else if (mini->additional_args)
+		exec->args = malloc(sizeof(char *) * (temp->argc + \
+			ft_find_array_size(mini->additional_args, 0) + 1));
 	if (exec_file_fork(exec, mini, i) == -1)
 		return (-1);
 	free_env_args(exec->envp, exec->args, 0);

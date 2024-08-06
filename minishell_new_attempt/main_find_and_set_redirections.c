@@ -6,13 +6,33 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:56:39 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 12:50:41 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:31:08 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	find_and_set_last_redirect_out(t_statement *current, t_mini *mini)
+static void	copy_args(t_mini *mini, t_statement *current)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	j = 0;
+	mini->additional_args = malloc(sizeof(char *) * \
+		(ft_find_array_size(current->argv, 1) + 1));
+	if (!mini->additional_args)
+		return ;
+	while (current->argv[i])
+	{
+		mini->additional_args[j] = current->argv[i];
+		j++;
+		i++;
+	}
+	mini->additional_args[j] = NULL;
+}
+
+int	find_and_set_last_redirect_out(t_statement *current, t_mini *mini)
 {
 	int	fd;
 
@@ -28,10 +48,16 @@ void	find_and_set_last_redirect_out(t_statement *current, t_mini *mini)
 		}
 		else if (current->operator != 1 && current->operator != 2)
 			break ;
+		if (current->next && current->next->argc > 1)
+			copy_args(mini, current->next);
 		current = current->next;
 	}
-	redirect_stdout(mini, fd, 0);
-	mini->current = current;
+//	redirect_stdout(mini, fd, 0);
+	if (current->operator == NONE)
+		mini->current = current->next;
+	else
+		mini->current = current;
+	return (fd);
 }
 
 int	find_and_set_last_redirect_in(t_statement *current, t_mini *mini)
@@ -51,6 +77,8 @@ int	find_and_set_last_redirect_in(t_statement *current, t_mini *mini)
 		}
 		if (current->operator != 3)
 			break ;
+		if (current->next && current->next->argc > 1)
+			copy_args(mini, current->next);
 		current = current->next;
 	}
 	redirect_stdin(mini, fd, 0); //sets stdin to file of last
@@ -68,6 +96,8 @@ void	find_and_set_last_redirect_in_until(t_statement *current, t_mini *mini)
 	end_word = NULL;
 	if (current->next)
 		end_word = current->next->argv[0];
+	if (current->next && current->next->argc > 1)
+		copy_args(mini, current->next);
 	current = redirect_input_until(current, end_word, mini);
 	if (current->operator == NONE)
 		mini->current = current->next;

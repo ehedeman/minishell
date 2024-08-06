@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 16:27:19 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:33:19 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ extern int	g_sig;
 //i was desperate, fuck the norm
 typedef struct s_exec
 {
-	char			**envp;
-	char			**args;
-	struct s_statement *current;
+	char				**envp;
+	char				**args;
+	struct s_statement	*current;
 }				t_exec;
 
 typedef struct s_remove_quotes
@@ -132,7 +132,7 @@ typedef struct s_mini
 	int					stdin_copy;
 	pid_t				pid;
 	int					invisible_file;//so i know if i need to remove temporary file in rm_in_until
-	char				*additional_args; //for the wc > file -l || in testing
+	char				**additional_args; //for the wc > file -l || in testing
 	}				t_mini;
 
 //main functions that happen before parsing
@@ -189,7 +189,7 @@ int			find_command(t_statement *current, t_mini *mini);
 int			check_builtins(t_statement *current, t_mini *mini, int i); //not static cuz needed by command_after_file_rdr
 
 //main_find_and_set_redirections.c
-void		find_and_set_last_redirect_out(t_statement *current, t_mini *mini);
+int			find_and_set_last_redirect_out(t_statement *current, t_mini *mini);
 int			find_and_set_last_redirect_in(t_statement *current, t_mini *mini);
 void		find_and_set_last_redirect_in_until(t_statement *current, \
 				t_mini *mini);
@@ -248,6 +248,7 @@ int			exec_command(t_statement *temp, t_mini *mini, int i);
 //execute_file_utils.c
 int			exec_com_fork(t_exec *exec, t_mini *mini, int i); //split half of exec_command | norm accurate
 int			exec_file_fork(t_exec *exec, t_mini *mini, int i);//split half of exec_file | norma accurate
+int			ft_find_array_size(char **array, int i);
 
 //fifty_shades_of_free.c
 int			free_env_args(char **envp, char **args, int mode); //frees the envp and args from the functions above

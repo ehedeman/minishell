@@ -6,7 +6,7 @@
 #    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/08/06 15:35:07 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/08/06 17:34:52 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,7 @@ GREEN = \033[0;32m
 NC = \033[0m
 
 all: $(LIBFT) $(CLIENT) $(NAME) #norm
+	@printf "$(NC)"
 
 $(NAME): $(OBJS_PREFIXED)
 	@$(CC) $(CFLAGS) $(OBJS_PREFIXED) -lreadline -Ilibft -L$(LIB_PATH) -lft -o $(NAME)

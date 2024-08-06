@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 12:52:43 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 12:44:46 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:30:58 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	initialize_mini(t_mini *mini, char **envp)
 	mini->fd_out = -1;
 	mini->fd_in = -1;
 	mini->temp_output = 0;
+	mini->additional_args = NULL;
 	ft_shlvl(mini);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:38:24 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 12:54:07 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:23:59 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int	redirection_out(t_statement *current, t_mini *mini)
 {
+	int	fd;
+
+	fd = find_and_set_last_redirect_out(current, mini); //do all output redirections
 	if (current->id == 0 || (current->previous
 			&& (current->previous->operator != 3
 				&& current->previous->operator != 4)))
@@ -22,7 +25,7 @@ int	redirection_out(t_statement *current, t_mini *mini)
 		find_command(current, mini);
 		reset_stdout(mini);
 	}
-	find_and_set_last_redirect_out(current, mini); //do all output redirections
+	redirect_stdout(mini, fd, 0);
 	print_output_file(mini);//print to the right file
 	reset_stdout(mini); //reset
 	set_temp_output_as_stdout(mini, 0); // to clear output file
