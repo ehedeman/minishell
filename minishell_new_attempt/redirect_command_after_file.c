@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:24:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 17:33:58 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:45:39 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static int	check_commands_rdr(t_statement *current, t_mini *mini, int i)
 		}
 		else
 		{
+			if (!ft_strcmp(current->argv[i], "bash"))
+				reset_std(mini);
 			exec_command(current, mini, 1);
 			return (0);
 		}
@@ -54,6 +56,8 @@ static void	rdr_out(t_statement *current, t_mini *mini)
 		}
 		current = current->next;
 	}
+	set_temp_output_as_stdout(mini, 0);
+	reset_stdout(mini);
 	redirect_stdout(mini, fd, 0);
 	check_commands_rdr(current, mini, 1);
 	reset_stdout(mini);
