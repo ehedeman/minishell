@@ -4,7 +4,7 @@ TO DO
 	[] 42header emails @student.42wolfsburg.de
 [] commands called through execve make the programm loop if failed (eg when the "file not found" message pops up)
 [] running ./minishell , bash and than ./minishell again is stucked in the .output
-[] cd -> /bin/cat: .output_the_first_cuz_what_the_fuck: No such file or directory
+[] cd -> /bin/cat: .output: No such file or directory
 [] idk where TEST-1 is comming from, but sth definately made the exit_status not be updated correctly anymore in case of file or command not found.
 [] cat
 [] .output file is not being deleted in the end
@@ -36,10 +36,10 @@ Pipes
 [OK] ls -la | grep ".c" | wc -l
 
 Redirection with pipes
-[OK] echo hello > out | wc -w
+[OK] echo hello > file | wc -w
 [OK] ls -la > file1 | ls -la > file2 (combination with pipe is working, just has the same issue that ls is run before creating file, like first test in redirection list)
 [] > file ls -la | > file1 ls -la :is creating both files when ctrl+D only and not print ls to them
-[] < file1 cat | wc -c > file2 :is creating file1 after ctrl+c and not wc, or at ctrl+d, but not wc properly
+[OK] < file1 cat | wc -c > file2 :is creating file1 after ctrl+c and not wc, or at ctrl+d, but not wc properly
 [OK] echo a >file | cat <file
 [OK] ls -la>file>file1>file2 | cat <file2
 [] >file>file1>file2 ls -l | cat <file2
