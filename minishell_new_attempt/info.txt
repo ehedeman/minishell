@@ -42,13 +42,13 @@ Redirection with pipes
 [OK] < file1 cat | wc -c > file2 :is creating file1 after ctrl+c and not wc, or at ctrl+d, but not wc properly
 [OK] echo a >file | cat <file
 [OK] ls -la>file>file1>file2 | cat <file2
-[] >file>file1>file2 ls -l | cat <file2
+[OK] >file>file1>file2 ls -l | cat <file2 ------> works but cat file2 is not supposed to print ls -la aka its a nice cool feature of minishell
 [okish] ls > | wc ...works like in bash but...
 	bash: syntax error near unexpected token `|'
 	minishell: syntax error near unexpected token '>'
 [let's just not go there] ls>|wc should create a wc file and print the ls output on it
-[] >>file echo hello | cat < info.txt (it creates the file and runs the cat on info.txt, but hello got lost)
-[] >>file echo '$USER' | cat <file (if file existed before, just cat whatever was there before, but it its not overwritten with $USER)
+[OK] >>file echo hello | cat < info.txt (it creates the file and runs the cat on info.txt, but hello got lost)
+[OK] >>file echo '$USER' | cat <file (if file existed before, just cat whatever was there before, but it its not overwritten with $USER)
 
 --------------------------------------------------------------------------------------------------------------------------------
 
