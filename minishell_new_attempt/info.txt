@@ -4,19 +4,19 @@ TO DO
 	[x] 42header emails @student.42wolfsburg.de
 [x] commands called through execve make the programm loop if failed (eg when the "file not found" message pops up)
 [x] running ./minishell , bash and than ./minishell again is stucked in the .output
-[] cd -> /bin/cat: .output_the_first_cuz_what_the_fuck: No such file or directory
-[] idk where TEST-1 is comming from, but sth definately made the exit_status not be updated correctly anymore in case of file or command not found.
-[] cat
-[] .output file is not being deleted in the end
-[] rm .output -> /bin/cat: .output: No such file or directory
-[] commands starting with < or > after running sth, if doing its thing and printing whatever is still stored in .output
+[x] cd -> /bin/cat: .output_the_first_cuz_what_the_fuck: No such file or directory
+[x] idk where TEST-1 is comming from, but sth definately made the exit_status not be updated correctly anymore in case of file or command not found.
+[x] cat
+[x] .output file is not being deleted in the end
+[x] rm .output -> /bin/cat: .output: No such file or directory
+[x] commands starting with < or > after running sth, if doing its thing and printing whatever is still stored in .output
 	for example:
 	1. echo hello
 	2. <nonexistentfile ls
 	will print
 	nonexistentfile: before and is still store in .output
 	hello
-[] add other shell names to the "list"
+[x] add other shell names to the "list"
 --------------------------------------------------------------------------------------------------------------------------------
 TESTS
 Redirection
