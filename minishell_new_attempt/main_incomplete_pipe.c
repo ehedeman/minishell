@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:31:52 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 12:53:24 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 12:33:30 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	check_incomplete_pipe(t_statement *temp)
 {
 	while (temp)
 	{
-		if (temp->id && temp->previous->operator == PIPE && !*temp->argv)
+		if (temp->id && temp->previous->operator == PIPE && !*temp->argv\
+				&& !temp->next)
 			return (1);
 		temp = temp->next;
 	}

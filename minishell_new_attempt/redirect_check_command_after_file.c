@@ -6,13 +6,13 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:28:14 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 16:17:59 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 12:37:21 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_command_after_file_rdr_2(t_statement *current, \
+static int	check_command_after_file_rdr_two(t_statement *current, \
 	t_operator operator)
 {
 	while (current->operator == operator && current->next->next)
@@ -37,12 +37,12 @@ int	check_command_after_file_rdr(t_statement *current)
 		}
 		else if (current->operator == 3)
 		{
-			if (check_command_after_file_rdr_2(current, 3))
+			if (check_command_after_file_rdr_two(current, 3))
 				return (1);
 		}
 		else if (current->operator == 4)
 		{
-			if (check_command_after_file_rdr_2(current, 4))
+			if (check_command_after_file_rdr_two(current, 4))
 				return (1);
 		}
 	}

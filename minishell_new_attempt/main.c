@@ -6,13 +6,33 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 11:50:57 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 12:48:05 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_sig;
+
+void	print_statements(t_statement *statements)
+{
+	t_statement *current = statements;
+	int i;
+	while (current)
+	{
+		i = 0;
+		printf("Statement node: %d\n", current->id);
+		printf("Operator: %d\n", current->operator);
+		// printf("Arguments\n");
+		// while(i < current->argc)
+		// {
+		// 	printf("  argv[%d]: %s\n", i, current->argv[i]);
+		// 	i++;	
+		// }
+		current = current->next;
+		printf("\n");
+	}
+}
 
 int	process_input_one(t_mini *mini)
 {
@@ -92,25 +112,6 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-// void	print_statements(t_statement *statements)
-// {
-// 	t_statement *current = statements;
-// 	int i;
-// 	while (current)
-// 	{
-// 		i = 0;
-// 		printf("Statement node: %d\n", current->id);
-// 		printf("Operator: %d\n", current->operator);
-// 		printf("Arguments\n");
-// 		while(i < current->argc)
-// 		{
-// 			printf("  argv[%d]: %s\n", i, current->argv[i]);
-// 			i++;	
-// 		}
-// 		current = current->next;
-// 		printf("\n");
-// 	}
-// }
 
 //we can delete this later, i was getting lost when testing in different shlvls
 // char	*ft_prompt(void)

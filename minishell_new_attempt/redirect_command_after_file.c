@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:24:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 11:45:39 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 12:51:04 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@ static void	rdr_out(t_statement *current, t_mini *mini)
 	redirect_stdout(mini, fd, 0);
 	check_commands_rdr(current, mini, 1);
 	reset_stdout(mini);
-	current = current->next;
-	mini->current = current;
+	if (current->operator == NONE)
+		mini->current = current->next;
+	else
+		mini->current = current;
 }
 
 static void	rdr_in_until(t_statement *current, t_mini *mini)
