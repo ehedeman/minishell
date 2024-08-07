@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:20:16 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 15:13:58 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:16:36 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ static void	child(char **args, char **envp)
 static char	**allocate_args(t_mini *mini)
 {
 	char	**args;
+	mode_t	mode;
 
+	mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
+	mini->temp_output = open(mini->output_path, O_RDWR | O_CREAT, mode);//makes sure the file really exists to avoid error messages
+	close(mini->temp_output);
 	args = malloc(sizeof(char *) * (2 + 1));
 	if (!args)
 		return (NULL);
