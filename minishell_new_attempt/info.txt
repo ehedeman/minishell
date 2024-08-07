@@ -1,28 +1,14 @@
 TO DO
-[x] pipes with redirection (basic and multiple pipes work)
 [] norm
 	[x] 42header emails @student.42wolfsburg.de
-[x] commands called through execve make the programm loop if failed (eg when the "file not found" message pops up)
-[x] running ./minishell , bash and than ./minishell again is stucked in the .output
-[x] cd -> /bin/cat: .output_the_first_cuz_what_the_fuck: No such file or directory
-[x] idk where TEST-1 is comming from, but sth definately made the exit_status not be updated correctly anymore in case of file or command not found.
-[x] cat
-[x] .output file is not being deleted in the end
-[x] rm .output -> /bin/cat: .output: No such file or directory
-[x] commands starting with < or > after running sth, if doing its thing and printing whatever is still stored in .output
-	for example:
-	1. echo hello
-	2. <nonexistentfile ls
-	will print
-	nonexistentfile: before and is still store in .output
-	hello
-[x] add other shell names to the "list"
+[] add other shell names to the "list"
+[] ./minishell, ./minishell, exit prints /bin/cat error message
+
 --------------------------------------------------------------------------------------------------------------------------------
-TESTS
+TESTS (test with existend and non existend files)
 Redirection
 [OK] ls > file1 (well, in bash it creates the file first if not existent, than runs ls -la, so the file name is also on the list inside the file)
-[OK] <file1 cat //not sure what it was supposed to do but i implemented the > file command kind of command-structure to work
-								it should cat whats in the file or if there is no file "no such file or dir.."
+[OK] <file1 cat
 [OK] <file ls
 [OK] >file ls -la		is printing the ls -la to file, but also throwing /bin/cat: .output: No such file or directory on terminal
 [OK] ls >file1.txt -l
@@ -36,7 +22,7 @@ Pipes
 [OK] ls -la | grep ".c" | wc -l
 
 Redirection with pipes
-[OK] echo hello > out | wc -w
+[OK] echo hello > file | wc -w
 [OK] ls -la > file1 | ls -la > file2 (combination with pipe is working, just has the same issue that ls is run before creating file, like first test in redirection list)
 [OK] > file ls -la | > file1 ls -la :is creating both files when ctrl+D only and not print ls to them
 [OK] < file1 cat | wc -c > file2 :is creating file1 after ctrl+c and not wc, or at ctrl+d, but not wc properly
@@ -134,3 +120,18 @@ but not sure
 is the part where the "./" gets strjoined to the rest, but because of norm  and for simplicity
 i made it into two)
 [x]norm arg_expansion
+[x] pipes with redirection (basic and multiple pipes work)
+[x] commands called through execve make the programm loop if failed (eg when the "file not found" message pops up)
+[x] running ./minishell , bash and than ./minishell again is stucked in the .output
+[x] cd -> /bin/cat: .output_the_first_cuz_what_the_fuck: No such file or directory
+[x] idk where TEST-1 is comming from, but sth definately made the exit_status not be updated correctly anymore in case of file or command not found.
+[x] cat
+[x] .output file is not being deleted in the end
+[x] rm .output -> /bin/cat: .output: No such file or directory
+[x] commands starting with < or > after running sth, if doing its thing and printing whatever is still stored in .output
+	for example:
+	1. echo hello
+	2. <nonexistentfile ls
+	will print
+	nonexistentfile: before and is still store in .output
+	hello

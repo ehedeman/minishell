@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:20:16 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 16:16:36 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:18:17 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,8 @@ static void	free_args(char **args)
 static void	child(char **args, char **envp)
 {
 	if (execve(args[0], args, envp) == -1)
-	{
-		write(2, "TEST\n", 5);
 		free_args(args);
-		if (errno == EACCES)
-			exit (126);
-		else if (errno == ENOENT)
-			exit (127);
-		else
-			exit (1);
-	}
-	else
-		exit(EXIT_SUCCESS);
+	return ;
 }
 
 static char	**allocate_args(t_mini *mini)
@@ -58,17 +48,6 @@ static char	**allocate_args(t_mini *mini)
 	return (args);
 }
 
-static void	parent(t_mini *mini)
-{
-	int		status;
-
-	waitpid(mini->pid, &status, WUNTRACED);
-	if (WIFEXITED(status))
-		mini->exit_status = WEXITSTATUS(status);
-	else
-		mini->exit_status = 1;
-}
-
 int	print_output_file(t_mini *mini)
 {
 	char	**args;
@@ -88,7 +67,7 @@ int	print_output_file(t_mini *mini)
 	else if (mini->pid == 0)
 		child(args, envp);
 	else
-		parent(mini);
+		wait(&mini->pid);
 	free_args(args);
 	return (0);
 }
