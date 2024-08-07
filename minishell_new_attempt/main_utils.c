@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 12:52:43 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 15:11:39 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 15:18:13 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	initialize_mini(t_mini *mini, char **envp)
 	mini->additional_args = NULL;
 	mini->pwd_save = malloc(PATH_MAX + 1);
 	getcwd(mini->pwd_save, PATH_MAX + 1);
-	mini->output_path = ft_strjoin(mini->pwd_save, ".output");
+	mini->output_path = ft_strjoin(mini->pwd_save, "/.output");
 	ft_shlvl(mini);
 }
 
