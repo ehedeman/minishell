@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_file_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:04:56 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 17:28:33 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:43:33 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	exec_com_fork(t_exec *exec, t_mini *mini, int i)
 {
 	int		status;
 
-	copy_temp(exec, 1, i + 1, mini); // 1 because args[0] was set in exec_command
+	copy_temp(exec, 1, i + 1, mini);
 	mini->pid = fork();
 	if (mini->pid == -1)
 	{
@@ -97,7 +97,7 @@ int	exec_file_fork(t_exec *exec, t_mini *mini, int i)
 {
 	int		status;
 
-	copy_temp(exec, 0, i, mini); // 0 because args[0] was not set in exec_file
+	copy_temp(exec, 0, i, mini);
 	mini->pid = fork();
 	if (mini->pid == -1)
 	{

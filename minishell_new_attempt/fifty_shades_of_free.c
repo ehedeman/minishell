@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   fifty_shades_of_free.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:01:01 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 15:08:53 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:40:43 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//none static free functions cuz im tired of always searching to change smth
 
 static void	free_mode(int mode, char *trimmed_cmd, char **args)
 {
@@ -32,7 +30,7 @@ static void	free_mode(int mode, char *trimmed_cmd, char **args)
 	}
 }
 
-int	free_env_args(char **envp, char **args, int mode) //exec_command free
+int	free_env_args(char **envp, char **args, int mode)
 {
 	int		i;
 	char	*trimmed_cmd;

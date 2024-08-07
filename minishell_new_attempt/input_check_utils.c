@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_check_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 14:57:12 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 14:58:49 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 22:06:33 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

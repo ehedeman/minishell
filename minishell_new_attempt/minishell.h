@@ -3,43 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 15:33:36 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 22:24:55 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <stdbool.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
-#include <signal.h>
+#ifndef MINISHELL_H
+# define MINISHELL_H
+# include "libft/libft.h"
+# include <stdio.h>
+# include <unistd.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdlib.h>
+# include <string.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <stdbool.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
+# include <signal.h>
 
-#define OPERATORS "<>|"
-#define QUOTES "\"\'"
-#define DELIMS "\"\' "
-#define REDIRECTS "<>"
+# define OPERATORS "<>|"
+# define QUOTES "\"\'"
+# define DELIMS "\"\' "
+# define REDIRECTS "<>"
 
-#define UNCLOSED_QUOTES "minishell: syntax error unclosed quotes.\n"
-#define SYNTAX_ERR_STR "minishell: syntax error.\n"
-#define MISSMATCHED_QUOTES "minishell: syntax error missmatched quotes.\n"
-#define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token '.\n"
-#define UNFINI_OUT_RED "minishell: syntax error near unexpected token '>'.\n"
-#define UNFINI_IN_RED "minishell: syntax error near unexpected token '<'.\n"
-#define UNFINI_PIPE "minishell: syntax error near unexpected token '|'.\n"
-#define FAILED_MALLOC "minishell: failed to allocate needed memory.\n"
-#define FAILED_PATH "minishell: failed to find path.\n"
-#define FAILED_FORK "minishell: system error regarding forks\n"
-#define FAILED_EXECVE "minishell: system error regarding execve\n"
+# define UNCLOSED_QUOTES "minishell: syntax error unclosed quotes.\n"
+# define SYNTAX_ERR_STR "minishell: syntax error.\n"
+# define MISSMATCHED_QUOTES "minishell: syntax error missmatched quotes.\n"
+# define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token '.\n"
+# define UNFINI_OUT_RED "minishell: syntax error near unexpected token '>'.\n"
+# define UNFINI_IN_RED "minishell: syntax error near unexpected token '<'.\n"
+# define UNFINI_PIPE "minishell: syntax error near unexpected token '|'.\n"
+# define FAILED_MALLOC "minishell: failed to allocate needed memory.\n"
+# define FAILED_PATH "minishell: failed to find path.\n"
+# define FAILED_FORK "minishell: system error regarding forks\n"
+# define FAILED_EXECVE "minishell: system error regarding execve\n"
 
 extern int	g_sig;
 
@@ -51,14 +53,14 @@ typedef struct s_exec
 	struct s_statement	*current;
 }				t_exec;
 
-typedef struct s_remove_quotes
+typedef struct s_rm_quotes
 {
 	int		size;
 	int		i;
 	int		j;
 	bool	quotes;
 	char	quote_c;
-}				t_remove_quotes;
+}				t_rm_quotes;
 
 typedef enum e_operator
 {
@@ -120,7 +122,7 @@ typedef struct s_mini
 	char				*input;
 	int					operator;
 	char				*pwd_save;
-	char				*output_path;
+	char				*out_path;
 	t_statement			*com_tab;
 	t_statement			*current;
 	t_env_list			*env;
@@ -132,9 +134,9 @@ typedef struct s_mini
 	int					stdout_copy;
 	int					stdin_copy;
 	pid_t				pid;
-	int					invisible_file;//so i know if i need to remove temporary file in rm_in_until
-	char				**additional_args; //for the wc > file -l || in testing
-	}				t_mini;
+	int					invisible_file;
+	char				**additional_args;
+}	t_mini;
 
 //main functions that happen before parsing
 //input_check.c
@@ -156,7 +158,7 @@ int			get_token_len(char *input);
 int			make_statement_list(t_statement *current, char **parsed, int i);
 
 char		*remove_quotes(char *parsed);
-void		unquoted_cpy(char *parsed, char *unquoted_parsed, t_remove_quotes *rem);
+void		unquoted_cpy(char *parsed, char *unquoted_parsed, t_rm_quotes *rem);
 int			copy_quotes_dollar_sign(char *unquoted_parsed, char *parsed);
 int			check_quotes_dollar_sign(char *parsed_at_i);
 int			is_onstr(const char *str, int c);
@@ -187,7 +189,7 @@ int			execution(t_mini *mini);
 
 //main_check_command_utils.c
 int			find_command(t_statement *current, t_mini *mini);
-int			check_builtins(t_statement *current, t_mini *mini, int i); //not static cuz needed by command_after_file_rdr
+int			check_builtins(t_statement *current, t_mini *mini, int i);
 
 //main_find_and_set_redirections.c
 int			find_and_set_last_redirect_out(t_statement *current, t_mini *mini);
@@ -223,7 +225,10 @@ int			get_fd(t_statement *temp);
 //redirect_command_after_file.c
 void		command_after_file_rdr(t_statement *temp, t_mini *mini);
 int			check_command_after_file_rdr(t_statement *temp);
+
+//redirect_check_command_after_file.c
 int			check_shell(char *argv);
+int			check_command_after_file_rdr(t_statement *current);
 
 //redirect_std.c
 int			redirect_stdout(t_mini *mini, int fd, int mode);
@@ -244,16 +249,16 @@ t_statement	*create_rm_node(void);
 int			copy_content(char **input);
 
 //execute_file.c
-int			exec_file(t_statement *temp, t_mini *mini, int i); //i is needed for the special case thing
+int			exec_file(t_statement *temp, t_mini *mini, int i);
 int			exec_command(t_statement *temp, t_mini *mini, int i);
 
 //execute_file_utils.c
-int			exec_com_fork(t_exec *exec, t_mini *mini, int i); //split half of exec_command | norm accurate
-int			exec_file_fork(t_exec *exec, t_mini *mini, int i);//split half of exec_file | norma accurate
+int			exec_com_fork(t_exec *exec, t_mini *mini, int i);
+int			exec_file_fork(t_exec *exec, t_mini *mini, int i);
 int			ft_find_array_size(char **array, int i);
 
 //fifty_shades_of_free.c
-int			free_env_args(char **envp, char **args, int mode); //frees the envp and args from the functions above
+int			free_env_args(char **envp, char **args, int mode);
 void		free_com_tab(t_mini *mini);
 void		free_input(char **input);
 void		free_node_input(t_statement *temp, char **input);
@@ -306,3 +311,5 @@ void		free_history(t_history *history);
 
 //testing
 void		print_statements(t_statement *statements);
+
+#endif

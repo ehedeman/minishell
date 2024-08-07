@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_check_command_after_file.c                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:28:14 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 14:22:42 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 22:24:15 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,22 @@ int	check_command_after_file_rdr(t_statement *current)
 				return (1);
 		}
 	}
+	return (0);
+}
+
+int	check_shell(char *argv)
+{
+	if (!ft_strcmp(argv, "bash"))
+		return (1);
+	else if (!ft_strcmp(argv, "zsh"))
+		return (1);
+	else if (!ft_strcmp(argv, "sh"))
+		return (1);
+	else if (!ft_strcmp(argv, "fish"))
+		return (1);
+	else if (!ft_strcmp(argv, "tmux"))
+		return (1);
+	else if (!ft_strcmp(argv, "dash"))
+		return (1);
 	return (0);
 }

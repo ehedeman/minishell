@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+         #
+#    By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/08/06 17:34:52 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/08/07 18:44:58 by smatschu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC = 	main.c								\
 		main_remove_output_file.c			\
 		input_check.c						\
 		input_check_utils.c					\
-		input_check_two.c					\
+		input_check2.c						\
 		parsing.c							\
 		parsing_get_nbr_parsed_args.c		\
 		parsing_get_token_length.c			\

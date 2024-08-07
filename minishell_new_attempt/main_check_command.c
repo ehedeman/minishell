@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_check_command.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 11:56:46 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:45:53 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static t_statement	*check_redirection(t_mini *mini, t_statement *current)
 	if (current && (current->operator == 1 || current->operator == 2))
 	{
 		redirection_out(current, mini);
-		current = mini->current; //set current to last rdr of output
+		current = mini->current;
 	}
 	if (current && current->operator == 3)
 	{
@@ -59,7 +59,7 @@ static void	check_commands(t_mini *mini, t_statement *first)
 	if (!current)
 		return ;
 	mini->invisible_file = 0;
-	if (check_incomplete_pipe(first)) //if theres a incomplete PIPE then complete pipe before anything else
+	if (check_incomplete_pipe(first))
 		complete_pipe(first);
 	while (current)
 	{
@@ -70,7 +70,7 @@ static void	check_commands(t_mini *mini, t_statement *first)
 			mini->additional_args = NULL;
 		}
 		if (mini->invisible_file == 1)
-			rm_invisible_file(mini, NULL); //from rdr_input_until
+			rm_invisible_file(mini, NULL);
 		if (!current)
 		{
 			reset_stdout(mini);
@@ -88,7 +88,7 @@ int	execution(t_mini *mini)
 	mini->temp_output = 0;
 	set_temp_output_as_stdout(mini, 0);
 	reset_stdout(mini);
-	if (check_command_after_file_rdr(mini->current)) //is for inverted inpout (> hello echo hello)
+	if (check_command_after_file_rdr(mini->current))
 		command_after_file_rdr(mini->current, mini);
 	if (!mini->current)
 	{

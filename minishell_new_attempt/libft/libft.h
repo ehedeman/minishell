@@ -6,18 +6,21 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:35:08 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/07/14 15:06:34 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/07 22:03:58 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
-#include <string.h>
-#include <fcntl.h>
-#include "ft_printf.h"
+#ifndef LIBFT_H
+# define LIBFT_H
+
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <string.h>
+# include <ctype.h>
+# include <string.h>
+# include <fcntl.h>
+# include "ft_printf.h"
 
 typedef struct s_list
 {
@@ -76,3 +79,5 @@ void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), \
 				void (*del)(void *));
 int				ft_strcmp(const char *s1, const char *s2);
+
+#endif

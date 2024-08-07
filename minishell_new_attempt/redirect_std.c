@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_std.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 11:19:24 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 14:48:53 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 22:00:40 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	reset_std(t_mini *mini)
 	reset_stdin(mini);
 }
 
-//mode 1 needs to be called if its file to file redirect, mode two if its STDOUT to file rd
 int	redirect_stdin(t_mini *mini, int fd, int mode)
 {
 	if (fd != 0 && fd != -1)

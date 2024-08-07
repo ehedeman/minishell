@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_command_after_file.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:24:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 15:30:24 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 22:21:07 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	check_shell(char *argv)
-{
-	if (!ft_strcmp(argv, "bash"))
-		return (1);
-	else if (!ft_strcmp(argv, "zsh"))
-		return (1);
-	else if (!ft_strcmp(argv, "sh"))
-		return (1);
-	else if (!ft_strcmp(argv, "fish"))
-		return (1);
-	else if (!ft_strcmp(argv, "tmux"))
-		return (1);
-	else if (!ft_strcmp(argv, "dash"))
-		return (1);
-	return (0);
-}
 
 static int	check_commands_rdr(t_statement *current, t_mini *mini, int i)
 {
@@ -110,8 +93,8 @@ static t_statement	*rdr_in(t_statement *current, t_mini *mini, int fd)
 	{
 		if (current->operator == 3)
 		{
-			fd = redirect_input(current); //open file
-			if (fd == -1) //nessecary cuz if file doesnt exist then all stops
+			fd = redirect_input(current);
+			if (fd == -1)
 				return (NULL);
 			if (current->next && current->next->operator == 3)
 				close(fd);
@@ -129,7 +112,6 @@ static t_statement	*rdr_in(t_statement *current, t_mini *mini, int fd)
 		return (current->next);
 	else
 		return (current);
-
 }
 
 void	command_after_file_rdr(t_statement *current, t_mini *mini)

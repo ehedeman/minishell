@@ -1,11 +1,22 @@
 TO DO
-[] norm
-	[x] 42header emails @student.42wolfsburg.de
-[x] add other shell names to the "list"
-[x] ./minishell, ./minishell, exit prints /bin/cat error message
+[] << EOF :ctrl+c not exiting
+[] go through eval sheet
+[] main.c and minishell.h-> delete stuff for debugging in the end, rest of norm should be ok.
+
+INFO: main_pipes.c -> yes, both the exit(EXIT_FAILURE) are necessary,
+because the exit in the child process is only for the child,
+to make sure it terminates when its done with its shit, is the signal for the parent to end with the wait.
+The exit after the pipe failure is an error check for the parent process only, in case the pipe could not be created.
 
 --------------------------------------------------------------------------------------------------------------------------------
-TESTS (test with existend and non existend files)
+
+IN PROGRESS
+[smatschu]
+
+[ehedeman]
+
+--------------------------------------------------------------------------------------------------------------------------------
+TESTS (test with existent and non existent files)
 Redirection
 [OK] ls > file1 (well, in bash it creates the file first if not existent, than runs ls -la, so the file name is also on the list inside the file)
 [OK] <file1 cat
@@ -36,38 +47,6 @@ Redirection with pipes
 [OK] >>file echo hello | cat < info.txt (it creates the file and runs the cat on info.txt, but hello got lost)
 [OK] >>file echo '$USER' | cat <file (if file existed before, just cat whatever was there before, but it its not overwritten with $USER)
 
---------------------------------------------------------------------------------------------------------------------------------
-
-IN PROGRESS
-[smatschu]
-[]echo $? should print exit value
-	[x] bash commands
-	[x] ./whatever
-	[x] exit 123 or any number higher than 255 (you can enter bash or ./minishell and exit, than echo $? to see if it gets the right value)
-	[x] command or file than does not exist (127)
-	[x] file without permission (126)
-	[] syntax errors, missing keywords or commands -> exit_status 2
-		[x] for example: exit asdasd -> exit_status 2 (exit 234 asd -> 1)
-		[] others, in parsing maybe? -> have to change main_error and wherever it is being called to take mini and use mini->exit_status
-	[] script terminated by ctrl+c -> exit_status 130
-	[x] ctrl D exit with 0, not 1
-
-
-[ehedeman]
-[]Parsing:
-	[x] check operator and lack of spaces in general
-
-IDEA:
-	pipes and redirections established at the beginning: a file descriptor array which gets sorted through 1 by 1 (maybe pipes and redirections seperately)
-
-
---------------------------------------------------------------------------------------------------------------------------------
-OPTIONAL(?)
-[not requested on subject, so no]history: with one value as argument to change ammount of lines from history to print
-[not requested on subject, so no]history: -c to clear the history
-[]bonus only?
-	echo "'$USER'" should print 'USER_VALUE'
-	echo '"$USER"' should print "$USER"
 
 --------------------------------------------------------------------------------------------------------------------------------
 DONE
@@ -135,3 +114,24 @@ i made it into two)
 	will print
 	nonexistentfile: before and is still store in .output
 	hello
+[x] add other shell names to the "list"
+[x] ./minishell, ./minishell, exit prints /bin/cat error message
+[x] 42header emails @student.42wolfsburg.de
+[x]echo $? should print exit value
+	[x] bash commands
+	[x] ./whatever
+	[x] exit 123 or any number higher than 255 (you can enter bash or ./minishell and exit, than echo $? to see if it gets the right value)
+	[x] command or file than does not exist (127)
+	[x] file without permission (126)
+	[x] syntax errors, missing keywords or commands -> exit_status 2
+		[x] for example: exit asdasd -> exit_status 2 (exit 234 asd -> 1)
+		[unnecessary] others, in parsing maybe? -> have to change main_error and wherever it is being called to take mini and use mini->exit_status
+	[not doable without global] script terminated by ctrl+c -> exit_status 130
+	[x] ctrl D exit with 0, not 1
+[x] check operator and lack of spaces in general
+[not requested on subject, so no]history: with one value as argument to change ammount of lines from history to print
+[not requested on subject, so no]history: -c to clear the history
+[bonus only, no need]
+	echo "'$USER'" should print 'USER_VALUE'
+	echo '"$USER"' should print "$USER"
+[x] norm

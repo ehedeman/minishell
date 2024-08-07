@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_print_output_file.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:20:16 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 16:18:17 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 21:47:34 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	**allocate_args(t_mini *mini)
 	mode_t	mode;
 
 	mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
-	mini->temp_output = open(mini->output_path, O_RDWR | O_CREAT, mode);//makes sure the file really exists to avoid error messages
+	mini->temp_output = open(mini->out_path, O_RDWR | O_CREAT, mode);
 	close(mini->temp_output);
 	args = malloc(sizeof(char *) * (2 + 1));
 	if (!args)
@@ -40,10 +40,10 @@ static char	**allocate_args(t_mini *mini)
 	args[0] = ft_strjoin("/bin/", "cat");
 	if (!args[0])
 		return (NULL);
-	args[1] = malloc(sizeof(char) * ft_strlen(mini->output_path) + 1);
+	args[1] = malloc(sizeof(char) * ft_strlen(mini->out_path) + 1);
 	if (!args[1])
 		return (NULL);
-	ft_strlcpy(args[1], mini->output_path, ft_strlen(mini->output_path) + 1);
+	ft_strlcpy(args[1], mini->out_path, ft_strlen(mini->out_path) + 1);
 	args[2] = NULL;
 	return (args);
 }

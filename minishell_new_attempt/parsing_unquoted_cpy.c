@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_unquoted_cpy.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 14:35:00 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 14:44:33 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 22:12:54 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	help_function(t_remove_quotes *r, char *parsed, \
+static void	help_function(t_rm_quotes *r, char *parsed, \
 		char *unquoted_parsed)
 {
 	int	save;
@@ -32,7 +32,7 @@ static void	help_function(t_remove_quotes *r, char *parsed, \
 }
 
 static void	unquoted_cpy_2(char *parsed, char *unquoted_parsed, \
-		t_remove_quotes *r)
+		t_rm_quotes *r)
 {
 	while (parsed[r->i])
 	{
@@ -51,7 +51,7 @@ static void	unquoted_cpy_2(char *parsed, char *unquoted_parsed, \
 }
 
 static void	unquoted_cpy_1(char *parsed, char *unquoted_parsed, \
-		t_remove_quotes *r)
+		t_rm_quotes *r)
 {
 	int	save;
 
@@ -71,7 +71,7 @@ static void	unquoted_cpy_1(char *parsed, char *unquoted_parsed, \
 	}
 }
 
-void	unquoted_cpy(char *parsed, char *unquoted_parsed, t_remove_quotes *r)
+void	unquoted_cpy(char *parsed, char *unquoted_parsed, t_rm_quotes *r)
 {
 	while (parsed[r->i])
 	{

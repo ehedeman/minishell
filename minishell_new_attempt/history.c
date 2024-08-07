@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:11:09 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/05 16:11:55 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:43:25 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_history(t_history *history)
 	int	i;
 
 	i = 0;
-	history->capacity = 5;
+	history->capacity = 10;
 	history->commands = malloc(history->capacity * sizeof(char *));
 	if (!history->commands)
 		perror("history malloc");

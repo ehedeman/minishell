@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_get_token_length.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 13:20:02 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 13:32:18 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 21:50:25 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ static void	get_token_len_1(char *input, int *i, bool *quotes, int *length)
 {
 	while (input[*i])
 	{
-		if (is_spaces(input[*i]) && !*quotes) //if there is space without it being in quotation
+		if (is_spaces(input[*i]) && !*quotes)
 			break ;
-		else if (is_onstr(OPERATORS, input[*i]) && !*quotes) //if theres unquoted operators
+		else if (is_onstr(OPERATORS, input[*i]) && !*quotes)
 			break ;
 		*length += 1;
-		if (is_onstr(QUOTES, input[*i]) && input[*i + 1] == ' ') //if we have quote the word is over 100%
+		if (is_onstr(QUOTES, input[*i]) && input[*i + 1] == ' ')
 			break ;
 		else if (is_onstr(QUOTES, input[*i]))
 			*quotes = !*quotes;
@@ -38,13 +38,13 @@ int	get_token_len(char *input)
 	quotes = false;
 	i = 0;
 	length = check_doubles(input, i);
-	if (length == 1 || length == 2) //if its either double quotes or double operators
+	if (length == 1 || length == 2)
 		return (length);
 	while (is_spaces(input[i]))
-		i += 1; //skip whitespace
+		i += 1;
 	if (is_onstr(QUOTES, input[i]) == 1)
 	{
-		quotes = !quotes; //if there's a quote, either it completes or is a new one
+		quotes = !quotes;
 		length += 1;
 		i += 1;
 	}

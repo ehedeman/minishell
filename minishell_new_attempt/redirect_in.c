@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:23:25 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 15:02:54 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 21:59:46 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	rm_invisible_file(t_mini *mini, char **input)
 {
 	t_statement	*rm_node;
 
-	rm_node = create_rm_node(); // creates node with rm and invisible file name
+	rm_node = create_rm_node();
 	exec_command(rm_node, mini, 0);
 	free_node_input(rm_node, input);
 	mini->invisible_file = 0;
@@ -40,7 +40,7 @@ int	redirect_input(t_statement *current)
 static void	clear_input(char **input, int i)
 {
 	int	j;
-	
+
 	j = 0;
 	while (j <= i)
 	{
@@ -49,7 +49,8 @@ static void	clear_input(char **input, int i)
 	}
 }
 
-static t_statement	*get_input(char **input, char *end_word, t_statement *current, int *i)
+static t_statement	*get_input(char **input, char *end_word, \
+								t_statement *current, int *i)
 {
 	current = current->next;
 	while (*i < 1000)
@@ -86,20 +87,20 @@ t_statement	*redirect_input_until(t_statement *current, char *end_word, \
 	int			fd;
 
 	i = 0;
-	input = init_input(); //malloc of input
+	input = init_input();
 	if (!input)
 		return (NULL);
-	current = get_input(input, end_word, current, &i); //readline part in there
+	current = get_input(input, end_word, current, &i);
 	if (!current)
 		return (NULL);
-	free(input[i]); //free end word part of input
+	free(input[i]);
 	input[i] = NULL;
-	copy_content(input); //creates invisible file, copies content
-	free_input(input); //no longer needed
-	fd = open(".temp_file", O_RDWR); //just opens the file regularly to read from it
+	copy_content(input);
+	free_input(input);
+	fd = open(".temp_file", O_RDWR);
 	if (fd < 0)
 		return (NULL);
-	redirect_stdin(mini, fd, 0); //automatically sets file as stdin as it should
+	redirect_stdin(mini, fd, 0);
 	mini->invisible_file = 1;
 	return (current);
 }

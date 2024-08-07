@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 15:09:16 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:49:32 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,55 @@
 
 int	g_sig;
 
-void	print_statements(t_statement *statements)
-{
-	t_statement *current = statements;
-	int i;
-	while (current)
-	{
-		i = 0;
-		printf("Statement node: %d\n", current->id);
-		printf("Operator: %d\n", current->operator);
-		// printf("Arguments\n");
-		// while(i < current->argc)
-		// {
-		// 	printf("  argv[%d]: %s\n", i, current->argv[i]);
-		// 	i++;	
-		// }
-		current = current->next;
-		printf("\n");
-	}
-}
+//char *prompt;
+// prompt = ft_prompt();
+// mini->input = readline(prompt);
+// free(prompt);
+
+//we can delete this later, i was getting lost when testing in different shlvls
+// char	*ft_prompt(void)
+// {
+// 	char	*shlvl;
+// 	char	*prompt;
+// 	char	*current;
+
+// 	shlvl = getenv("SHLVL");
+// 	prompt = ft_strjoin("\033[1;31m", "minishell shlvl ");
+// 	current = prompt;
+// 	prompt = ft_strjoin(prompt, shlvl);
+// 	free(current);
+// 	current = prompt;
+// 	prompt = ft_strjoin(prompt, ": \033[0m");
+// 	free(current);
+// 	return (prompt);
+// }
+
+// void	print_statements(t_statement *statements)
+// {
+// 	t_statement	*current;
+// 	int			i;
+
+// 	current = statements;
+// 	while (current)
+// 	{
+// 		i = 0;
+// 		printf("Statement node: %d\n", current->id);
+// 		printf("Operator: %d\n", current->operator);
+// 		printf("Arguments\n");
+// 		while (i < current->argc)
+// 		{
+// 			printf("  argv[%d]: %s\n", i, current->argv[i]);
+// 			i++;
+// 		}
+// 		current = current->next;
+// 		printf("\n");
+// 	}
+// }
 
 int	process_input_one(t_mini *mini)
 {
-	if (whitespace_check(mini)) //frees input if nessecary
-		return (-1); // = continue ;
+	if (whitespace_check(mini))
+		return (-1);
 	if (input_check(mini->input))
 	{
 		add_history(mini->input);
@@ -47,7 +72,7 @@ int	process_input_one(t_mini *mini)
 		{
 			ft_env_lst_clear(mini->env, free);
 			free(mini->input);
-			return (1); // = return ;
+			return (1);
 		}
 		replace_env_vars(mini->com_tab->argv, mini);
 		if (execution(mini) == -1)
@@ -62,10 +87,6 @@ int	process_input_one(t_mini *mini)
 	return (0);
 }
 
-//char *prompt;
-// prompt = ft_prompt();
-// mini->input = readline(prompt);
-// free(prompt);
 void	process_input(t_mini *mini, int return_value)
 {
 	while (1)
@@ -113,22 +134,3 @@ int	main(int argc, char **argv, char **envp)
 		free(mini.pwd_save);
 	return (0);
 }
-
-
-//we can delete this later, i was getting lost when testing in different shlvls
-// char	*ft_prompt(void)
-// {
-// 	char	*shlvl;
-// 	char	*prompt;
-// 	char	*current;
-
-// 	shlvl = getenv("SHLVL");
-// 	prompt = ft_strjoin("\033[1;31m", "minishell shlvl ");
-// 	current = prompt;
-// 	prompt = ft_strjoin(prompt, shlvl);
-// 	free(current);
-// 	current = prompt;
-// 	prompt = ft_strjoin(prompt, ": \033[0m");
-// 	free(current);
-// 	return (prompt);
-// }

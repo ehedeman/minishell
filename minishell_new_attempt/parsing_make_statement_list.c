@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_make_statement_list.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 13:09:03 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 15:07:05 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 21:52:04 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	make_statement_list_1(t_statement *current, char **parsed, \
 	return (0);
 }
 
-int	make_statement_list(t_statement *current, char **parsed, int i) //i = variable for word pointers //j = variable for current-argv-pointer
+int	make_statement_list(t_statement *current, char **parsed, int i)
 {
 	int	j;
 

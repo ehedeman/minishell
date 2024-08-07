@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 11:37:36 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 17:36:13 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:43:29 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ static t_exec	*allocate_exec(void)
 	return (new);
 }
 
-//g_sig tells program that theres a file being executed
-int	exec_command(t_statement *temp, t_mini *mini, int i) //i = 1 or 0 depending on where it got called from
+/* g_sig tells program that theres a file being executed.*/
+int	exec_command(t_statement *temp, t_mini *mini, int i)
 {
 	t_exec	*exec;
 

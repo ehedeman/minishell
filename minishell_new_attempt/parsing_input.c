@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 13:06:34 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 14:47:32 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 21:51:37 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	copy_input_to_parsed(char *input, char **parsed, int i, int j)
 {
-	int		k; //variable for character-pointers of parsed
+	int		k;
 	int		length;
 	bool	quotes;
 
@@ -23,7 +23,7 @@ static int	copy_input_to_parsed(char *input, char **parsed, int i, int j)
 	length = get_token_len(&input[i]);
 	while (input[i] && k < length)
 	{
-		if (is_onstr(QUOTES, input[i])) //just nessecary to know if space needs to be copied
+		if (is_onstr(QUOTES, input[i]))
 			quotes = !quotes;
 		if (is_spaces(input[i]) && !quotes)
 			i++;
@@ -38,13 +38,13 @@ static int	copy_input_to_parsed(char *input, char **parsed, int i, int j)
 	return (i);
 }
 
-static int	fill_array(char *input, char **parsed, int nbr_args, int i) //loop from parsing input // i = variable for input-pointers
+static int	fill_array(char *input, char **parsed, int nbr_args, int i)
 {
-	int	j; //variable for word-pointers
-	int	length; //variable for getting the word length needed for parsed[j]
+	int	j;
+	int	length;
 
 	j = 0;
-	while (input[i] && j < nbr_args) // if j = nbr_args then it needs to be NULL | to avoid segfault
+	while (input[i] && j < nbr_args)
 	{
 		length = get_token_len(&input[i]);
 		if (length == 0)
@@ -52,7 +52,7 @@ static int	fill_array(char *input, char **parsed, int nbr_args, int i) //loop fr
 			i++;
 			continue ;
 		}
-		parsed[j] = malloc(sizeof(char) * (length + 1)); //allocating the length-of-word space
+		parsed[j] = malloc(sizeof(char) * (length + 1));
 		if (!parsed[j])
 		{
 			free(parsed);
@@ -72,9 +72,8 @@ char	**parsing_input(char *input)
 	char	**parsed;
 	int		nbr_args;
 
-	nbr_args = get_nbr_parsed_args(input, 0, 0) + 1; //plus one to terminate
+	nbr_args = get_nbr_parsed_args(input, 0, 0) + 1;
 	parsed = malloc(sizeof(char *) * nbr_args);
-	// parsed = ft_split(input, ' ');
 	if (!parsed)
 	{
 		free(input);

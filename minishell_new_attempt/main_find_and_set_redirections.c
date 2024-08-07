@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_find_and_set_redirections.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:56:39 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 14:43:28 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:51:45 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	find_and_set_last_redirect_out(t_statement *current, t_mini *mini)
 			copy_args(mini, current->next);
 		current = current->next;
 	}
-//	redirect_stdout(mini, fd, 0);
 	if (current->operator == NONE)
 		mini->current = current->next;
 	else
@@ -69,8 +68,8 @@ int	find_and_set_last_redirect_in(t_statement *current, t_mini *mini)
 	{
 		if (current->operator == 3)
 		{
-			fd = redirect_input(current); //open file
-			if (fd == -1) //nessecary cuz if file doesnt exist then all stops
+			fd = redirect_input(current);
+			if (fd == -1)
 				return (1);
 			if (current->next && current->next->operator == 3)
 				close(fd);
@@ -81,7 +80,7 @@ int	find_and_set_last_redirect_in(t_statement *current, t_mini *mini)
 			copy_args(mini, current->next);
 		current = current->next;
 	}
-	redirect_stdin(mini, fd, 0); //sets stdin to file of last
+	redirect_stdin(mini, fd, 0);
 	if (current->operator == NONE)
 		mini->current = current->next;
 	else
