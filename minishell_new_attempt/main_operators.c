@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_operators.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:38:24 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 12:49:11 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:46:45 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -1,9 +1,9 @@
 TO DO
-[] pipes with redirection (basic and multiple pipes work)
+[x] pipes with redirection (basic and multiple pipes work)
 [] norm
-	[] 42header emails @student.42wolfsburg.de
-[] commands called through execve make the programm loop if failed (eg when the "file not found" message pops up)
-[] running ./minishell , bash and than ./minishell again is stucked in the .output
+	[x] 42header emails @student.42wolfsburg.de
+[x] commands called through execve make the programm loop if failed (eg when the "file not found" message pops up)
+[x] running ./minishell , bash and than ./minishell again is stucked in the .output
 [] cd -> /bin/cat: .output_the_first_cuz_what_the_fuck: No such file or directory
 [] idk where TEST-1 is comming from, but sth definately made the exit_status not be updated correctly anymore in case of file or command not found.
 [] cat
@@ -16,15 +16,15 @@ TO DO
 	will print
 	nonexistentfile: before and is still store in .output
 	hello
-
+[] add other shell names to the "list"
 --------------------------------------------------------------------------------------------------------------------------------
 TESTS
 Redirection
 [OK] ls > file1 (well, in bash it creates the file first if not existent, than runs ls -la, so the file name is also on the list inside the file)
-[] <file1 cat //not sure what it was supposed to do but i implemented the > file command kind of command-structure to work
+[OK] <file1 cat //not sure what it was supposed to do but i implemented the > file command kind of command-structure to work
 								it should cat whats in the file or if there is no file "no such file or dir.."
-[] <file ls
-[] >file ls -la		is printing the ls -la to file, but also throwing /bin/cat: .output: No such file or directory on terminal
+[OK] <file ls
+[OK] >file ls -la		is printing the ls -la to file, but also throwing /bin/cat: .output: No such file or directory on terminal
 [OK] ls >file1.txt -l
 [OK] cat <file1 >file2
 [OK] cat <<EOF >file

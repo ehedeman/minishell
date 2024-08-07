@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_find_and_set_redirections.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:56:39 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 17:31:08 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:43:28 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
