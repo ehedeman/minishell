@@ -1,41 +1,53 @@
 TO DO
 [] pipes with redirection (basic and multiple pipes work)
 [] norm
+	[] 42header emails @student.42wolfsburg.de
 [] commands called through execve make the programm loop if failed (eg when the "file not found" message pops up)
-[] running ./minishell or bash inside minishell is not working anymore (or maybe is my laptop, test in school),
-	for example, if you run bash, all the commands are not being printed to stdout, but to the .output_blabla file
-	can't run ./minishell, it is also being run on the .output file
+[] running ./minishell , bash and than ./minishell again is stucked in the .output
 [] cd -> /bin/cat: .output_the_first_cuz_what_the_fuck: No such file or directory
 [] idk where TEST-1 is comming from, but sth definately made the exit_status not be updated correctly anymore in case of file or command not found.
-
-
+[] cat
+[] .output file is not being deleted in the end
+[] rm .output -> /bin/cat: .output: No such file or directory
+[] commands starting with < or > after running sth, if doing its thing and printing whatever is still stored in .output
+	for example:
+	1. echo hello
+	2. <nonexistentfile ls
+	will print
+	nonexistentfile: before and is still store in .output
+	hello
 
 --------------------------------------------------------------------------------------------------------------------------------
 TESTS
 Redirection
-[] ls > file1 (well, in bash it creates the file first if not existent, than runs ls -la, so the file name is also on the list inside the file)
-[x] <file1 cat //not sure what it was supposed to do but i implemented the > file command kind of command-structure to work
-[x] <file ls
-[x] >file ls -la
-[] ls >file1.txt -l (i think this would be another level of parsing tbh)
-[ok] cat <file1 >file2
-[ok] cat <<EOF >file
-[ok] echo a '>>'file>file2
+[OK] ls > file1 (well, in bash it creates the file first if not existent, than runs ls -la, so the file name is also on the list inside the file)
+[] <file1 cat //not sure what it was supposed to do but i implemented the > file command kind of command-structure to work
+								it should cat whats in the file or if there is no file "no such file or dir.."
+[] <file ls
+[] >file ls -la		is printing the ls -la to file, but also throwing /bin/cat: .output: No such file or directory on terminal
+[OK] ls >file1.txt -l
+[OK] cat <file1 >file2
+[OK] cat <<EOF >file
+[OK] echo a '>>'file>file2
 
 Pipes
-[ok] echo hello | cat -e
-[ok] echo hello | wc -w | cat -e
-[ok] ls -la | grep ".c" | wc -l
+[OK] echo hello | cat -e
+[OK] echo hello | wc -w | cat -e
+[OK] ls -la | grep ".c" | wc -l
 
 Redirection with pipes
-[ok] echo hello > out | wc -w
-[] ls -la > file1 | ls -la > file2 (combination with pipe is working, just has the same issue that ls is run before creating file, like first test in redirection list)
-[] >file ls -la | >file1 ls -la
-[] < file1 cat | wc -c > file2
-[ok] echo a >file | cat <file
+[OK] echo hello > out | wc -w
+[OK] ls -la > file1 | ls -la > file2 (combination with pipe is working, just has the same issue that ls is run before creating file, like first test in redirection list)
+[] > file ls -la | > file1 ls -la :is creating both files when ctrl+D only and not print ls to them
+[] < file1 cat | wc -c > file2 :is creating file1 after ctrl+c and not wc, or at ctrl+d, but not wc properly
+[OK] echo a >file | cat <file
+[OK] ls -la>file>file1>file2 | cat <file2
 [] >file>file1>file2 ls -l | cat <file2
-[okish] ls > | wc ...works like in bash (but is not the same as ls>|wc, which doesnt, wtf bash?)
-[] >>file echo '$USER' | cat < info.txt (it creates the file and runs the cat on info.txt, but $USER got lost)
+[okish] ls > | wc ...works like in bash but...
+	bash: syntax error near unexpected token `|'
+	minishell: syntax error near unexpected token '>'
+[let's just not go there] ls>|wc should create a wc file and print the ls output on it
+[] >>file echo hello | cat < info.txt (it creates the file and runs the cat on info.txt, but hello got lost)
 [] >>file echo '$USER' | cat <file (if file existed before, just cat whatever was there before, but it its not overwritten with $USER)
 
 --------------------------------------------------------------------------------------------------------------------------------
