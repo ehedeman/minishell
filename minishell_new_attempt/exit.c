@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:12:06 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 12:16:17 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:05:40 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	ft_exit(t_mini *mini, char *arg)
 		exit_status = exit_arg(arg, mini);
 		if (exit_status == -1)
 			return (-1);
-		printf("exit status: %i\n", exit_status);
 	}
 	free_com_tab(mini);
 	ft_env_lst_clear(mini->env, free);

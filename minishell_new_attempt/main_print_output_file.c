@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_print_output_file.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:20:16 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 15:47:53 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 15:59:24 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,11 @@ static void	free_args(char **args)
 static void	child(char **args, char **envp)
 {
 	if (execve(args[0], args, envp) == -1)
-	{
-		write(2, "TEST\n", 5);
 		free_args(args);
-		if (errno == EACCES)
-			exit (126);
-		else if (errno == ENOENT)
-			exit (127);
-		else
-			exit (1);
-	}
-	else
-		exit(EXIT_SUCCESS);
+	return ;
 }
 
-static char	**allocate_args(void)
+static char	**allocate_args(t_mini *mini)
 {
 	char	**args;
 
@@ -46,23 +36,12 @@ static char	**allocate_args(void)
 	args[0] = ft_strjoin("/bin/", "cat");
 	if (!args[0])
 		return (NULL);
-	args[1] = malloc(sizeof(char) * ft_strlen(".output") + 1);
+	args[1] = malloc(sizeof(char) * ft_strlen(mini->output_path) + 1);
 	if (!args[1])
 		return (NULL);
-	ft_strlcpy(args[1], ".output", ft_strlen(".output") + 1);
+	ft_strlcpy(args[1], mini->output_path, ft_strlen(mini->output_path) + 1);
 	args[2] = NULL;
 	return (args);
-}
-
-static void	parent(t_mini *mini)
-{
-	int		status;
-
-	waitpid(mini->pid, &status, WUNTRACED);
-	if (WIFEXITED(status))
-		mini->exit_status = WEXITSTATUS(status);
-	else
-		mini->exit_status = 1;
 }
 
 int	print_output_file(t_mini *mini)
@@ -71,7 +50,7 @@ int	print_output_file(t_mini *mini)
 	char	**envp;
 
 	envp = NULL;
-	args = allocate_args();
+	args = allocate_args(mini);
 	if (!args)
 		return (-1);
 	mini->pid = fork();
@@ -84,7 +63,7 @@ int	print_output_file(t_mini *mini)
 	else if (mini->pid == 0)
 		child(args, envp);
 	else
-		parent(mini);
+		wait(&mini->pid);
 	free_args(args);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 12:48:05 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 15:09:16 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ int	main(int argc, char **argv, char **envp)
 	process_input(&mini, 0);
 	if (mini.com_tab)
 		free_com_tab(&mini);
+	if (mini.pwd_save)
+		free(mini.pwd_save);
 	return (0);
 }
 

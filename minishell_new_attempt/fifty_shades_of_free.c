@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fifty_shades_of_free.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:01:01 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 15:01:02 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 15:08:53 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
