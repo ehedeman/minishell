@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:38:24 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 17:23:59 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 12:49:11 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ int	redirection_out(t_statement *current, t_mini *mini)
 {
 	int	fd;
 
+	if (check_command_after_file_rdr(mini->current)) //is for inverted inpout (> hello echo hello)
+	{
+		command_after_file_rdr(mini->current, mini);
+		return (0);
+	}
 	fd = find_and_set_last_redirect_out(current, mini); //do all output redirections
 	if (current->id == 0 || (current->previous
 			&& (current->previous->operator != 3
@@ -60,7 +65,8 @@ int	pipes(t_statement *current, t_mini *mini)
 
 int	none(t_statement *current, t_mini *mini)
 {
-	set_temp_output_as_stdout(mini, 0);
+	if (current->id)
+		set_temp_output_as_stdout(mini, 0);
 	find_command(current, mini);
 	reset_stdout(mini);
 	return (0);
