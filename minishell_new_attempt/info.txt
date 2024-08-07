@@ -38,8 +38,8 @@ Pipes
 Redirection with pipes
 [OK] echo hello > out | wc -w
 [OK] ls -la > file1 | ls -la > file2 (combination with pipe is working, just has the same issue that ls is run before creating file, like first test in redirection list)
-[] > file ls -la | > file1 ls -la :is creating both files when ctrl+D only and not print ls to them
-[] < file1 cat | wc -c > file2 :is creating file1 after ctrl+c and not wc, or at ctrl+d, but not wc properly
+[OK] > file ls -la | > file1 ls -la :is creating both files when ctrl+D only and not print ls to them
+[OK] < file1 cat | wc -c > file2 :is creating file1 after ctrl+c and not wc, or at ctrl+d, but not wc properly
 [OK] echo a >file | cat <file
 [OK] ls -la>file>file1>file2 | cat <file2
 [] >file>file1>file2 ls -l | cat <file2
