@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 12:52:43 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 16:10:22 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:31:56 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	handler(int sig)
 	else if (sig == SIGQUIT && !g_sig)
 		rl_replace_line("\0", 1);
 	else if (sig == SIGQUIT)
-		printf("Quit (core dumped)\n");
+		write(2, "Quit (core dumped)\n", 19);
 }
 
 int	ft_shlvl(t_mini *mini)

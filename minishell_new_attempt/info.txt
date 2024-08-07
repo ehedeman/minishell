@@ -1,8 +1,8 @@
 TO DO
 [] norm
 	[x] 42header emails @student.42wolfsburg.de
-[] add other shell names to the "list"
-[] ./minishell, ./minishell, exit prints /bin/cat error message
+[x] add other shell names to the "list"
+[x] ./minishell, ./minishell, exit prints /bin/cat error message
 
 --------------------------------------------------------------------------------------------------------------------------------
 TESTS (test with existend and non existend files)
