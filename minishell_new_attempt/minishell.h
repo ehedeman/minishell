@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 15:11:10 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 15:33:36 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,9 +220,10 @@ void		remove_output_file(t_mini *mini);
 
 int			get_fd(t_statement *temp);
 
-//redirect_special_case.c
+//redirect_command_after_file.c
 void		command_after_file_rdr(t_statement *temp, t_mini *mini);
 int			check_command_after_file_rdr(t_statement *temp);
+int			check_shell(char *argv);
 
 //redirect_std.c
 int			redirect_stdout(t_mini *mini, int fd, int mode);

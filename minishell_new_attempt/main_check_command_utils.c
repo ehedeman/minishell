@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_check_command_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:32:38 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 11:40:37 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 15:32:20 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	check_execute(t_statement *current, int i, t_mini *mini)
 	}
 	else
 	{
-		if (!ft_strcmp(current->argv[i], "bash"))
+		if (check_shell(current->argv[i]))
 			reset_std(mini);
 		exec_command(current, mini, i);
 		return (1);

@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_command_after_file.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:24:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 13:10:17 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 15:30:24 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	check_shell(char *argv)
+{
+	if (!ft_strcmp(argv, "bash"))
+		return (1);
+	else if (!ft_strcmp(argv, "zsh"))
+		return (1);
+	else if (!ft_strcmp(argv, "sh"))
+		return (1);
+	else if (!ft_strcmp(argv, "fish"))
+		return (1);
+	else if (!ft_strcmp(argv, "tmux"))
+		return (1);
+	else if (!ft_strcmp(argv, "dash"))
+		return (1);
+	return (0);
+}
 
 static int	check_commands_rdr(t_statement *current, t_mini *mini, int i)
 {
@@ -28,7 +45,7 @@ static int	check_commands_rdr(t_statement *current, t_mini *mini, int i)
 		}
 		else
 		{
-			if (!ft_strcmp(current->argv[i], "bash"))
+			if (check_shell(current->argv[i]))
 				reset_std(mini);
 			exec_command(current, mini, 1);
 			return (0);
