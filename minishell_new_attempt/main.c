@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 12:44:20 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:50:57 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_sig;
 
-int	process_input_1(t_mini *mini)
+int	process_input_one(t_mini *mini)
 {
 	if (whitespace_check(mini)) //frees input if nessecary
 		return (-1); // = continue ;
@@ -60,7 +60,7 @@ void	process_input(t_mini *mini, int return_value)
 		}
 		if (*mini->input)
 		{
-			return_value = process_input_1(mini);
+			return_value = process_input_one(mini);
 			if (return_value == 1)
 				return ;
 			else if (return_value == -1)

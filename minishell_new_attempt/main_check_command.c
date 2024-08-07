@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/06 17:32:21 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:56:46 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int	execution(t_mini *mini)
 	mini->fd_out = -1;
 	mini->fd_in = -1;
 	mini->temp_output = 0;
+	set_temp_output_as_stdout(mini, 0);
+	reset_stdout(mini);
 	if (check_command_after_file_rdr(mini->current)) //is for inverted inpout (> hello echo hello)
 		command_after_file_rdr(mini->current, mini);
 	if (!mini->current)
