@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 12:52:43 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 21:47:34 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:50:48 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	initialize_mini(t_mini *mini, char **envp)
 	ft_copy_env2lst(mini, envp);
 	init_history(&(mini->history));
 	signal(SIGINT, handler);
-	signal(SIGQUIT, handler);
+	signal(SIGQUIT, SIG_IGN);
 	mini->com_tab = NULL;
 	mini->input = NULL;
 	g_sig = 0;
@@ -74,11 +74,20 @@ void	handler(int sig)
 		rl_replace_line("\0", 1);
 		rl_redisplay();
 	}
-	else if (sig == SIGINT && g_sig)
+	if (sig == SIGINT && g_sig == 2)
+	{
+		g_sig = 3;
 		printf("\n");
-	else if (sig == SIGQUIT && !g_sig)
 		rl_replace_line("\0", 1);
-	else if (sig == SIGQUIT)
+	}
+	else if (sig == SIGINT && g_sig == 1)
+		printf("\n");
+	// else if (sig == SIGQUIT && !g_sig)
+	// {
+	// 	rl_replace_line("\0", 1);
+	// 	printf("\n");
+	// }
+	else if (sig == SIGQUIT && g_sig)
 		write(2, "Quit (core dumped)\n", 19);
 }
 

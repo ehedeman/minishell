@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 11:37:36 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 18:43:29 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:56:00 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	exec_command(t_statement *temp, t_mini *mini, int i)
 		return (-1);
 	mini->pid = 0;
 	g_sig = 1;
+	signal(SIGQUIT, handler);
 	exec->envp = assign_link_pointer(mini->env, exec->envp);
 	if (!mini->additional_args)
 		exec->args = malloc(sizeof(char *) * (temp->argc + 1));
@@ -85,6 +86,7 @@ int	exec_command(t_statement *temp, t_mini *mini, int i)
 	free_env_args(exec->envp, exec->args, 1);
 	free(exec);
 	g_sig = 0;
+	signal(SIGQUIT, SIG_IGN);
 	return (0);
 }
 
@@ -97,6 +99,8 @@ int	exec_file(t_statement *temp, t_mini *mini, int i)
 		return (-1);
 	mini->pid = 0;
 	g_sig = 1;
+	if (ft_strcmp(temp->argv[i], "./minishell"))
+		signal(SIGQUIT, handler);
 	exec->envp = assign_link_pointer(mini->env, exec->envp);
 	exec->current = temp;
 	if (!mini->additional_args)
@@ -109,5 +113,6 @@ int	exec_file(t_statement *temp, t_mini *mini, int i)
 	free_env_args(exec->envp, exec->args, 0);
 	free(exec);
 	g_sig = 0;
+	signal(SIGQUIT, SIG_IGN);
 	return (0);
 }

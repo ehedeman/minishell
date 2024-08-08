@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_operators.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:38:24 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 18:54:38 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:05:03 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	redirection_out(t_statement *current, t_mini *mini)
 int	redirection_in_until(t_statement *current, t_mini *mini)
 {
 	find_and_set_last_redirect_in_until(current, mini);
+	if (!mini->current)
+		return (1);
 	set_temp_output_as_stdout(mini, 0);
 	find_command(current, mini);
 	reset_stdin(mini);

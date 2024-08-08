@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_find_and_set_redirections.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:56:39 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 18:51:45 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:04:37 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,9 @@ void	find_and_set_last_redirect_in_until(t_statement *current, t_mini *mini)
 	if (current->next && current->next->argc > 1)
 		copy_args(mini, current->next);
 	current = redirect_input_until(current, end_word, mini);
-	if (current->operator == NONE)
+	if (!current)
+		mini->current = current;
+	else if (current->operator == NONE)
 		mini->current = current->next;
 	else
 		mini->current = current;

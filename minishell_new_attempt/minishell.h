@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 22:24:55 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:07:07 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,7 +260,7 @@ int			ft_find_array_size(char **array, int i);
 //fifty_shades_of_free.c
 int			free_env_args(char **envp, char **args, int mode);
 void		free_com_tab(t_mini *mini);
-void		free_input(char **input);
+void		free_input(char **input, int j);
 void		free_node_input(t_statement *temp, char **input);
 
 //BUILTINS

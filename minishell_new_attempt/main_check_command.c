@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_check_command.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 18:45:53 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:05:43 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static t_statement	*check_redirection(t_mini *mini, t_statement *current)
 	}
 	if (current && current->operator == 4)
 	{
-		redirection_in_until(current, mini);
+		if (redirection_in_until(current, mini))
+			return (NULL);
 		current = mini->current;
 	}
 	return (current);

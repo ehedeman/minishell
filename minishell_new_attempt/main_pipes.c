@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:07:02 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 21:44:51 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:59:20 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	child_process(t_statement *current, t_mini *mini, int pipe_fd[])
 	reset_stdout(mini);
 	redirect_stdin(mini, pipe_fd[0], 0);
 	set_temp_output_as_stdout(mini, 0);
-	exec_command(current, mini, 0);
+	find_command(current, mini);
 	reset_stdin(mini);
 	reset_stdout(mini);
 	exit(EXIT_SUCCESS);

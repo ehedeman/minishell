@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fifty_shades_of_free.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:01:01 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 18:40:43 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:07:43 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,21 @@ void	free_com_tab(t_mini *mini)
 	mini->input = NULL;
 }
 
-void	free_input(char **input)
+void	free_input(char **input, int j)
 {
 	int	i;
 
 	i = 0;
+	if (j >= 0)
+	{
+		while (j >= 0)
+		{
+			free(input[j]);
+			j--;
+		}
+		free(input);
+		return ;
+	}
 	while (input[i])
 	{
 		free(input[i]);
@@ -106,5 +116,5 @@ void	free_node_input(t_statement *temp, char **input)
 	free(temp);
 	if (!input)
 		return ;
-	free_input(input);
+	free_input(input, -1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_command_after_file.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:24:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 22:21:07 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:29:42 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,11 @@ static void	rdr_in_until(t_statement *current, t_mini *mini)
 	if (current->next)
 		end_word = current->next->argv[0];
 	current = redirect_input_until(current, end_word, mini);
+	if (!current)
+	{
+		mini->current = NULL;
+		return ;
+	}
 	set_temp_output_as_stdout(mini, 0);
 	check_commands_rdr(current, mini, 1);
 	reset_stdin(mini);
