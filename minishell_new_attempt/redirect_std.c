@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_std.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 11:19:24 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 22:00:40 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/08 14:38:04 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,9 @@ int	redirect_stdout(t_mini *mini, int fd, int mode)
 			if (mini->fd_out < 0)
 				write(2, strerror(errno), ft_strlen(strerror(errno)));
 		}
+		return (1);
 	}
-	return (0);
+	return (-1);
 }
 
 int	reset_stdout(t_mini *mini)

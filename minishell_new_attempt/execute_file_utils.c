@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_file_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:04:56 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 18:43:33 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/08 13:58:49 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,6 @@ static void	copy_temp(t_exec *exec, int i, int j, t_mini *mini)
 		else if (i == exec->current->argc && mini->additional_args)
 			break ;
 		exec->args[i] = exec->current->argv[j];
-		i++;
-		j++;
-	}
-	if (!mini->additional_args)
-		return ;
-	j = 0;
-	while (mini->additional_args[j])
-	{
-		exec->args[i] = mini->additional_args[j];
 		i++;
 		j++;
 	}

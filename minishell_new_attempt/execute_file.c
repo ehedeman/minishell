@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 11:37:36 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/08 11:56:00 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/08 13:58:45 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,7 @@ int	exec_command(t_statement *temp, t_mini *mini, int i)
 	g_sig = 1;
 	signal(SIGQUIT, handler);
 	exec->envp = assign_link_pointer(mini->env, exec->envp);
-	if (!mini->additional_args)
-		exec->args = malloc(sizeof(char *) * (temp->argc + 1));
-	else if (mini->additional_args)
-		exec->args = malloc(sizeof(char *) * (temp->argc + \
-			ft_find_array_size(mini->additional_args, 0) + 1));
+	exec->args = malloc(sizeof(char *) * (temp->argc + 1));
 	exec->current = temp;
 	exec->args[0] = ft_strjoin("/bin/", temp->argv[i]);
 	if (exec_com_fork(exec, mini, i) == -1)
@@ -103,11 +99,7 @@ int	exec_file(t_statement *temp, t_mini *mini, int i)
 		signal(SIGQUIT, handler);
 	exec->envp = assign_link_pointer(mini->env, exec->envp);
 	exec->current = temp;
-	if (!mini->additional_args)
-		exec->args = malloc(sizeof(char *) * (temp->argc + 1));
-	else if (mini->additional_args)
-		exec->args = malloc(sizeof(char *) * (temp->argc + \
-			ft_find_array_size(mini->additional_args, 0) + 1));
+	exec->args = malloc(sizeof(char *) * (temp->argc + 1));
 	if (exec_file_fork(exec, mini, i) == -1)
 		return (-1);
 	free_env_args(exec->envp, exec->args, 0);

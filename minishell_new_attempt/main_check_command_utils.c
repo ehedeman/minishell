@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_check_command_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:32:38 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 22:06:42 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/08 14:59:49 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,14 @@ static int	check_execute(t_statement *current, int i, t_mini *mini)
 	return (0);
 }
 
-int	find_command(t_statement *current, t_mini *mini)
+int	find_command(t_statement *current, t_mini *mini, int i)
 {
-	int	i;
-
-	i = 0;
+	if (mini->additional_args)
+	{
+		current = add_arg_to_argv(current, mini);
+		if (!current)
+			return (1);
+	}
 	if (current->id != 0 && (current->previous->operator <= 4
 			&& current->previous->operator >= 1))
 		i++;

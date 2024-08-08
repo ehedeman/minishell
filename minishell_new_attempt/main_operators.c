@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:38:24 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/08 11:05:03 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/08 15:00:16 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int	redirection_out(t_statement *current, t_mini *mini)
 	}
 	fd = find_and_set_last_redirect_out(current, mini);
 	if (current->id == 0 || (current->previous
-			&& (current->previous->operator != 3
-				&& current->previous->operator != 4)))
+			&& !(current->previous->operator >= 3
+				&& current->previous->operator <= 5)))
 	{
 		set_temp_output_as_stdout(mini, 0);
-		find_command(current, mini);
+		find_command(current, mini, 0);
 		reset_stdout(mini);
 	}
 	redirect_stdout(mini, fd, 0);
@@ -44,7 +44,7 @@ int	redirection_in_until(t_statement *current, t_mini *mini)
 	if (!mini->current)
 		return (1);
 	set_temp_output_as_stdout(mini, 0);
-	find_command(current, mini);
+	find_command(current, mini, 0);
 	reset_stdin(mini);
 	return (0);
 }
@@ -54,7 +54,7 @@ int	redirection_in(t_statement *current, t_mini *mini)
 	if (find_and_set_last_redirect_in(current, mini))
 		return (1);
 	set_temp_output_as_stdout(mini, 0);
-	find_command(current, mini);
+	find_command(current, mini, 0);
 	reset_stdin(mini);
 	return (0);
 }
@@ -69,7 +69,7 @@ int	none(t_statement *current, t_mini *mini)
 {
 	if (current->id)
 		set_temp_output_as_stdout(mini, 0);
-	find_command(current, mini);
+	find_command(current, mini, 0);
 	reset_stdout(mini);
 	return (0);
 }

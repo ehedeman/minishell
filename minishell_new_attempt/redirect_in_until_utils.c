@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in_until_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:09:40 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 22:00:59 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/08 14:54:59 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,15 @@ char	**init_input(void)
 	}
 	input[0] = NULL;
 	return (input);
+}
+
+int	condition_from_get_input(char **input, int *i)
+{
+	if (!input[*i] || g_sig == 3)
+	{
+		g_sig = 0;
+		free_input(input, *i);
+		return (1);
+	}
+	return (0);
 }

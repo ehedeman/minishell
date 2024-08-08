@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+         #
+#    By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/08/07 18:44:58 by smatschu         ###   ########.fr        #
+#    Updated: 2024/08/08 12:52:28 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC = 	main.c								\
 		main_pipes.c						\
 		main_set_output_file.c				\
 		main_remove_output_file.c			\
+		add_arg_to_argv.c					\
 		input_check.c						\
 		input_check_utils.c					\
 		input_check2.c						\

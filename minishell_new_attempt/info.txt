@@ -1,5 +1,5 @@
 TO DO
-[] << EOF :ctrl+c not exiting
+[x] << EOF :ctrl+c not exiting
 [] go through eval sheet
 [] main.c and minishell.h-> delete stuff for debugging in the end, rest of norm should be ok.
 

@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:23:25 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/08 12:16:29 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/08 14:59:20 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,8 @@ static t_statement	*get_input(char **input, char *end_word, \
 	while (*i < 1000 && g_sig != 3)
 	{
 		input[*i] = readline("> ");
-		if (!input[*i] || g_sig == 3)
-		{
-			g_sig = 0;
-			free_input(input, *i);
+		if (condition_from_get_input(input, i))
 			return (NULL);
-		}
 		if (!ft_strcmp(input[*i], end_word))
 		{
 			if (current->next && current->operator == 4)

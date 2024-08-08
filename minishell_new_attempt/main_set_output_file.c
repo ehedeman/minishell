@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_set_output_file.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:03:25 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 21:47:51 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/08 13:52:43 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

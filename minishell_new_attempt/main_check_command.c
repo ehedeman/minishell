@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/08 11:05:43 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/08 12:57:51 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,6 @@ static void	check_commands(t_mini *mini, t_statement *first)
 	while (current)
 	{
 		current = check_operators(mini, current);
-		if (mini->additional_args)
-		{
-			free(mini->additional_args);
-			mini->additional_args = NULL;
-		}
 		if (mini->invisible_file == 1)
 			rm_invisible_file(mini, NULL);
 		if (!current)
