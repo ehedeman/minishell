@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/08 14:59:58 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/08 16:24:41 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@ int			check_builtins(t_statement *current, t_mini *mini, int i);
 //main_find_and_set_redirections.c
 int			find_and_set_last_redirect_out(t_statement *current, t_mini *mini);
 int			find_and_set_last_redirect_in(t_statement *current, t_mini *mini);
-void		find_and_set_last_redirect_in_until(t_statement *current, \
+int			find_and_set_last_redirect_in_until(t_statement *current, \
 				t_mini *mini);
 
 //main_incomplete_pipe.c

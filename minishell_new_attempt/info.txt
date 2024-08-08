@@ -17,6 +17,9 @@ IN PROGRESS
 
 --------------------------------------------------------------------------------------------------------------------------------
 TESTS (test with existent and non existent files)
+
+Generally
+
 Redirection
 [OK] ls > file1 (well, in bash it creates the file first if not existent, than runs ls -la, so the file name is also on the list inside the file)
 [OK] <file1 cat
@@ -28,6 +31,10 @@ Redirection
 [OK] echo a '>>'file>file2
 
 Pipes
+[] echo $:$= | cat -e ------> supposed to be "$:$=$"
+[] echo " $ " | cat -e ---------> supposed to be "$$"
+[] echo ' $ ' | cat -e ---------> "$$"
+[] echo $? | echo $? | echo $? ---------->prints a newline too much
 [OK] echo hello | cat -e
 [OK] echo hello | wc -w | cat -e
 [OK] ls -la | grep ".c" | wc -l

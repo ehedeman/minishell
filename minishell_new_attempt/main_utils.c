@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 12:52:43 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/08 12:20:34 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/08 15:58:51 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	initialize_mini(t_mini *mini, char **envp)
 	mini->exit_status = 0;
 	mini->fd_out = -1;
 	mini->fd_in = -1;
-	mini->temp_output = 0;
+	mini->temp_output = -1;
 	mini->additional_args = NULL;
 	mini->pwd_save = malloc(PATH_MAX + 1);
 	getcwd(mini->pwd_save, PATH_MAX + 1);

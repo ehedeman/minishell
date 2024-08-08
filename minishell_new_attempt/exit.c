@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:12:06 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 18:44:13 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/08 15:59:52 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	ft_exit(t_mini *mini, char *arg)
 {
 	int	exit_status;
 
-	remove_output_file(mini);
+	if (mini->temp_output >= 0)
+		remove_output_file(mini);
 	exit_status = 0;
 	if (arg)
 	{

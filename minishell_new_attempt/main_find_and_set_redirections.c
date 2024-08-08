@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:56:39 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/08 13:01:12 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/08 16:24:18 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	find_and_set_last_redirect_in(t_statement *current, t_mini *mini)
 	return (0);
 }
 
-void	find_and_set_last_redirect_in_until(t_statement *current, t_mini *mini)
+int	find_and_set_last_redirect_in_until(t_statement *current, t_mini *mini)
 {
 	char	*end_word;
 
@@ -99,9 +99,10 @@ void	find_and_set_last_redirect_in_until(t_statement *current, t_mini *mini)
 		copy_args(mini, current->next);
 	current = redirect_input_until(current, end_word, mini);
 	if (!current)
-		mini->current = current;
+		return (1);
 	else if (current->operator == NONE)
 		mini->current = current->next;
 	else
 		mini->current = current;
+	return (0);
 }

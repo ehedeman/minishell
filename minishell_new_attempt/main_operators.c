@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:38:24 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/08 15:00:16 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/08 16:24:34 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ int	redirection_out(t_statement *current, t_mini *mini)
 
 int	redirection_in_until(t_statement *current, t_mini *mini)
 {
-	find_and_set_last_redirect_in_until(current, mini);
-	if (!mini->current)
+	if (find_and_set_last_redirect_in_until(current, mini))
 		return (1);
 	set_temp_output_as_stdout(mini, 0);
 	find_command(current, mini, 0);
