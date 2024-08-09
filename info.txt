@@ -1,8 +1,8 @@
 TO DO
 [x] << EOF :ctrl+c not exiting
 	---> it's exiting only if anything is pressed after ctrl+c
-[] "   " leaks
-[] '   ' leaks
+[x] "   " leaks
+[x] '   ' leaks
 [] 'cat | cat | ls' should behave in a "normal way"
 	---> it should run ls return the prompt without having to press ctrl+c (bash returns after 2x enter)
 	---> it is runnig ls and returning prompt only after ctrl+c
