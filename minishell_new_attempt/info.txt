@@ -31,10 +31,10 @@ Redirection
 [OK] echo a '>>'file>file2
 
 Pipes
-[] echo $:$= | cat -e ------> supposed to be "$:$=$"
-[] echo " $ " | cat -e ---------> supposed to be "$$"
-[] echo ' $ ' | cat -e ---------> "$$"
-[] echo $? | echo $? | echo $? ---------->prints a newline too much
+[x] echo $:$= | cat -e ------> supposed to be "$:$=$"
+[x] echo " $ " | cat -e ---------> supposed to be "$$" bash prints also the spaces
+[x] echo ' $ ' | cat -e ---------> "$$"
+[x] echo $? | echo $? | echo $? ---------->prints a newline too much
 [OK] echo hello | cat -e
 [OK] echo hello | wc -w | cat -e
 [OK] ls -la | grep ".c" | wc -l

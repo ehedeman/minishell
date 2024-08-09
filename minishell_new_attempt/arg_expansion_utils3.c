@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 18:52:54 by smatschu          #+#    #+#             */
-/*   Updated: 2024/08/07 18:43:43 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/09 10:23:45 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*handle_dollar_sign(char *arg, t_mini *mini, char **new_arg)
 	int	use_braces;
 
 	arg++;
-	if (*arg == '\0' || *arg == '"')
+	if (*arg == '\0' || *arg == '"' || (!ft_isalnum(*arg) && *arg != '{' && *arg != '}' && *arg != '?'))
 	{
 		*new_arg = append_char_to_new_arg(*new_arg, '$');
 		return (arg);

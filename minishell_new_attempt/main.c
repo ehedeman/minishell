@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/08 11:42:23 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/09 10:42:32 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,26 @@ int	g_sig;
 // 	return (prompt);
 // }
 
-// void	print_statements(t_statement *statements)
-// {
-// 	t_statement	*current;
-// 	int			i;
+void	print_statements(t_statement *statements)
+{
+	t_statement	*current;
+	int			i;
 
-// 	current = statements;
-// 	while (current)
-// 	{
-// 		i = 0;
-// 		printf("Statement node: %d\n", current->id);
-// 		printf("Operator: %d\n", current->operator);
-// 		printf("Arguments\n");
-// 		while (i < current->argc)
-// 		{
-// 			printf("  argv[%d]: %s\n", i, current->argv[i]);
-// 			i++;
-// 		}
-// 		current = current->next;
-// 		printf("\n");
-// 	}
-// }
+	current = statements;
+	while (current)
+	{
+		i = 0;
+		printf("Operator: %d\n", current->operator);
+		printf("Arguments\n");
+		while (i < current->argc)
+		{
+			printf("  argv[%d]: %s\n", i, current->argv[i]);
+			i++;
+		}
+		current = current->next;
+		printf("\n");
+	}
+}
 
 int	process_input_one(t_mini *mini)
 {
@@ -74,7 +73,8 @@ int	process_input_one(t_mini *mini)
 			free(mini->input);
 			return (1);
 		}
-		replace_env_vars(mini->com_tab->argv, mini);
+		replace_env_vars(mini);
+		//print_statements(mini->com_tab);
 		if (execution(mini) == -1)
 		{
 			free_com_tab(mini);

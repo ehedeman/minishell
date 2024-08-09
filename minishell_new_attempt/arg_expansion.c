@@ -6,7 +6,7 @@
 /*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 22:23:35 by smatschu          #+#    #+#             */
-/*   Updated: 2024/08/07 18:43:46 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/09 10:42:15 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,19 +112,26 @@ char	*process_arg(char *arg, t_mini *mini)
 	return (arg_info.new_arg);
 }
 
-void	replace_env_vars(char **args, t_mini *mini)
+void	replace_env_vars(t_mini *mini)
 {
 	int		i;
+	t_statement *current;
 
 	i = 0;
-	while (args[i] != NULL)
+	current = mini->com_tab;
+	while(current)
 	{
-		if (ft_strcmp(args[i], "'$?'") == 0)
+		i = 0;
+		while (current->argv[i] != NULL)
 		{
+			if (ft_strcmp(current->argv[i], "'$?'") == 0)
+			{
+				i++;
+				continue ;
+			}
+			current->argv[i] = process_arg(current->argv[i], mini);
 			i++;
-			continue ;
 		}
-		args[i] = process_arg(args[i], mini);
-		i++;
+		current = current->next;
 	}
 }

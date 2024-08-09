@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:07:02 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/08 15:02:15 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/09 10:27:37 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ flows in this direction ------->| pipe_fd[0] (read end)  |
 								| pipe_fd[1] (write end) | ---> Input data flows
 								|                        |	in this direction
 								--------------------------	for the next
-																ou stdout
+																or stdout
 */
 static void	child_process(t_statement *current, t_mini *mini, int pipe_fd[])
 {

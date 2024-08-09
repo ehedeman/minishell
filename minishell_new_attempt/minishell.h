@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/08 16:24:41 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/09 10:40:10 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,7 +292,7 @@ void		sort_linked_list(t_env_list *temp_env);
 char		**ft_join_env(char *env_var);
 
 //expansion $
-void		replace_env_vars(char **args, t_mini *mini);
+void		replace_env_vars(t_mini *mini);
 void		append_var_value(char **new_arg, const char *var_value);
 char		*extract_var_name(char	**arg);
 char		*get_env_value(const char *var_name, t_mini *mini);
