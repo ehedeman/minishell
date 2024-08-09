@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+         #
+#    By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/08/08 12:52:28 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/08/09 11:39:01 by smatschu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arg_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 22:23:35 by smatschu          #+#    #+#             */
-/*   Updated: 2024/08/09 10:42:15 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:41:56 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,12 @@ char	*process_arg(char *arg, t_mini *mini)
 
 void	replace_env_vars(t_mini *mini)
 {
-	int		i;
-	t_statement *current;
+	int			i;
+	t_statement	*current;
 
 	i = 0;
 	current = mini->com_tab;
-	while(current)
+	while (current)
 	{
 		i = 0;
 		while (current->argv[i] != NULL)
