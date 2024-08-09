@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:46:10 by smatschu          #+#    #+#             */
-/*   Updated: 2024/08/07 18:44:07 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/09 13:50:02 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,31 @@ int	check_env(t_statement *temp, t_mini *mini, int i)
 	{
 		mini->exit_status = ft_print_env_lst(mini->env);
 		return (1);
+	}
+	return (0);
+}
+
+int	is_path_in_env(t_env_list *env)
+{
+	const char	*paths[] = {"/bin", "/usr/bin", "/usr/local/bin", NULL};
+	int			i;
+
+	while (env)
+	{
+		if (ft_strcmp(env->name, "PATH") == 0)
+		{
+			if (env->value && strlen(env->value) > 0)
+			{
+				i = 0;
+				while (paths[i] != NULL)
+				{
+					if (ft_strnstr(env->value, paths[i], strlen(env->value)))
+						return (1);
+					i++;
+				}
+			}
+		}
+		env = env->next;
 	}
 	return (0);
 }

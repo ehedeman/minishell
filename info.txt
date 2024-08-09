@@ -1,17 +1,18 @@
 TO DO
 [x] << EOF :ctrl+c not exiting
-[] go through eval sheet
+	---> it's exiting only if anything is pressed after ctrl+c
 [] main.c and minishell.h-> delete stuff for debugging in the end, rest of norm should be ok.
-
-INFO: main_pipes.c -> yes, both the exit(EXIT_FAILURE) are necessary,
-because the exit in the child process is only for the child,
-to make sure it terminates when its done with its shit, is the signal for the parent to end with the wait.
-The exit after the pipe failure is an error check for the parent process only, in case the pipe could not be created.
-
+[] "   " leaks
+[] '   ' leaks
+[] 'cat | cat | ls' should behave in a "normal way"
+	---> it should run ls return the prompt without having to press ctrl+c (bash returns after 2x enter)
+	---> it is runnig ls and returning prompt only after ctrl+c
+[] go through eval sheet again
 --------------------------------------------------------------------------------------------------------------------------------
 
 IN PROGRESS
 [smatschu]
+	[x] go through eval sheet
 
 [ehedeman]
 
@@ -21,39 +22,42 @@ TESTS (test with existent and non existent files)
 Generally
 
 Redirection
-[OK] ls > file1 (well, in bash it creates the file first if not existent, than runs ls -la, so the file name is also on the list inside the file)
+[OK] ls > file1
 [OK] <file1 cat
 [OK] <file ls
-[OK] >file ls -la		is printing the ls -la to file, but also throwing /bin/cat: .output: No such file or directory on terminal
+[OK] >file ls -la
 [OK] ls >file1.txt -l
 [OK] cat <file1 >file2
 [OK] cat <<EOF >file
 [OK] echo a '>>'file>file2
+[OK] echo hello ">" file
 
 Pipes
-[x] echo $:$= | cat -e ------> supposed to be "$:$=$"
-[x] echo " $ " | cat -e ---------> supposed to be "$$" bash prints also the spaces
-[x] echo ' $ ' | cat -e ---------> "$$"
-[x] echo $? | echo $? | echo $? ---------->prints a newline too much
+[OK] echo $:$= | cat -e ------> supposed to be "$:$=$"
+[OK] echo " $ " | cat -e ---------> supposed to be " $ $" (bash prints also the spaces)
+[OK] echo ' $ ' | cat -e ---------> " $ $"
+[OK] echo $? | echo $? | echo $? ---------->prints a newline too much
 [OK] echo hello | cat -e
 [OK] echo hello | wc -w | cat -e
 [OK] ls -la | grep ".c" | wc -l
+[OK] echo hello "|" cat -e
+[OK] env | wc
+ 
 
 Redirection with pipes
 [OK] echo hello > file | wc -w
-[OK] ls -la > file1 | ls -la > file2 (combination with pipe is working, just has the same issue that ls is run before creating file, like first test in redirection list)
-[OK] > file ls -la | > file1 ls -la :is creating both files when ctrl+D only and not print ls to them
-[OK] < file1 cat | wc -c > file2 :is creating file1 after ctrl+c and not wc, or at ctrl+d, but not wc properly
-[OK] echo a >file | cat <file
-[OK] ls -la>file>file1>file2 | cat <file2
-[OK] >file>file1>file2 ls -l | cat <file2 ------> works but cat file2 is not supposed to print ls -la aka its a nice cool feature of minishell
-[okish] ls > | wc ...works like in bash but...
+[] ls -la > file1 | ls -la > file2 :file 2 is being created, but not before ls -la, so it is not on the list, should show on the list in file1 and file2
+[] > file1 ls -la | > file2 ls -la :file2 is being created and is shown only in file2. should also show in file1.
+[OK] < info.txt cat | wc -c > file2 :is creating file1 after ctrl+c and not wc, or at ctrl+d, but not wc properly
+[OKish] echo a >file | cat <file 			------> works but cat <file is not supposed to print stuff, aka its a nice cool feature of minishell
+[OKish] ls -la>file>file1>file2 | cat <file2 ------> works but cat file2 is not supposed to print ls -la aka its a nice cool feature of minishell
+[OKish] >file>file1>file2 ls -l | cat <file2 ------> works but cat file2 is not supposed to print ls -la aka its a nice cool feature of minishell
+[OKish] ls > | wc ...works like in bash but...
 	bash: syntax error near unexpected token `|'
 	minishell: syntax error near unexpected token '>'
 [let's just not go there] ls>|wc should create a wc file and print the ls output on it
 [OK] >>file echo hello | cat < info.txt (it creates the file and runs the cat on info.txt, but hello got lost)
 [OK] >>file echo '$USER' | cat <file (if file existed before, just cat whatever was there before, but it its not overwritten with $USER)
-
 
 --------------------------------------------------------------------------------------------------------------------------------
 DONE
@@ -142,3 +146,6 @@ i made it into two)
 	echo "'$USER'" should print 'USER_VALUE'
 	echo '"$USER"' should print "$USER"
 [x] norm
+[x] when executing shell commands, should take the path from the struct linked list, and not hardcode the path,
+	so that if we unset $PATH, the commands like ls, wc, don't work anymore. -->added a condition to add /bin/ only if it is in the path
+[x] if exit and PATH not in env, rm gives error --> fixed by changing main_remove_output_file.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 11:37:36 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/08 16:16:02 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/09 13:50:05 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,10 @@ int	exec_command(t_statement *temp, t_mini *mini, int i)
 	exec->envp = assign_link_pointer(mini->env, exec->envp);
 	exec->args = malloc(sizeof(char *) * (temp->argc + 1));
 	exec->current = temp;
-	exec->args[0] = ft_strjoin("/bin/", temp->argv[i]);
+	if (is_path_in_env(mini->env))
+		exec->args[0] = ft_strjoin("/bin/", temp->argv[i]);
+	else
+		exec->args[0] = ft_strjoin("", temp->argv[i]);
 	if (exec_com_fork(exec, mini, i) == -1)
 		return (-1);
 	free_env_args(exec->envp, exec->args, 1);

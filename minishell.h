@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/09 10:40:10 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/09 13:12:53 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,6 +281,7 @@ void		ft_copy_env2lst(t_mini *mini, char **envp);
 void		ft_env_lst_addback(t_env_list **lst, t_env_list *new);
 t_env_list	*ft_env_lst_new(char *key, char *value);
 int			ft_print_env_lst(t_env_list *env);
+int			is_path_in_env(t_env_list *env);
 
 //export
 t_env_list	*ft_env_lst_new(char *key, char *value);
