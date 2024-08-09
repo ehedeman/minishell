@@ -1,13 +1,14 @@
 TO DO
 [x] << EOF :ctrl+c not exiting
 	---> it's exiting only if anything is pressed after ctrl+c
-[] main.c and minishell.h-> delete stuff for debugging in the end, rest of norm should be ok.
 [] "   " leaks
 [] '   ' leaks
 [] 'cat | cat | ls' should behave in a "normal way"
 	---> it should run ls return the prompt without having to press ctrl+c (bash returns after 2x enter)
 	---> it is runnig ls and returning prompt only after ctrl+c
 [] go through eval sheet again
+[] main.c and minishell.h-> delete stuff for debugging in the end, rest of norm should be ok.
+[] check norm one last time
 --------------------------------------------------------------------------------------------------------------------------------
 
 IN PROGRESS
