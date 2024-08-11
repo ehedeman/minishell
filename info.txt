@@ -6,11 +6,11 @@ TO DO
 [x] 'cat | cat | ls' should behave in a "normal way"
 	---> it should run ls return the prompt without having to press ctrl+c (bash returns after 2x enter)
 	---> it is runnig ls and returning prompt only after ctrl+c
-[] echo -n hello > file :not printing to file
-[] echo -n hello >> file :same
-[] echo hello > file how are you :printing 'how are you hello' to file, instead of 'hello how are you'
-[] echo -n hello > file | cat -e
-[] echo -n hello | cat -e | wc -c
+[x] echo -n hello > file :not printing to file
+[x] echo -n hello >> file :same
+[x] echo hello > file how are you :printing 'how are you hello' to file, instead of 'hello how are you'
+[x] echo -n hello > file | cat -e
+[x] echo -n hello | cat -e | wc -c
 [] go through eval sheet again
 [] main.c and minishell.h-> delete stuff for debugging in the end, rest of norm should be ok.
 [] check norm one last time

@@ -6,7 +6,7 @@
 #    By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/08/11 16:05:40 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/08/11 16:22:42 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,10 +79,9 @@ RED = \033[0;31m
 GREEN = \033[0;32m
 NC = \033[0m
 
-all: $(LIBFT) $(CLIENT) $(NAME) #norm
-	@printf "$(NC)"
+all: $(NAME) #norm
 
-$(NAME): $(OBJS_PREFIXED)
+$(NAME): $(LIBFT) $(OBJS_PREFIXED)
 	@$(CC) $(CFLAGS) $(OBJS_PREFIXED) -lreadline -Ilibft -L$(LIB_PATH) -lft -o $(NAME)
 
 $(OBJS_DIR)%.o : %.c minishell.h
