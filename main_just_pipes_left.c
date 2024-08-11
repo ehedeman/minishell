@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 16:43:55 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/11 16:11:28 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/11 20:01:45 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static void	parent_process(t_statement *current, int *input_fd, int pipefd[])
 		close(pipefd[1]);
 		*input_fd = pipefd[0];
 	}
-	else if (!current->next)
-		close(pipefd[0]);
+	// else if (!current->next)
+	// 	close(pipefd[0]);
 }
 
 void	do_just_pipes(t_statement *commands, t_mini *mini)
