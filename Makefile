@@ -6,7 +6,7 @@
 #    By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/08/09 16:50:24 by ehedeman         ###   ########.fr        #
+#    Updated: 2024/08/11 16:05:40 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,12 +19,14 @@ SRC = 	main.c								\
 		main_find_and_set_redirections.c	\
 		main_incomplete_pipe.c				\
 		main_just_pipes_left.c				\
+		main_just_pipes_utils.c				\
 		main_operators.c					\
 		main_print_output_file.c			\
 		main_pipes.c						\
 		main_set_output_file.c				\
 		main_remove_output_file.c			\
 		add_arg_to_argv.c					\
+		add_arg_to_argv_utils.c				\
 		input_check.c						\
 		input_check_utils.c					\
 		input_check2.c						\

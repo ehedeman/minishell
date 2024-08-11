@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_arg_to_argv.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:26:55 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/11 13:27:24 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/11 16:07:10 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ static int	copy_mini(t_statement *temp, char **add, int *i, int j)
 
 static int	copy_current(t_statement *current, t_statement *temp, int *i)
 {
-	int j;
+	int	j;
 
 	j = 1;
 	while (current->argv[j])
-		{
+	{
 		temp->argv[*i] = malloc(sizeof(char) * \
 			ft_strlen(current->argv[j]) + 1);
 		if (!temp->argv[*i])
@@ -48,7 +48,7 @@ static int	copy_current(t_statement *current, t_statement *temp, int *i)
 static int	copy_args(t_statement *current, t_statement *temp, int *i, \
 	t_mini *mini)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	temp->argv[0] = malloc(sizeof(char) * \
@@ -58,17 +58,8 @@ static int	copy_args(t_statement *current, t_statement *temp, int *i, \
 	ft_strlcpy(temp->argv[0], current->argv[0], \
 		ft_strlen(current->argv[0]) + 1);
 	*i += 1;
-	if (!ft_strlcpy(mini->additional_args[0], "-", 1))
-	{
-		temp->argv[1] = malloc(sizeof(char) * \
-			ft_strlen(mini->additional_args[0]) + 1);
-		if (!temp->argv[1])
+	if (copy_flags(temp, mini, i, &j))
 		return (1);
-		ft_strlcpy(temp->argv[1], mini->additional_args[0], \
-		ft_strlen(mini->additional_args[0]) + 1);
-		*i += 1;
-		j = 1;
-	}
 	if (copy_current(current, temp, i))
 		return (1);
 	if (copy_mini(temp, mini->additional_args, i, j))

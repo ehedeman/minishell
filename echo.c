@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:28:15 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 18:43:54 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/11 15:53:43 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	remove_quotes_echo(t_statement *temp, int i)
 	temp->argv[i] = malloc(sizeof(char) * ft_strlen(temp->argv[i]) - 1);
 	if (!temp->argv[i])
 	{
-		printf("minishell: System Error.\n");
+		ft_printf("minishell: System Error.\n");
 		temp->argv[i] = temp_pointer;
 		return (-1);
 	}
@@ -44,14 +44,14 @@ static bool	check_newline_flag(char **argv, int *i)
 static void	handle_special_cases(t_mini *mini, t_statement *temp, int i)
 {
 	if (!ft_strcmp(temp->argv[i], "$?"))
-		printf("%i\n", mini->exit_status);
+		ft_printf("%i\n", mini->exit_status);
 	else if (!ft_strncmp(temp->argv[i], "\'$", 2))
 	{
 		remove_quotes_echo(temp, i);
-		printf("%s", temp->argv[i]);
+		ft_printf("%s", temp->argv[i]);
 	}
 	else
-		printf("%s", temp->argv[i]);
+		ft_printf("%s", temp->argv[i]);
 }
 
 static int	ft_echo(t_mini *mini, t_statement *temp, int i)
@@ -64,11 +64,11 @@ static int	ft_echo(t_mini *mini, t_statement *temp, int i)
 	{
 		handle_special_cases(mini, temp, i);
 		if (i < temp->argc - 1 && *temp->argv[i])
-			printf(" ");
+			ft_printf(" ");
 		i++;
 	}
 	if (!newline)
-		printf("\n");
+		ft_printf("\n");
 	return (0);
 }
 

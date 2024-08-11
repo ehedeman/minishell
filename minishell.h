@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/09 16:50:32 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/11 16:15:36 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ int			ft_shlvl(t_mini *mini);
 
 //add_args_to_argv.c
 t_statement	*add_arg_to_argv(t_statement *current, t_mini *mini);
+int			copy_flags(t_statement *temp, t_mini *mini, int *i, int *j);
 
 //exit.c
 int			ft_exit(t_mini *mini, char *arg);
@@ -205,8 +206,11 @@ int			check_incomplete_pipe(t_statement *temp);
 int			complete_pipe(t_statement *temp);
 
 //main_just_pipes_left.c
-void	do_just_pipes(t_statement *commands, t_mini *mini);
-int just_piepes_left(t_statement *current);
+void		do_just_pipes(t_statement *commands, t_mini *mini);
+int			just_piepes_left(t_statement *current);
+int			command_involves_pipes(t_statement *parsed_input);
+void		create_pipes(t_statement *current, int pipefd[]);
+void		wait_for_children_pipes(t_mini *mini);
 
 //main_operators.c
 int			redirection_out(t_statement *current, t_mini *mini);
