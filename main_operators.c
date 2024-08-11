@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:38:24 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/11 16:17:30 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/11 17:37:21 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@ int	redirection_out(t_statement *current, t_mini *mini)
 {
 	int	fd;
 
-	if (check_command_after_file_rdr(mini->current))
-	{
-		command_after_file_rdr(mini->current, mini);
-		return (0);
-	}
 	fd = find_and_set_last_redirect_out(current, mini);
 	if (current->id == 0 || (current->previous
 			&& !(current->previous->operator >= 3

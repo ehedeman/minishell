@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/11 15:22:47 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/11 17:37:30 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ static t_statement	*check_redirection(t_mini *mini, t_statement *current)
 
 static t_statement	*check_operators(t_mini *mini, t_statement *current)
 {
+	if (check_command_after_file_rdr(mini->current))
+	{
+		command_after_file_rdr(mini->current, mini);
+		return (0);
+	}
 	current = check_redirection(mini, current);
 	if (!current)
 		return (NULL);
