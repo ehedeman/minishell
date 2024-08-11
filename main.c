@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/09 11:43:06 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/09 20:29:42 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	process_input(t_mini *mini, int return_value)
 {
 	while (1)
 	{
-		mini->input = readline("\033[1;31mthe minishell: \033[0m");
+		mini->input = readline("\033[1;31mminiHell: \033[0m");
 		if (!mini->input)
 		{
 			mini->com_tab = NULL;

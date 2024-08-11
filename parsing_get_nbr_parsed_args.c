@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_get_nbr_parsed_args.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 13:14:35 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/09 15:39:05 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/09 20:03:51 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	get_nbr_parsed_args(char *input, int i, int count)
 			i += 1;
 		}
 		if ((quotes || input[i] != ' ') && (!is_onstr(OPERATORS, input[i])
-			|| quotes))
+				|| quotes))
 			get_nbr_parsed_args_1(input, &i, &count, &quotes);
 		if (input[i])
 			i += 1;
