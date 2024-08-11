@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_arg_to_argv.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:26:55 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/08 14:59:13 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/11 13:27:24 by smatschu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	copy_args(t_statement *current, t_statement *temp, int *i, \
 	ft_strlcpy(temp->argv[0], current->argv[0], \
 		ft_strlen(current->argv[0]) + 1);
 	*i += 1;
-	if (!ft_strncpy(mini->additional_args[0], "-", 1)
+	if (!ft_strlcpy(mini->additional_args[0], "-", 1))
 	{
 		temp->argv[1] = malloc(sizeof(char) * \
 			ft_strlen(mini->additional_args[0]) + 1);
@@ -67,7 +67,7 @@ static int	copy_args(t_statement *current, t_statement *temp, int *i, \
 		ft_strlcpy(temp->argv[1], mini->additional_args[0], \
 		ft_strlen(mini->additional_args[0]) + 1);
 		*i += 1;
-		j = 1:
+		j = 1;
 	}
 	if (copy_current(current, temp, i))
 		return (1);
