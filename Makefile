@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+         #
+#    By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 13:51:06 by ehedeman          #+#    #+#              #
-#    Updated: 2024/08/09 11:39:01 by smatschu         ###   ########.fr        #
+#    Updated: 2024/08/09 16:50:24 by ehedeman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC = 	main.c								\
 		main_check_command_utils.c			\
 		main_find_and_set_redirections.c	\
 		main_incomplete_pipe.c				\
+		main_just_pipes_left.c				\
 		main_operators.c					\
 		main_print_output_file.c			\
 		main_pipes.c						\

@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:38:24 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/08 16:24:34 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:54:39 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ int	redirection_in(t_statement *current, t_mini *mini)
 
 int	pipes(t_statement *current, t_mini *mini)
 {
+	if (just_piepes_left(current))
+	{
+		do_just_pipes(current, mini);
+		mini->current = NULL;
+		return (0);
+	}
 	do_all_connected_pipes(current, mini);
 	return (0);
 }

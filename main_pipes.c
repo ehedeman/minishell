@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:07:02 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/09 10:27:37 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:48:30 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,16 @@ void	do_all_connected_pipes(t_statement *current, t_mini *mini)
 		mini->current = current->next;
 	else
 		mini->current = current;
+}
+
+int just_piepes_left(t_statement *current)
+{
+	while (current)
+	{
+		if (current->operator == 5 || current->operator == NONE)
+			current = current->next;
+		else
+			return (0);
+	}
+	return (1);
 }

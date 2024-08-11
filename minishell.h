@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:07 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/09 13:12:53 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:50:32 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,10 @@ int			find_and_set_last_redirect_in_until(t_statement *current, \
 //main_incomplete_pipe.c
 int			check_incomplete_pipe(t_statement *temp);
 int			complete_pipe(t_statement *temp);
+
+//main_just_pipes_left.c
+void	do_just_pipes(t_statement *commands, t_mini *mini);
+int just_piepes_left(t_statement *current);
 
 //main_operators.c
 int			redirection_out(t_statement *current, t_mini *mini);

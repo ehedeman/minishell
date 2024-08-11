@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/08 12:57:51 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:07:25 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,21 @@ static void	check_commands(t_mini *mini, t_statement *first)
 	}
 }
 
+static void	create_all_redirect(t_statement *current)
+{
+	int	fd;
+
+	while (current)
+	{
+		if (current->operator == 1 || current->operator == 2)
+		{
+			fd = get_fd(current);
+			close(fd);
+		}
+		current = current->next;
+	}
+}
+
 int	execution(t_mini *mini)
 {
 	mini->current = mini->com_tab;
@@ -84,6 +99,7 @@ int	execution(t_mini *mini)
 	mini->temp_output = 0;
 	set_temp_output_as_stdout(mini, 0);
 	reset_stdout(mini);
+	create_all_redirect(mini->current);
 	if (check_command_after_file_rdr(mini->current))
 		command_after_file_rdr(mini->current, mini);
 	if (!mini->current)
