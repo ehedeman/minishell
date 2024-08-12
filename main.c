@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:57:19 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/09 20:29:42 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/12 09:11:21 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,26 @@ int	g_sig;
 // 	return (prompt);
 // }
 // 		//print_statements(mini->com_tab);
-// void	print_statements(t_statement *statements)
-// {
-// 	t_statement	*current;
-// 	int			i;
+void	print_statements(t_statement *statements)
+{
+	t_statement	*current;
+	int			i;
 
-// 	current = statements;
-// 	while (current)
-// 	{
-// 		i = 0;
-// 		printf("Operator: %d\n", current->operator);
-// 		printf("Arguments\n");
-// 		while (i < current->argc)
-// 		{
-// 			printf("  argv[%d]: %s\n", i, current->argv[i]);
-// 			i++;
-// 		}
-// 		current = current->next;
-// 		printf("\n");
-// 	}
-// }
+	current = statements;
+	while (current)
+	{
+		i = 0;
+		printf("Operator: %d\n", current->operator);
+		printf("Arguments\n");
+		while (i < current->argc)
+		{
+			printf("  argv[%d]: %s\n", i, current->argv[i]);
+			i++;
+		}
+		current = current->next;
+		printf("\n");
+	}
+}
 
 int	process_input_one(t_mini *mini)
 {
@@ -73,6 +73,7 @@ int	process_input_one(t_mini *mini)
 			free(mini->input);
 			return (1);
 		}
+		print_statements(mini->com_tab);
 		replace_env_vars(mini);
 		if (execution(mini) == -1)
 		{

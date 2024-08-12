@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:47:10 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/11 17:37:30 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/12 09:29:14 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,14 @@ static void	check_commands(t_mini *mini, t_statement *first)
 		return ;
 	mini->invisible_file = 0;
 	if (check_incomplete_pipe(first))
-		complete_pipe(first);
+	{
+		if (complete_pipe(first))
+			return ;
+	}
 	while (current)
 	{
 		current = check_operators(mini, current);
+		print_statements(mini->com_tab);
 		if (mini->invisible_file == 1)
 			rm_invisible_file(mini, NULL);
 		if (!current)

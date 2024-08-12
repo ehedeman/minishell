@@ -6,7 +6,7 @@
 /*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 16:43:55 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/11 20:01:45 by ehedeman         ###   ########.fr       */
+/*   Updated: 2024/08/12 09:55:23 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	child_process(t_statement *curr, t_mini *mini, \
 		close(pipefd[0]);
 		redirect_stdout_pipe(pipefd[1]);
 	}
-	exec_command(curr, mini, 0);
+	find_command(curr, mini, 0);
 	exit(EXIT_SUCCESS);
 }
 

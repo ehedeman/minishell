@@ -18,10 +18,19 @@ static int	remove_quotes_length_1(char *parsed, t_rm_quotes *r)
 	{
 		while (parsed[r->i] && is_onstr(QUOTES, parsed[r->i]))
 		{
-			r->quotes = !r->quotes;
+			if (r->quote_c != parsed[r->i] && r->quote_c != '\0')
+			{
+				r->size++;
+				r->i++;
+			}
+			else
+			{
+				r->quotes = !r->quotes;
+				r->quote_c = parsed[r->i];
+				r->i += 1;
+			}
 			if (check_quotes_dollar_sign(&parsed[r->i]))
 				r->size += 2;
-			r->i += 1;
 		}
 		if (!parsed[r->i])
 			return (1);
@@ -39,10 +48,19 @@ static int	rm_quotes_len(char *parsed, t_rm_quotes *r)
 	{
 		while (parsed[r->i] && is_onstr(QUOTES, parsed[r->i]))
 		{
-			r->quotes = !r->quotes;
+			if (r->quote_c != parsed[r->i] && r->quote_c != '\0')
+			{
+				r->size++;
+				r->i++;
+			}
+			else
+			{
+				r->quotes = !r->quotes;
+				r->quote_c = parsed[r->i];
+				r->i += 1;
+			}
 			if (check_quotes_dollar_sign(&parsed[r->i]))
 				r->size += 2;
-			r->i += 1;
 		}
 		if (remove_quotes_length_1(parsed, r))
 			return (r->size);

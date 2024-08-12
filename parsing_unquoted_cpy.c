@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_unquoted_cpy.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatschu <smatschu@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: ehedeman <ehedeman@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 14:35:00 by ehedeman          #+#    #+#             */
-/*   Updated: 2024/08/07 22:12:54 by smatschu         ###   ########.fr       */
+/*   Updated: 2024/08/12 09:24:08 by ehedeman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,17 @@ static void	help_function(t_rm_quotes *r, char *parsed, \
 			r->i += save;
 			r->j += save;
 		}
+		else if (parsed[r->i] != r->quote_c && r->quote_c != '\0')
+		{
+			unquoted_parsed[r->j] = parsed[r->i];
+			r->i++;
+			r->j++;
+		}
 		else if (parsed[r->i])
+		{
+			r->quote_c = parsed[r->i];
 			r->i += 1;
+		}
 	}
 }
 
@@ -57,8 +66,20 @@ static void	unquoted_cpy_1(char *parsed, char *unquoted_parsed, \
 
 	while (parsed[r->i] && (parsed[r->i] == '\'' || parsed[r->i] == '\"'))
 	{
-		r->quote_c = parsed[r->i];
-		r->quotes = !r->quotes;
+		if (r->quote_c != parsed[r->i] && r->quote_c != '\0')
+		{
+			if (!check_quotes_dollar_sign(&parsed[r->i]))
+			{
+				unquoted_parsed[r->j] = parsed[r->i];
+				r->i++;
+				r->j++;
+			}
+		}
+		else
+		{
+			r->quote_c = parsed[r->i];
+			r->quotes = !r->quotes;
+		}
 		if (check_quotes_dollar_sign(&parsed[r->i]))
 		{
 			save = copy_quotes_dollar_sign(&unquoted_parsed[r->j], \
@@ -66,7 +87,7 @@ static void	unquoted_cpy_1(char *parsed, char *unquoted_parsed, \
 			r->i += save;
 			r->j += save;
 		}
-		else if (parsed[r->i])
+		else if (parsed[r->i] && parsed[r->i] == r->quote_c)
 			r->i += 1;
 	}
 }
